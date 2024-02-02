@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'auctionapp.apps.AuctionappConfig',
+    'myadmin.apps.MyadminConfig',
 ]
 
 MIDDLEWARE = [
