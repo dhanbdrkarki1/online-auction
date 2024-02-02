@@ -1,5 +1,5 @@
 from django.shortcuts import render
 from auctionapp.models import *
 
-def item_list(request):
-    return render(request, 'auctionapp/item/list.html')
+def index(request):
+    return render(request, 'auctionapp/index.html')

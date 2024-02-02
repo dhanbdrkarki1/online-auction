@@ -4,6 +4,6 @@ from . import views
 app_name = 'auctionapp'
 
 urlpatterns = [
-    path('', views.item_list, name='item_list'),
+    path('', views.index, name='item_list'),
     # path('<int:id>/', views.post_detail, name='item_detail'),
 ]
