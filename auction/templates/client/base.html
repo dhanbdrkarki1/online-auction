@@ -11,7 +11,8 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
     rel="stylesheet">
 
-  <title>{% block title %}{% endblock %}</title>
+  <title>Hexashop Ecommerce HTML CSS Template</title>
+
 
   <!-- Additional CSS Files -->
   <link rel="stylesheet" type="text/css" href="{% static 'client/css/bootstrap.min.css' %}">
@@ -23,16 +24,40 @@
   <link rel="stylesheet" href="{% static 'client/css/owl-carousel.css' %}">
 
   <link rel="stylesheet" href="{% static 'client/css/lightbox.css' %}">
+  {% block css %}
+
+  {% endblock %}
+  <!--
+
+TemplateMo 571 Hexashop
+
+https://templatemo.com/tm-571-hexashop
+
+-->
 </head>
 
 <body>
+  <!-- ***** Preloader Start ***** -->
+  <div id="preloader">
+    <div class="jumper">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
   {% include 'includes/client/header.html' %}
 
   {% block content %}
-  <h2> this is a main page.</h2>
+
   {% endblock %}
 
-  {% include 'includes/client/footer.html' %}
+  <!-- include modals here -->
+  {% block modal %}
+
+  {% endblock %}
+  <!-- modal ended -->
 
   <!-- jQuery -->
   <script src="{% static 'client/js/jquery-2.1.0.min.js' %}"></script>
@@ -74,6 +99,10 @@
 
   </script>
 
+  {% block js %}
+  {% endblock %}
+
 </body>
+
 
 </html>

@@ -2,7 +2,17 @@
 {% load static %}
 
 {% block content %}
-<h1>Index</h1>
+<div class="container" style="background-color: brown;">
+    <h1>INDEX</h1>
+    <!-- Button trigger modal -->
+
+</div>
+{% endblock %}
+
+{% block modal %}
+
+{% include 'account/modal/loginModal.html' %}
+
 {% endblock %}
 
 {% block js %}
