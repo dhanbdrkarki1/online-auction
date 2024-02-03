@@ -3,57 +3,83 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="registerModalCloseBtn">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
+
             <div class="modal-body">
                 <div class="form-title text-center">
-                    <h4>Register</h4>
+                    <h4>Sign Up</h4>
                 </div>
-                <div class="d-flex flex-column text-center">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="firstName" placeholder="First Name"
-                                name="firstName">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="lastName" placeholder="First Name"
-                                name="lastName">
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" id="email1" placeholder="Your email address...">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" id="password1" name="password2"
-                                placeholder="Your password...">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" id="password2" name="password2"
-                                placeholder="Your password...">
-                        </div>
-                        <button type="submit" class="btn btn-info btn-block btn-round">Register</button>
-                    </form>
 
-                    <div class="text-center text-muted delimiter">or use a social network</div>
-                    <div class="d-flex justify-content-center social-buttons">
-                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"
-                            data-placement="top" title="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </button>
-                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"
-                            data-placement="top" title="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </button>
-                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"
-                            data-placement="top" title="Linkedin">
-                            <i class="fab fa-linkedin"></i>
-                        </button>
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <!-- First Name input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="formFirstName1" class="form-control" />
+                                <label class="form-label" for="formFirstName1">First Name</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+
+                            <!-- Last Name input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="formLastName1" class="form-control" />
+                                <label class="form-label" for="formLastName1">Last Name</label>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="email" id="formEmail1" class="form-control" />
+                        <label class="form-label" for="formEmail1">Email address</label>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="password" id="formPassword1" class="form-control" />
+                        <label class="form-label" for="formPassword1">Password</label>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col d-flex justify-content-center">
+                            <!-- Checkbox -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                                <label class="form-check-label" for="form2Example31"> Remember me </label>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <a href="#!">Forgot password?</a>
+                        </div>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="button" class="btn btn-primary btn-block mb-4">Sign Up</button>
+
+                    <!-- Register buttons -->
+                    <div class="text-center">
+                        <p>Already have an account? <a href="#!" id="signinLink" data-toggle="modal"
+                                data-target="#loginModal">Sign in</a></p>
+                    </div>
+                </form>
             </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="signup-section">Not a member yet? <a href="#a" class="text-info"> Sign Up</a>.</div>
-            </div>
+
         </div>
     </div>
+</div>
+</div>
+
+
+<script>
+    document.getElementById('signinLink').addEventListener('click', function () {
+        // Hide the Register modal
+        $('#registerModal').modal('hide');
+    });
+</script>

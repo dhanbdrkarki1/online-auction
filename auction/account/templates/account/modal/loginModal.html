@@ -1,3 +1,5 @@
+<!-- Login modal -->
+
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -6,44 +8,64 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
+
       <div class="modal-body">
         <div class="form-title text-center">
           <h4>Login</h4>
         </div>
         <div class="d-flex flex-column text-center">
           <form>
-            <div class="form-group">
-              <input type="email" class="form-control" id="email1" placeholder="Your email address...">
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control" id="password1" placeholder="Your password...">
-            </div>
-            <button type="submit" class="btn btn-info btn-block btn-round">Login</button>
-          </form>
+        </div>
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+          <input type="email" id="form2Example1" class="form-control" />
+          <label class="form-label" for="form2Example1">Email address</label>
+        </div>
 
-          <div class="text-center text-muted delimiter">or use a social network</div>
-          <div class="d-flex justify-content-center social-buttons">
-            <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top"
-              title="Twitter">
-              <i class="fab fa-twitter"></i>
-            </button>
-            <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top"
-              title="Facebook">
-              <i class="fab fa-facebook"></i>
-            </button>
-            <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top"
-              title="Linkedin">
-              <i class="fab fa-linkedin"></i>
-            </button>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <input type="password" id="form2Example2" class="form-control" />
+          <label class="form-label" for="form2Example2">Password</label>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col d-flex justify-content-center">
+            <!-- Checkbox -->
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+              <label class="form-check-label" for="form2Example31"> Remember me </label>
+            </div>
+          </div>
+
+          <div class="col">
+            <a href="#!">Forgot password?</a>
           </div>
         </div>
+
+        <!-- Submit button -->
+        <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+        <!-- Register buttons -->
+        <div class="text-center">
+          <p>Not a member? <a href="#!" id="signupLink" data-toggle="modal" data-target="#registerModal">Register</a>
+          </p>
+          <p>or sign up with: <button type="button" class="btn btn-primary btn-floating mx-1  mb-0 me-3">
+              <i class="fab fa-google"></i>
+            </button></p>
+          </button>
+        </div>
+        </form>
       </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <div class="signup-section">Not a member yet? <a data-toggle="modal" data-target="#registerModal"
-            id="registerBtn">
-            Register
-          </a>.</div>
-      </div>
+
     </div>
   </div>
 </div>
+
+</div>
+
+<script>
+  document.getElementById('signupLink').addEventListener('click', function () {
+    // Hide the "Sign In" modal
+    $('#loginModal').modal('hide');
+  });
+</script>
