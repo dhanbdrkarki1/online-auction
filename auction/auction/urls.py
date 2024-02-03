@@ -23,6 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('auctionapp.urls', namespace='auctionapp')),
     path('myadmin/', include('myadmin.urls', namespace='myadmin')),
+    path('account/', include('account.urls', namespace='account')),
+
 ]
 
 if settings.DEBUG:
