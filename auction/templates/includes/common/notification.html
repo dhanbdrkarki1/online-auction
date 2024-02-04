@@ -1,0 +1,12 @@
+{% load static %}
+{% if messages %}
+
+<script src="{% static 'client/js/jquery.min.js' %}"></script>
+<script src="{% static 'client/js/toastr.min.js' %}"></script>
+
+{% for message in messages %}
+<script type="text/javascript">
+    toastr.{{ message.tags }} ("{{ message }}");
+</script>
+{% endfor %}
+{% endif %}
