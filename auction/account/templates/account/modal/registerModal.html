@@ -13,12 +13,14 @@
                     <h4>Sign Up</h4>
                 </div>
 
-                <form>
+                <!-- start register form  -->
+                <form method="post" action="account/register/">
+                    {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6 mb-4">
                             <!-- First Name input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="formFirstName1" class="form-control" />
+                                <input type="text" id="formFirstName1" name="first_name" class="form-control" />
                                 <label class="form-label" for="formFirstName1">First Name</label>
                             </div>
                         </div>
@@ -27,7 +29,7 @@
 
                             <!-- Last Name input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="formLastName1" class="form-control" />
+                                <input type="text" id="formLastName1" name="last_name" class="form-control" />
                                 <label class="form-label" for="formLastName1">Last Name</label>
                             </div>
                         </div>
@@ -36,13 +38,13 @@
 
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <input type="email" id="formEmail1" class="form-control" />
+                        <input type="email" id="formEmail1" name="email" class="form-control" />
                         <label class="form-label" for="formEmail1">Email address</label>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                        <input type="password" id="formPassword1" class="form-control" />
+                        <input type="password" id="formPassword1" name="password" class="form-control" />
                         <label class="form-label" for="formPassword1">Password</label>
                     </div>
 
@@ -61,7 +63,7 @@
                     </div>
 
                     <!-- Submit button -->
-                    <button type="button" class="btn btn-primary btn-block mb-4">Sign Up</button>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Sign Up</button>
 
                     <!-- Register buttons -->
                     <div class="text-center">
@@ -69,6 +71,8 @@
                                 data-target="#loginModal">Sign in</a></p>
                     </div>
                 </form>
+
+                <!-- register form end -->
             </div>
 
         </div>
