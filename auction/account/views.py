@@ -9,13 +9,9 @@ from uuid import uuid4
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.contrib.auth.forms import PasswordResetForm
-
 from account.models import *
 
-# def index(request):
-#     return render(request, 'account/login.html')
-
-
+# User Login
 def user_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -79,6 +75,11 @@ def register_user(request):
         except Exception as e:
             print(e)
 
+# Logout User
 def user_logout(request):
     logout(request)
     return redirect('auctionapp:home')
+
+
+def user_settings(request):
+    return render(request, 'account/settings.html')
