@@ -49,9 +49,10 @@
           <div class="text-center">
             <p>Not a member? <a href="#!" id="signupLink" data-toggle="modal" data-target="#registerModal">Register</a>
             </p>
-            <p>or sign up with: <button type="button" class="btn btn-primary btn-floating mx-1  mb-0 me-3">
+            <p>or continue with: <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"
+                class="btn btn-primary btn-floating mx-1  mb-0 me-3">
                 <i class="fab fa-google"></i>
-              </button></p>
+              </a></p>
             </button>
           </div>
         </form>
