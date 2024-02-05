@@ -1,0 +1,103 @@
+{% extends 'myadmin/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            {% include 'includes/myadmin/breadcrumbs.html' %}
+            <div class="mb-4">
+                <h2>{{category}}</h2>
+            </div>
+            <div>
+                <table id="categoryTable" class="table mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Date Added</th>
+                            <!-- Add other table headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in category.sub_category.all %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td><a href="{% url 'myadmin:category_detail' category.slug %}">{{ category.name }}</a></td>
+                            <td>{{ category.created }}</td>
+                            <!-- Add other table data fields as needed -->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-4">
+            <div class="mb-4">
+                <h2>Add Sub Category</h2>
+            </div>
+            <div>
+                <form method="POST" action="{% url 'myadmin:category_create' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="name_input">Name</label>
+                                <input type="text" class="form-control p-2 mt-2" id="name_input" name="name" required
+                                    oninput="updateSlug()">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="slug_input">Slug</label>
+                                <input type="text" class="form-control p-2 mt-2" id="slug_input" name="slug" required
+                                    readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-4">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="description_input">Description</label>
+                                <input type="text" class="form-control p-2 mt-2" id="description_input"
+                                    name="description" required>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="parent" value="{{category.id}}">
+                    <button type="submit" class="btn btn-success">Add</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+    // auto-fill slug fields
+    function updateSlug() {
+        // Get the value of the name field
+        var nameValue = document.getElementById('name_input').value;
+
+        // Replace spaces with dashes and convert to lowercase to create a slug
+        var slugValue = nameValue.replace(/\s+/g, '-').toLowerCase();
+
+        // Update the slug field
+        document.getElementById('slug_input').value = slugValue;
+    }
+
+    $(document).ready(function () {
+        $('#categoryTable').DataTable({
+            response: true,
+        });
+    });
+</script>
+{% endblock %}

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'auctionapp.apps.AuctionappConfig',
     'myadmin.apps.MyadminConfig',
     'account.apps.AccountConfig',
+    'lot.apps.LotConfig',
 ]
 
 MIDDLEWARE = [
