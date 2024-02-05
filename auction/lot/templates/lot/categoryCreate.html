@@ -1,0 +1,26 @@
+<form method="post">
+    <div class="container">
+        <div class="row mb-3">
+            <h2>Create New Category</h2>
+        </div>
+        <div class="row">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control" />
+        </div>
+        <div class="row mt-4">
+            <div class="col-6">
+                <button type="submit" class="btn form-control btn-primary">Create Category</button>
+            </div>
+            <div class="col-6">
+                <a asp-controller="Category" asp-action="Index" class="btn btn-secondary form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
