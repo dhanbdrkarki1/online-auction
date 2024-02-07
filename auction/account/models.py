@@ -76,7 +76,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class ShippingAddress(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="shipping_addresses")
     first_name = models.CharField(max_length=150, blank=True, null=True)
     last_name = models.CharField(max_length=150, blank=True, null=True)
     country = models.CharField(max_length=50, blank=True, null=True)

@@ -87,7 +87,7 @@
                                 </svg>Profile Information
                             </a>
                             <a href="#shippingAddress" data-toggle="tab"
-                                class="nav-item nav-link has-icon nav-link-faded">
+                                class="nav-item nav-link has-icon nav-link-faded" id="shippingAddressTab">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-truck">
@@ -185,18 +185,20 @@
                         </ul>
                     </div>
                     <div class="card-body tab-content">
+
+                        <!-- PROFILE INFORMATION -->
                         <div class="tab-pane active" id="profile">
                             <h6>YOUR PROFILE INFORMATION</h6>
                             <hr>
-                            <form>
-
+                            <form id="profileInfoForm">
+                                {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <!-- first Name -->
                                         <div class="form-group">
                                             <label for="firstName">First Name</label>
-                                            <input type="text" class="form-control" id="firstName"
-                                                aria-describedby="firstNameHelp" value="">
+                                            <input type="text" name="first_name" class="form-control" id="firstName"
+                                                aria-describedby="firstNameHelp" value="{{ first_name }}">
                                         </div>
                                     </div>
 
@@ -204,51 +206,57 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="lastName">Last Name</label>
-                                            <input type="text" class="form-control" id="lastName"
-                                                aria-describedby="lastNameHelp" value="">
+                                            <input type="text" name="last_name" class="form-control" id="lastName"
+                                                aria-describedby="lastNameHelp" value="{{ last_name }}">
                                         </div>
                                     </div>
                                 </div>
 
-
                                 <div class="form-group">
                                     <label for="userName">Username</label>
-                                    <input type="text" class="form-control" id="userName" value="" disabled />
+                                    <input type="text" name="username" class="form-control" id="userName"
+                                        value="{{ request.user.username }}" disabled />
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" value="">
+                                    <input type="email" name="email" class="form-control" id="email"
+                                        value="{{ email }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone Number</label>
-                                    <input type="text" class="form-control" id="phoneNumber" value="">
+                                    <input type="text" name="phone_number" class="form-control" id="phoneNumber"
+                                        value="{{ phone_number }}">
                                 </div>
-                                <button type="button" class="btn btn-primary">Update Profile</button>
-                                <button type="reset" class="btn btn-light">Reset Changes</button>
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
                             </form>
                         </div>
+                        <!-- PROFILE INFORMATION END -->
+
 
                         <!-- Shipping Address -->
                         <div class="tab-pane" id="shippingAddress">
                             <h6>Shipping Address</h6>
                             <hr>
-                            <form>
+                            <form id="shippingAddressForm">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <!-- first Name -->
                                         <div class="form-group">
-                                            <label for="firstName">First Name</label>
-                                            <input type="text" class="form-control" id="firstName" name="firstName"
-                                                aria-describedby="firstNameHelp" value="">
+                                            <label for="shippingAddressFirstName">First Name</label>
+                                            <input type="text" class="form-control" id="shippingAddressFirstName"
+                                                name="shippingAddressFirstName"
+                                                aria-describedby="shippingAddressFirstNameHelp"
+                                                value="{{ first_name }}">
                                         </div>
                                     </div>
 
                                     <!-- last Name -->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="lastName">Last Name</label>
-                                            <input type="text" class="form-control" id="lastName" name="lastName"
-                                                aria-describedby="lastNameHelp" value="">
+                                            <label for="shippingAddressLastName">Last Name</label>
+                                            <input type="text" class="form-control" id="shippingAddressLastName"
+                                                name="shippingAddressLastName"
+                                                aria-describedby="shippingAddressLastNameHelp" value="{{ last_name }}">
                                         </div>
                                     </div>
                                 </div>
@@ -257,34 +265,40 @@
                                 <div class="form-group">
                                     <label for="country">Country</label>
                                     <input type="text" class="form-control" id="country" name="country"
-                                        aria-describedby="countryHelp" value="">
+                                        aria-describedby="countryHelp" value="{{ country }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="city">Town / city</label>
                                     <input type="text" class="form-control" id="city" name="city"
-                                        aria-describedby="cityHelp" value="">
+                                        aria-describedby="cityHelp" value="{{ city }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="addressLine1">Address Line 1</label>
                                     <input type="text" class="form-control" id="addressLine1" name="addressLine1"
-                                        aria-describedby="addressLine1Help" value="">
+                                        aria-describedby="addressLine1Help" value="{{ address_line1 }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="addressLine2">Address Line 2</label>
                                     <input type="text" class="form-control" id="addressLine2" name="addressLine2"
-                                        aria-describedby="addressLine2Help" value="">
+                                        aria-describedby="addressLine2Help" value="{{ address_line2 }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="state">State / Province / Region</label>
                                     <input type="text" class="form-control" id="state" name="state"
-                                        aria-describedby="stateHelp" value="">
+                                        aria-describedby="stateHelp" value="{{ state }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="postalCode">Postal Code</label>
                                     <input type="text" class="form-control" id="postalCode" name="postalCode"
-                                        aria-describedby="postalCodeHelp" value="">
+                                        aria-describedby="postalCodeHelp" value="{{ postal_code }}">
                                 </div>
+                                <!-- <div class="form-group">
+                                    <label for="shippingAddressPhoneNumber">Postal Code</label>
+                                    <input type="text" class="form-control" id="shippingAddressPhoneNumber"
+                                        name="shippingAddressPhoneNumber"
+                                        aria-describedby="shippingAddressPhoneNumberHelp" value="">
+                                </div> -->
 
                                 <button class="btn btn-primary" type="submit">Save Settings</button>
                             </form>
@@ -423,5 +437,81 @@
 </div>
 {% endblock %}
 
+{% block domready %}
+var profileForm = document.getElementById("profileInfoForm");
+setupFormAjax(profileForm, '{% url "account:profile_info" %}', function (data) {
+// Success callback
+toastr.success('Profile updated successfully.');
+console.log("Profile updated successfully");
+}, function (error) {
+// Error callback
+console.error("Error updating profile");
+});
+
+var shippingAddressForm = document.getElementById("shippingAddressForm");
+
+setupFormAjax(shippingAddressForm, "{% url 'account:shipping_address' %}", function (data) {
+toastr.success('Address updated successfully.');
+console.log("Address updated successfully");
+}, function (error) {
+toastr.error('Error updating address!');
+console.error("Error updating profile!");
+});
+
+
+// Fetch shipping address data when tab is clicked
+document.getElementById('shippingAddressTab').addEventListener('click', function(event) {
+const url = '/account/settings/profile/address/';
+const fieldIds = {
+'first_name': 'shippingAddressFirstName',
+'last_name': 'shippingAddressLastName',
+'country': 'country',
+'city': 'city',
+'address_line1': 'addressLine1',
+'address_line2': 'addressLine2',
+'state': 'state',
+'postal_code': 'postalCode'
+};
+fetchDataAndPopulate(url, fieldIds);
+});
+
+
+
+
+{% endblock %}
+
+
+{% block js %}
+<!-- <script>
+// Function to fetch shipping address data
+    function fetchShippingAddress() {
+    fetch('/account/settings/profile/address/')
+    .then(response => response.json())
+    .then(data => {
+    console.log(data);
+    // Populate form fields with fetched data
+    document.getElementById('shippingAddressFirstName').value = data.first_name;
+    document.getElementById('shippingAddressLastName').value = data.last_name;
+    document.getElementById('country').value = data.country;
+    document.getElementById('city').value = data.city;
+    document.getElementById('addressLine1').value = data.address_line1;
+    document.getElementById('addressLine2').value = data.address_line2;
+    document.getElementById('state').value = data.state;
+    document.getElementById('postalCode').value = data.postal_code;
+    })
+    .catch(error => {
+    console.error('Error fetching shipping address:', error);
+    });
+    }
+    
+    // Fetch shipping address data when tab is clicked
+    document.getElementById('shippingAddressTab').addEventListener('click', function(event) {
+    fetchShippingAddress();
+    });
+
+
+
+</script> -->
+{% endblock %}
 
 <!-- Account Settings ends here -->

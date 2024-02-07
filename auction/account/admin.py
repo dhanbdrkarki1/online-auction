@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import fields
 from django.contrib.auth.admin import UserAdmin
-from account.models import CustomUser
+from account.models import CustomUser, ShippingAddress
 
 
 class CutomUserAdmin(UserAdmin):
@@ -25,3 +25,4 @@ class CutomUserAdmin(UserAdmin):
     )
 
 admin.site.register(CustomUser, CutomUserAdmin)
+admin.site.register(ShippingAddress)

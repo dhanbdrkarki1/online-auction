@@ -7,8 +7,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from uuid import uuid4
 from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm
+from django.shortcuts import get_object_or_404
 from account.models import *
 
 # User Login
@@ -83,3 +84,102 @@ def user_logout(request):
 
 def user_settings(request):
     return render(request, 'account/settings.html')
+
+@login_required
+def profileInfo(request):
+    print("------profile info-----------")
+    if request.method == 'POST':
+        print(request.POST)
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        print('user email--------------', email, first_name)
+        phone_number = request.POST.get('phone_number')
+        try:
+
+            profile = CustomUser.objects.get(email=request.user) 
+            profile.first_name = first_name
+            profile.last_name = last_name
+            profile.email = email
+            profile.phone_number = phone_number
+            profile.save()
+            return JsonResponse({'status': 'ok'})
+        except CustomUser.DoesNotExist as e:
+            print(e)
+        
+        return JsonResponse({'status': 'error' })
+    else:
+        user_profile = get_object_or_404(CustomUser,email=request.user)
+        context = {
+            'first_name': user_profile.first_name,
+            'last_name': user_profile.last_name,
+            'email': user_profile.email,
+            'phone_number': user_profile.phone_number
+        }
+    return render(request, 'account/settings.html', context)
+
+@login_required
+def shippingAddress(request):
+    print("---------------Shipping Addresss")
+    if request.method == 'POST':
+        print(request.POST)
+        first_name = request.POST.get('shippingAddressFirstName')
+        last_name = request.POST.get('shippingAddressLastName')
+        country = request.POST.get('country')
+        city = request.POST.get('city')
+        address_line1 = request.POST.get('addressLine1')
+        address_line2 = request.POST.get('addressLine2')
+        state = request.POST.get('state')
+        postal_code = request.POST.get('postalCode')
+        print(first_name, address_line1)
+        # phone_number = request.POST.get('phone_number')
+        try:
+
+            print("obj--------------")
+            shipping_address_obj, created = ShippingAddress.objects.get_or_create(user=request.user)
+
+            # shipping_address_obj = ShippingAddress.objects.create(user=user_profile.user)
+            # shipping_address_obj = get_object_or_404(ShippingAddress, user=user_profile.user)
+            print(shipping_address_obj)
+            print("gotcha--------------")
+            shipping_address_obj.first_name = first_name
+            shipping_address_obj.last_name = last_name
+            shipping_address_obj.country = country
+            shipping_address_obj.city = city
+            shipping_address_obj.address_line1 = address_line1
+            shipping_address_obj.address_line2 = address_line2
+            shipping_address_obj.state = state
+            shipping_address_obj.postal_code = postal_code
+
+            print("before saving-----------")
+            shipping_address_obj.save()
+            print("after saving-----------")
+
+            return JsonResponse({'status': 'ok'})
+        except Exception as e:
+            print(e)
+        
+        return JsonResponse({'status': 'error' })
+    else:
+        user_profile = get_object_or_404(CustomUser,email=request.user)
+        shipping_address_obj = get_object_or_404(ShippingAddress, user=request.user)
+        if user_profile.first_name is None:
+            shipping_address_obj.first_name = user_profile.first_name
+        if user_profile.last_name is None:
+            shipping_address_obj.last_name = user_profile.last_name
+            
+        context = {
+            'first_name': shipping_address_obj.first_name,
+            'last_name': shipping_address_obj.last_name,
+            'country': shipping_address_obj.country,
+            'city': shipping_address_obj.city,
+            'address_line1': shipping_address_obj.address_line1,
+            'address_line2': shipping_address_obj.address_line2,
+            'state': shipping_address_obj.state,
+            'postal_code': shipping_address_obj.postal_code,
+        }
+        return JsonResponse(context)
+
+    # return render(request, 'account/settings.html', context)
+
+
