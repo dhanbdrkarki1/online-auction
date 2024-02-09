@@ -449,7 +449,7 @@
                                 <div class="col-md-6">
                                     <div>Email</div>
                                     <div>
-                                        <a href="#" class="small text-primary">Verify Email</a>
+                                        <a href="#" id="emailVerification" class="small text-primary">Verify Email</a>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -516,11 +516,28 @@ toastr.error(error['message']);
 var passwordForm = document.getElementById("passwordForm");
 setupFormAjax(passwordForm, '{% url "account:change_password" %}', function (data) {
 toastr.success(data['message']);
-console.log("errr...2")
 }, function (error) {
-toastr.success(error['message']);
-console.log("err...")
+toastr.error(error['message']);
 });
+
+
+// Send email
+document.getElementById('emailVerification').addEventListener('click', function(event) {
+console.log("email verification")
+const url = '{% url "account:send-verification-email" }';
+fetch(url)
+.then (resp => resp.json())
+.then (data => {
+if(data['message'] === 'ok'){
+toastr.success(data['message']);
+}
+})
+.catch(error => {
+toastr.error(error['message']);
+console.log(error);
+});
+});
+
 
 
 // Fetch shipping address and populate it in the form

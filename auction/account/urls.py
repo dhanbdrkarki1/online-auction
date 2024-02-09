@@ -12,7 +12,7 @@ urlpatterns = [
     path('settings/profile/change-password/', views.change_password, name="change_password"),
 
 
-    path('send-verification-email/', views.send_verification_email, name='send-verification-email'),
+    path('settings/profile/send-verification-email/', views.send_verification_email, name='send-verification-email'),
     path('confirm-email/<int:user_id>/<slug:token>/', views.confirm_email, name='confirm-email'),
 
 

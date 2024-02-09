@@ -68,10 +68,12 @@ def register_user(request):
             if CustomUser.objects.filter(email = email).first():
                 messages.info(request, 'Email is already taken!')
                 return redirect('auctionapp:home')
+            
             user_obj = CustomUser.objects.create(email = email, first_name=first_name, last_name=last_name)
             user_obj.set_password(password)
             user_obj.save()
-            login(request, user_obj)
+            # must provide backend for multiple authentication backends
+            login(request, user_obj,  backend='django.contrib.auth.backends.ModelBackend')
             messages.success(request, 'Your account has been created successfully.')
             return redirect('auctionapp:home')
 
@@ -112,23 +114,29 @@ def change_password(request):
 # Send email verification mail to user
 @login_required
 def send_verification_email(request):
-    user_obj = get_object_or_404(CustomUser, user=request.user)
+    try:
+        user_obj = get_object_or_404(CustomUser, user=request.user)
 
-    email_confirmation_token = str(uuid4())
-    user_obj.email_confirmation_token = email_confirmation_token
-    # expire token in 12 hours
-    user_obj.email_confirmation_token_expiry = timezone.now() + timezone.timedelta(hours=12)
-    user_obj.save()
+        email_confirmation_token = str(uuid4())
+        user_obj.email_confirmation_token = email_confirmation_token
+        # expire token in 12 hours
+        user_obj.email_confirmation_token_expiry = timezone.now() + timezone.timedelta(hours=12)
+        user_obj.save()
 
-    # sending email
-    subject = 'Verify Your Email'
-    message = render_to_string('account/verification_email.html', {'user': user_obj, 'token': email_confirmation_token})
-    from_email = settings.EMAIL_HOST_USER
-    print(request.user.email)
-    print("Email SEnt----------")
-    recipient_list = [request.user.email]
-    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-    messages.info(request, 'We have resent you the email to verify your email address.')
+        # sending email
+        subject = 'Verify Your Email'
+        message = render_to_string('account/verification_email.html', {'user': user_obj, 'token': email_confirmation_token})
+        from_email = settings.EMAIL_HOST_USER
+        print(request.user.email)
+        print("Email SEnt----------")
+        recipient_list = [request.user.email]
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+        return JsonResponse({'status': 'ok', 'message': 'We have resent you the email to verify your email address.'})
+
+    except Exception as e:
+        print(e)
+        return JsonResponse({'status': 'error', 'message': 'Error in sending verification email.'})
+
 
 
 @login_required
