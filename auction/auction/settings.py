@@ -34,7 +34,6 @@ INSTALLED_APPS = [
 ]
 
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,7 +49,7 @@ MIDDLEWARE = [
 
 # SOCIAL AUTH SETTINGS START
 # recommended to use the built-in JSONB field to store the extracted extra_data When using PostgreSQL
-SOCIAL_AUTH_JSONFIELD_ENABLED = True
+# SOCIAL_AUTH_JSONFIELD_ENABLED = True
 SOCIAL_AUTH_URL_NAMESPACE = "social"
 AUTHENTICATION_BACKENDS = [
      'django.contrib.auth.backends.ModelBackend',
@@ -157,7 +156,6 @@ USE_I18N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'account.CustomUser'
-
 
 
 # Static files (CSS, JavaScript, Images)
