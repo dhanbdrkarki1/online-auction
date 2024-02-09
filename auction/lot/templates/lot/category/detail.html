@@ -9,6 +9,7 @@
             {% include 'includes/myadmin/breadcrumbs.html' %}
             <div class="mb-4">
                 <h2>{{category}}</h2>
+                <p class="my-4">{{ category.description }}</p>
             </div>
             <div>
                 <table id="categoryTable" class="table mt-4">
@@ -41,6 +42,7 @@
             <div>
                 <form method="POST" action="{% url 'myadmin:category_create' %}">
                     {% csrf_token %}
+                    <input type="hidden" name="action" id="action_input" value="create">
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
