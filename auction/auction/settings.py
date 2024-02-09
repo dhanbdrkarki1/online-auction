@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6u=jl$hz*4cc!63m#vg0k0%(j%0lp#o9d4$g_o+#mg2eg-*$66'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -57,8 +57,8 @@ AUTHENTICATION_BACKENDS = [
      'social_core.backends.google.GoogleOAuth2',
 ]
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '164037503258-2mu6kfvt7e4j9m0vn6aordkl3juhkg3p.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 SOCIAL_AUTH_PIPELINE = [
  'social_core.pipeline.social_auth.social_details',
@@ -119,9 +119,9 @@ WSGI_APPLICATION = 'auction.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'auction_db',
-        'USER': 'auction',
-        'PASSWORD': 'admin',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
     }
 }
 
