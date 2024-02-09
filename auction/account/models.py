@@ -45,9 +45,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'),max_length=150, null=True)
 
     email = models.CharField(_('email address'), max_length=150, unique=True)
-    email_confirmation = models.BooleanField(default=False)
+    is_email_confirmed = models.BooleanField(default=False)
+    email_confirmation_token = models.CharField(max_length=100, blank=True, null=True)
+    email_confirmation_token_expiry = models.DateTimeField(null=True, blank=True)
+
+
     phone_number = models.CharField(max_length=15, null = True, blank=True)
-    phone_number_confirmation = models.BooleanField(default=False)
+    is_phone_number_confirmed = models.BooleanField(default=False)
+    phone_number_confirmation_token = models.CharField(max_length=50, blank=True, null=True)
+
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

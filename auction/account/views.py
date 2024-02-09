@@ -6,10 +6,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from uuid import uuid4
-from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse, JsonResponse
-from django.contrib.auth.forms import PasswordResetForm
+from django.core.mail import send_mail
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
+from django.contrib.auth import update_session_auth_hash
+from django.utils import timezone
+
 from account.models import *
 
 # User Login
@@ -65,7 +68,6 @@ def register_user(request):
             if CustomUser.objects.filter(email = email).first():
                 messages.info(request, 'Email is already taken!')
                 return redirect('auctionapp:home')
-            
             user_obj = CustomUser.objects.create(email = email, first_name=first_name, last_name=last_name)
             user_obj.set_password(password)
             user_obj.save()
@@ -76,7 +78,80 @@ def register_user(request):
         except Exception as e:
             print(e)
 
+# Change User Password
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        new_password1 = request.POST.get('password1')
+        new_password2 = request.POST.get('password2')
+        print(new_password1, new_password2)
+        print("check 1")
+        print(request.user.check_password(old_password))
+        if not request.user.check_password(old_password):
+            print("check 2")
+
+            return JsonResponse({'status': 'error', 'message': 'The old password is incorrect.'})
+
+        if new_password1 != new_password2:
+            print("check 3")
+
+            return JsonResponse({'status': 'error', 'message': 'The new passwords do not match.'})
+
+        print("check 4")
+
+        request.user.set_password(new_password1)
+        request.user.save()
+        update_session_auth_hash(request, request.user)
+        print("check 5")
+
+        # Send a success response
+        return JsonResponse({'status': 'ok', 'message': 'Your password has been chanaged.'})
+
+
+# Send email verification mail to user
+@login_required
+def send_verification_email(request):
+    user_obj = get_object_or_404(CustomUser, user=request.user)
+
+    email_confirmation_token = str(uuid4())
+    user_obj.email_confirmation_token = email_confirmation_token
+    # expire token in 12 hours
+    user_obj.email_confirmation_token_expiry = timezone.now() + timezone.timedelta(hours=12)
+    user_obj.save()
+
+    # sending email
+    subject = 'Verify Your Email'
+    message = render_to_string('account/verification_email.html', {'user': user_obj, 'token': email_confirmation_token})
+    from_email = settings.EMAIL_HOST_USER
+    print(request.user.email)
+    print("Email SEnt----------")
+    recipient_list = [request.user.email]
+    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+    messages.info(request, 'We have resent you the email to verify your email address.')
+
+
+@login_required
+def confirm_email(request, user_id, token):
+    user_obj = get_object_or_404(CustomUser, user=request.user)
+    if str(token) == str(user_obj.email_confirmation_token) and user_obj.email_confirmation_token_expiry > timezone.now():
+        user_obj.is_email_confirmed = True
+        user_obj.save()
+        print("Email confirmed successfully")
+        return redirect('account:home')
+    elif user_obj.is_email_confirmed:
+        messages.info(request, 'Your email has already been verified!')
+        return
+    else:
+        messages.info(request, 'Invalid or confirmation token expired!')
+        return
+
+
+
+
+
 # Logout User
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('auctionapp:home')
@@ -87,7 +162,6 @@ def user_settings(request):
 
 @login_required
 def profileInfo(request):
-    print("------profile info-----------")
     if request.method == 'POST':
         print(request.POST)
         first_name = request.POST.get('first_name')
@@ -103,11 +177,11 @@ def profileInfo(request):
             profile.email = email
             profile.phone_number = phone_number
             profile.save()
-            return JsonResponse({'status': 'ok'})
+            return JsonResponse({'status': 'ok', 'message':'Profile updated successfully.'})
         except CustomUser.DoesNotExist as e:
             print(e)
         
-        return JsonResponse({'status': 'error' })
+        return JsonResponse({'status': 'error', 'message': 'Error submitting profile info!' })
     else:
         user_profile = get_object_or_404(CustomUser,email=request.user)
         context = {
@@ -135,13 +209,8 @@ def shippingAddress(request):
         # phone_number = request.POST.get('phone_number')
         try:
 
-            print("obj--------------")
-            shipping_address_obj, created = ShippingAddress.objects.get_or_create(user=request.user)
-
-            # shipping_address_obj = ShippingAddress.objects.create(user=user_profile.user)
-            # shipping_address_obj = get_object_or_404(ShippingAddress, user=user_profile.user)
-            print(shipping_address_obj)
-            print("gotcha--------------")
+            shipping_address_obj, created= ShippingAddress.objects.get_or_create(user=request.user)
+            
             shipping_address_obj.first_name = first_name
             shipping_address_obj.last_name = last_name
             shipping_address_obj.country = country
@@ -151,15 +220,12 @@ def shippingAddress(request):
             shipping_address_obj.state = state
             shipping_address_obj.postal_code = postal_code
 
-            print("before saving-----------")
             shipping_address_obj.save()
-            print("after saving-----------")
-
-            return JsonResponse({'status': 'ok'})
+            return JsonResponse({'status': 'ok', 'message': 'Successfully updated details.' })
         except Exception as e:
             print(e)
         
-        return JsonResponse({'status': 'error' })
+        return JsonResponse({'status': 'error', 'message': 'Error updating shipping address details!' })
     else:
         user_profile = get_object_or_404(CustomUser,email=request.user)
         shipping_address_obj = get_object_or_404(ShippingAddress, user=request.user)
@@ -179,7 +245,4 @@ def shippingAddress(request):
             'postal_code': shipping_address_obj.postal_code,
         }
         return JsonResponse(context)
-
-    # return render(request, 'account/settings.html', context)
-
 

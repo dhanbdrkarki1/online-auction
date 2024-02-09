@@ -26,15 +26,14 @@
                 successCallback(data);
               }
             } else {
-              console.error("Error");
               if (errorCallback) {
+              console.log("error");
+
                 errorCallback(data);
-                toastr.warning('Error on submitting form!');
               }
             }
           })
           .catch(error => {
-            console.error('Error on submitting form:');
             console.log(url)
             if (errorCallback) {
               errorCallback(error);
