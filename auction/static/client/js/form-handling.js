@@ -45,7 +45,10 @@
     // Function to fetch data from URL and populate form fields using tab
     function fetchDataAndPopulate(url, fieldIds) {
       fetch(url)
-        .then(response => response.json())
+        .then(response => {
+          console.log(url);
+          return response.json()
+        })
         .then(data => {
           // Populate form fields with fetched data
           for (const [key, value] of Object.entries(data)) {
