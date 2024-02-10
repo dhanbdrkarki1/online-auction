@@ -1,15 +1,24 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from account.models import CustomUser
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
+from django.http import HttpResponse
 from uuid import uuid4
-from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+
+# email
 from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import EmailMultiAlternatives
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.contrib.auth.tokens import default_token_generator
+
 from django.contrib.auth import update_session_auth_hash
 from django.utils import timezone
 
@@ -87,27 +96,16 @@ def change_password(request):
         old_password = request.POST.get('old_password')
         new_password1 = request.POST.get('password1')
         new_password2 = request.POST.get('password2')
-        print(new_password1, new_password2)
-        print("check 1")
         print(request.user.check_password(old_password))
         if not request.user.check_password(old_password):
-            print("check 2")
-
             return JsonResponse({'status': 'error', 'message': 'The old password is incorrect.'})
 
         if new_password1 != new_password2:
-            print("check 3")
-
             return JsonResponse({'status': 'error', 'message': 'The new passwords do not match.'})
-
-        print("check 4")
 
         request.user.set_password(new_password1)
         request.user.save()
         update_session_auth_hash(request, request.user)
-        print("check 5")
-
-        # Send a success response
         return JsonResponse({'status': 'ok', 'message': 'Your password has been chanaged.'})
 
 
@@ -115,23 +113,47 @@ def change_password(request):
 @login_required
 def send_verification_email(request):
     try:
-        user_obj = get_object_or_404(CustomUser, user=request.user)
-
-        email_confirmation_token = str(uuid4())
+        user_obj = get_object_or_404(CustomUser, email=request.user)
+        token_string = str(uuid4())
+        print(token_string)
+        email_confirmation_token = token_string
         user_obj.email_confirmation_token = email_confirmation_token
         # expire token in 12 hours
         user_obj.email_confirmation_token_expiry = timezone.now() + timezone.timedelta(hours=12)
         user_obj.save()
 
+        print(request.META.get('HTTP_HOST'))
+        print(request.scheme)
         # sending email
+        # email details
+
+        context = {
+            'protocol':'https',
+            'domain' : request.META.get('HTTP_HOST'),
+            'token': email_confirmation_token,
+            'site_name': 'Website',
+            'user_id': user_obj.pk,
+            }
+        
         subject = 'Verify Your Email'
-        message = render_to_string('account/verification_email.html', {'user': user_obj, 'token': email_confirmation_token})
+        html_message = render_to_string('account/verification_email.html', context)
+        msg = strip_tags(html_message)
         from_email = settings.EMAIL_HOST_USER
-        print(request.user.email)
-        print("Email SEnt----------")
         recipient_list = [request.user.email]
-        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-        return JsonResponse({'status': 'ok', 'message': 'We have resent you the email to verify your email address.'})
+
+        try:
+            msg = EmailMultiAlternatives(
+                subject, 
+                msg,
+                from_email,
+                recipient_list
+            )
+            msg.attach_alternative(html_message, "text/html")
+            msg.send()
+            print("email sent-----------------")
+        except BadHeaderError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid header found.'})
+        return JsonResponse({'status': 'ok', 'message': 'We have resent you the email to verify your email address. Check our inbox.'})
 
     except Exception as e:
         print(e)
@@ -141,17 +163,20 @@ def send_verification_email(request):
 
 @login_required
 def confirm_email(request, user_id, token):
-    user_obj = get_object_or_404(CustomUser, user=request.user)
+    print("confirm email-------------")
+    user_obj = get_object_or_404(CustomUser, id=user_id)
     if str(token) == str(user_obj.email_confirmation_token) and user_obj.email_confirmation_token_expiry > timezone.now():
         user_obj.is_email_confirmed = True
         user_obj.save()
         print("Email confirmed successfully")
-        return redirect('account:home')
+        messages.success(request, 'Your email has been verified!')
+
+        return redirect('auctionapp:home')
     elif user_obj.is_email_confirmed:
         messages.info(request, 'Your email has already been verified!')
         return
     else:
-        messages.info(request, 'Invalid or confirmation token expired!')
+        messages.error(request, 'Invalid or confirmation token expired!')
         return
 
 
@@ -164,6 +189,84 @@ def user_logout(request):
     logout(request)
     return redirect('auctionapp:home')
 
+
+def password_reset_request(request):
+    if request.method == 'POST':
+        user_email = request.POST.get('email')
+        try:
+            user_obj = CustomUser.objects.get(email=user_email)
+            uid = urlsafe_base64_encode(force_bytes(user_obj.pk))
+            protocol = request.scheme
+            domain = request.META.get('HTTP_HOST')
+            token = default_token_generator.make_token(user_obj)
+            site_name = "Bidme"
+            context = {
+                'protocol': protocol,
+                'domain' : domain,
+                'token': token,
+                'site_name': site_name,
+                'user_id': uid,
+                }
+            
+            subject = 'Reset your account password'
+            html_message = render_to_string('account/password_mail_template.html', context)
+            msg = strip_tags(html_message)
+            from_email = settings.EMAIL_HOST_USER
+            recipient_list = [user_email]
+
+            try:
+                msg = EmailMultiAlternatives(
+                    subject, 
+                    msg,
+                    from_email,
+                    recipient_list
+                )
+                msg.attach_alternative(html_message, "text/html")
+                msg.send()
+                messages.success(request, 'We have sent you the email to reset the password. Check your inbox.')
+                return redirect('account:password_reset_sent')
+
+            except BadHeaderError:
+                messages.error(request, 'Invalid header found.')
+       
+        except CustomUser.DoesNotExist:
+            messages.error(request, 'The provided email address is not associated with any account.')
+
+        except Exception as e:
+            print(e)
+            messages.error(request, 'Error in sending password reset mail.')
+    return render(request, 'account/forgot_password_form.html')
+
+
+
+
+def password_reset_confirm(request, user_id, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(user_id))
+        print(uid)
+        user = CustomUser.objects.get(pk=uid)
+        if user is not None and default_token_generator.check_token(user, token):
+            if request.method == 'POST':
+                new_password = request.POST.get('new_password')
+                confirm_password = request.POST.get('confirm_password')
+                if new_password != confirm_password:
+                    messages.error(request, "Passwords do not match.")
+                    return
+                else:
+                    user.set_password(confirm_password)
+                    user.save()
+                    messages.success(request, "Password reset successfully.")
+                    return redirect('auctionapp:home')
+
+            return render(request, 'account/password_reset_form.html')
+        else:
+            messages.error(request, "Invalid password reset link.")
+    except Exception as e:
+        print(e)
+
+
+def password_reset_sent(request):
+    return render(request, 'account/password_reset_sent.html')
 
 def user_settings(request):
     return render(request, 'account/settings.html')

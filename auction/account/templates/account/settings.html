@@ -449,12 +449,22 @@
                                 <div class="col-md-6">
                                     <div>Email</div>
                                     <div>
+                                        {% if not request.user.is_email_confirmed %}
                                         <a href="#" id="emailVerification" class="small text-primary">Verify Email</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    {% if request.user.is_email_confirmed %}
+                                    <p class="small text-success">
+                                        <i class="fa-regular fa-circle-check"></i>
+                                        Your email address has been successfully verified.
+                                    </p>
+                                    {% else %}
                                     <p class="small text-warning"><i class="fa-solid fa-triangle-exclamation"></i>
                                         You haven't verified your email address yet.</p>
+                                    {% endif %}
+
                                     <p class="small text-muted">To activate your account, your email address
                                         needs to be verified.</p>
                                 </div>
@@ -524,17 +534,22 @@ toastr.error(error['message']);
 // Send email
 document.getElementById('emailVerification').addEventListener('click', function(event) {
 console.log("email verification")
-const url = '{% url "account:send-verification-email" }';
-fetch(url)
-.then (resp => resp.json())
+fetch('{% url "account:send_verification_email" %}')
+.then (resp => {
+console.log(resp);
+return resp.json();
+})
 .then (data => {
-if(data['message'] === 'ok'){
+if(data.status === 'ok'){
+console.log(data);
+
 toastr.success(data['message']);
 }
 })
 .catch(error => {
-toastr.error(error['message']);
+
 console.log(error);
+toastr.error(error['message']);
 });
 });
 
