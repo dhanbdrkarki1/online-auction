@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,7 @@
 <body>
     <p>Hello {{ request.user.first_name }},</p>
     <p>Please click the following link to verify your email:</p>
-    <p><a href="{{ domain }}{% url 'confirm-email' user.id token %}">Verify Email</a></p>
+    <p><a href="{{ protocol }}://{{ domain }}{% url 'account:confirm_email' user_id token %}">Verify Email</a></p>
     <p>If you didn't request this verification, you can ignore this email.</p>
     <p>Thanks,</p>
     <p>Your Application Team</p>
