@@ -9,6 +9,8 @@ from django.http import HttpResponse
 from uuid import uuid4
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import Group
+from .decorators import *
 
 # email
 from django.template.loader import render_to_string
@@ -29,23 +31,10 @@ def user_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-
-
-        print("Hello world-----------------------")
-
         user_email = CustomUser.objects.filter(email = email).first()
         if not user_email:
             messages.success(request, 'Email not found !')
             return redirect('auctionapp:home')
-
-        # profile_verify = CustomUser.objects.filter(
-        #     Q(is_verified = True) & 
-        #     Q(email = user_email)
-        #     )
-
-        # if not profile_verify:
-        #     messages.success(request, 'Your account has not been verified yet..')
-        #     return redirect('login')
 
         user = authenticate(request, email = email, password = password)
         if user is not None:
@@ -80,6 +69,10 @@ def register_user(request):
             
             user_obj = CustomUser.objects.create(email = email, first_name=first_name, last_name=last_name)
             user_obj.set_password(password)
+
+            # adding user to group
+            # group = Group.objects.get(name="bidder")
+            # user_obj.groups.add(group)
             user_obj.save()
             # must provide backend for multiple authentication backends
             login(request, user_obj,  backend='django.contrib.auth.backends.ModelBackend')
