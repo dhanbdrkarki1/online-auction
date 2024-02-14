@@ -11,6 +11,9 @@ class Category(models.Model):
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated = models.DateTimeField(auto_now=True, null=True, blank=True)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='sub_category')
+    
+    def __str__(self):
+        return self.name
 
     class Meta:
         ordering = ('name',)
@@ -20,14 +23,21 @@ class Category(models.Model):
             models.Index(fields=['name'])
         ]
 
-    def __str__(self):
-        return self.name
+class ConditionChoices(models.TextChoices):
+    NEW = 'New'
+    USED_EXCELLENT = 'Used - Excellent'
+    USED_GOOD = 'Used - Good'
+    USED_FAIR = 'Used - Fair'
+    USED_POOR = 'Used - Poor'
 
 class Lot(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='lots')
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lots')
     name=models.CharField(max_length=255,db_index=True)
     slug=models.SlugField(max_length=255,db_index=True)
+
+    condition = models.CharField(max_length=255, choices=ConditionChoices.choices)
+
     description = models.TextField(blank=True)
     starting_price=models.DecimalField(max_digits=12, decimal_places=2)
     current_price=models.DecimalField(max_digits=12, decimal_places=2, blank=True)

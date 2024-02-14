@@ -1,0 +1,308 @@
+{% extends 'client/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="main-banner" style="padding-top:120px;" id="top">
+    <div class="container">
+
+        <form id="lotForm" action="">
+            {% csrf_token %}
+
+            <!-- start step indicators -->
+            <div class="form-header d-flex mb-4">
+                <span class="stepIndicator">Category</span>
+                <span class="stepIndicator">Photos</span>
+                <span class="stepIndicator">Lot Details</span>
+                <span class="stepIndicator">Selling Details</span>
+                <span class="stepIndicator">Shipping Details</span>
+                <span class="stepIndicator">Preview</span>
+            </div>
+            <!-- end step indicators -->
+
+            <!-- step one -->
+            <div class="step" id="step1">
+                <h1 class="display-6">Select a category</h1>
+                <p class="text-muted text-justify mb-4">Select a category that fits your lot. Unsure what to choose?
+                    Pick the best
+                    options and
+                    our expert will ensure it's correct.</p>
+
+                <h3 class="mb-2">Search category</h3>
+                <div class="mb-3 search-icon">
+                    <input type="text" class="form-control" name="category_search_query"
+                        placeholder="e.g., art, jwellery, paintings, etc." name="category" />
+                </div>
+
+                <!-- category result -->
+                <div id="categoryResult" class="mb-3"></div>
+
+                <hr>
+                <p class="text-bold mb-4">Can't find what you're looking for? <a href="#">Browse all categories</a></p>
+            </div>
+
+            <!-- step two -->
+            <div class="step" id="step2">
+                <h1 class="display-6">Upload Photos</h1>
+                <p class="text-muted mb-4 text-justify">Upload photos that showcase your lot in the best way.
+                    Remember to to put your best photos first and include different angles. You can move your photos
+                    here.</p>
+
+                <div class="upload-box">
+                    <label class="upload-btn col-lg-12 col-md-6 text-center">
+                        <p class="mb-0"><i class="bi bi-cloud-arrow-up-fill upload-icon-large"></i></p>
+                        <p class="mb-0">Drag and drop to upload</p>
+                        <p class="mb-0">or browse to choose files</p>
+                        <input type="file" multiple="" data-max_length="10" class="upload-inputfile d-none">
+                    </label>
+                    <div class="upload-img-wrap m-1 d-none"></div>
+                    <button class="btn btn-primary mx-1 my-4 add-more d-none"><i class="bi bi-plus-circle-fill"></i> Add
+                        More
+                        Photos</button>
+                </div>
+            </div>
+            <!-- step two end -->
+
+
+            <!-- step three -->
+            <div class="step" id="step3">
+                <h1 class="display-6">Lot Details</h1>
+                <p class="text-muted mb-4 text-justify">To give us the best overview of your lot, please enter all the
+                    required details as accurately as possible. This way
+                    you’ll speed up the experts review and increase your lot’s findability, meaning it will attract more
+                    bidders.</p>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="lotName">Lot Name</label>
+                    <input type="text" id="lotName" name="lot_name" class="form-control" />
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="lotCondition">Condition</label>
+                    <select id="lotCondition" name="lot_condition" class="form-control">
+                        <option value="" selected disabled>Choose Condition</option>
+                        {% for value, label in lot_condition_choices %}
+                        <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="lotDescription">Description</label>
+                    <textarea id="lotDescription" name="lot_description" class="form-control"></textarea>
+                </div>
+            </div>
+            <!-- step three  end-->
+
+
+            <!-- step four -->
+            <div class="step" id="step4">
+                <h1 class="display-6">Selling Details</h1>
+                <p class="text-muted mb-4 text-justify">To give us the best overview of your lot, please enter all the
+                    required details as accurately as possible. This way
+                    you’ll speed up the experts review and increase your lot’s findability, meaning it will attract more
+                    bidders.</p>
+
+                <div class="form-group row">
+                    <label for="auctionDuration" class="col-sm-2 col-form-label">Duration</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <select id="totalDuration" class="form-control">
+                                <option selected>7 days</option>
+                                <option>10 days</option>
+                            </select>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="startBidOption" id="bidOnSubmit"
+                                value="option1" checked>
+                            <label class="form-check-label" for="bidOnSubmit">
+                                Start my bid when I submit them
+                            </label>
+                        </div>
+
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="startBidOption" id="startBidOnSchedule"
+                                value="option2">
+                            <label class="form-check-label" for="startBidOnSchedule">
+                                Schedule to start on
+                            </label>
+                        </div>
+                        <div class="input-group mt-2">
+                            <input type="text" id="startDate" class="form-control datetimepicker-input"
+                                data-toggle="datetimepicker" data-target="#startDate"
+                                placeholder="Select start date and time">
+                            <div class="input-group-append">
+                                <div class="input-group-text"><i class="fa fa-calendar" id="schedule-calender"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="auctionPrice" class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="startingPrice">
+                                        Starting Price
+                                    </label>
+                                    <input class="form-control" type="text" name="starting_price" id="startingPrice"
+                                        value="">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="buyItNowPrice">
+                                        Buy It Now Price
+                                    </label>
+                                    <input class="form-control" type="text" name="buy_it_now_price" id="buyItNowPrice"
+                                        value="">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="reservePrice">
+                                        Reserve Price
+                                    </label>
+                                    <input class="form-control" type="text" name="reserve_price" id="reservePrice"
+                                        value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="auctionQuantity" class="col-sm-2 col-form-label">Quantity</label>
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <input class="form-control col-lg-3" type="text" name="quantity" id="auctionQuantity" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- step four end-->
+
+            <!-- step five -->
+            <div class="step" id="step5">
+                <h1 class="display-6">Shipping Details</h1>
+                <p class="text-muted mb-4 text-justify">To give us the best overview of your lot, please enter all
+                    the
+                    required details as accurately as possible. This way
+                    you’ll speed up the experts review and increase your lot’s findability, meaning it will attract
+                    more
+                    bidders.</p>
+                <div class="row align-items-end">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Name</label>
+                            <input name="name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Phone Number</label>
+                            <input name="phoneNumber" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">Street Address</label>
+                            <input name="streetAddress" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">City</label>
+                            <input name="city" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">State</label>
+                            <input name="state" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Postal Code</label>
+                            <input name="postalCode" class="form-control" />
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- step five end-->
+
+            <!-- step six -->
+            <div class="step" id="step6">
+                <h1 class="display-6">Preview</h1>
+                <p class="text-muted mb-4 text-justify">Please review the details you've entered:</p>
+                <div id="previewDetails">
+                </div>
+            </div>
+            <!-- step six end-->
+
+
+            <!-- start previous / next buttons -->
+            <div class="form-footer d-flex">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">
+                    Previous
+                </button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+            </div>
+            <!-- end previous / next buttons -->
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+    console.log("create..");
+    tinymce.init({
+        selector: 'textarea#lotDescription',
+        menubar: false,
+        plugins: 'anchor autolink charmap codesample emoticons link lists table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link table | align lineheight | tinycomments | checklist numlist bullist indent outdent',
+    });
+
+
+    $(function () {
+        $('#startDate').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm',
+            icons: {
+                time: 'fa fa-clock',
+                date: 'fa fa-calendar',
+                up: 'fa fa-chevron-up',
+                down: 'fa fa-chevron-down',
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-crosshairs',
+                clear: 'fa fa-trash',
+                close: 'fa fa-times'
+            },
+            sideBySide: true,
+            useCurrent: false,
+            stepping: 15,
+            minDate: moment(), // preventing selecting previous time
+        });
+
+        $('#schedule-calender').click(function () {
+            $('#startDate').datetimepicker('show');
+        });
+    });
+
+
+</script>
+{% endblock %}

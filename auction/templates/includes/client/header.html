@@ -30,6 +30,14 @@
                                 Hello {{ request.user.first_name|default:request.user.username }}
                             </a>
                             <ul>
+                                <li><a href="#">My Favourite Lots</a></li>
+                                <li><a href="#">My Bids</a></li>
+                                <li><a href="#">My won lots</a></li>
+
+                                <li><a href="{% url 'lots:lots_list' %}">Lots in auction</a></li>
+                                <li><a href="#">My Sold Lots</a></li>
+
+
                                 <li><a href="{% url 'account:profile_info' %}">Settings</a></li>
                                 <li><a href="{% url 'account:logout' %}">Logout</a></li>
                             </ul>
