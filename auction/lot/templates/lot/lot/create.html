@@ -6,7 +6,7 @@
 <div class="main-banner" style="padding-top:120px;" id="top">
     <div class="container">
 
-        <form id="lotForm" action="{% url 'lots:lot_create' %}">
+        <form id="lotForm" method="POST" action="{% url 'lots:lot_create' %}">
             {% csrf_token %}
 
             <!-- start step indicators -->
@@ -80,8 +80,8 @@
                     <label class="form-label" for="lotCondition">Condition</label>
                     <select id="lotCondition" name="lot_condition" class="form-control">
                         <option value="" selected disabled>Choose Condition</option>
-                        {% for value, label in lot_condition_choices %}
-                        <option value="{{ value }}">{{ value }}</option>
+                        {% for label, value in lot_condition_choices %}
+                        <option name="{{ label }}" value="{{ value }}">{{ value }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -106,29 +106,32 @@
                     <label for="auctionDuration" class="col-sm-2 col-form-label">Duration</label>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <select id="totalDuration" class="form-control">
-                                <option selected>7 days</option>
-                                <option>10 days</option>
+                            <select id="totalDuration" name="auction_duration" class="form-control">
+                                <option value="2" selected>2 days</option>
+                                <option value="3">3 days</option>
+                                <option value="5">5 days</option>
+                                <option value="7">7 days</option>
+                                <option value="10">10 days</option>
                             </select>
                         </div>
                         <div class="form-check mt-2">
-                            <input class="form-check-input" type="radio" name="startBidOption" id="bidOnSubmit"
+                            <input class="form-check-input" type="radio" name="bid_on_submit" id="bidOnSubmit"
                                 value="option1" checked>
                             <label class="form-check-label" for="bidOnSubmit">
                                 Start my bid when I submit them
                             </label>
                         </div>
                         <div class="form-check mt-2">
-                            <input class="form-check-input" type="radio" name="startBidOption" id="startBidOnSchedule"
-                                value="option2">
+                            <input class="form-check-input" type="radio" name="schedule_bidding_time"
+                                id="startBidOnSchedule" value="option2">
                             <label class="form-check-label" for="startBidOnSchedule">
                                 Schedule to start on
                             </label>
                         </div>
                         <div class="input-group mt-2">
-                            <input type="text" id="startDate" class="form-control datetimepicker-input"
-                                data-toggle="datetimepicker" data-target="#startDate"
-                                placeholder="Select start date and time" disabled>
+                            <input type="text" id="startDate" name="auction_scheduled_time"
+                                class="form-control datetimepicker-input" data-toggle="datetimepicker"
+                                data-target="#startDate" placeholder="Select start date and time" disabled>
                             <div class="input-group-append">
                                 <div class="input-group-text"><i class="fa fa-calendar" id="schedule-calender"></i>
                                 </div>
@@ -190,57 +193,100 @@
             <!-- step five -->
             <div class="step" id="step5">
                 <h1 class="display-6">Shipping Details</h1>
-                <p class="text-muted mb-4 text-justify">To give us the best overview of your lot, please enter all
-                    the
-                    required details as accurately as possible. This way
-                    you’ll speed up the experts review and increase your lot’s findability, meaning it will attract
-                    more
-                    bidders.</p>
+                <p class="text-muted mb-4 text-justify">To give us the best overview of your lot, please enter all the
+                    required
+                    details as accurately as possible. This way you’ll speed up the experts review and increase your
+                    lot’s
+                    findability, meaning it will attract more bidders.</p>
                 <div class="row align-items-end">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Name</label>
-                            <input name="receiver_name" class="form-control" />
+                            <label for="package_type">Package Type</label>
+                            <select name="package_type" id="package_type" class="form-control">
+                                <option value="box">Box</option>
+                                <option value="envelope">Envelope</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Phone Number</label>
-                            <input name="phone_number" class="form-control" />
+                            <label for="dimensions">Dimensions</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input type="text" name="length" id="length" class="form-control"
+                                            placeholder="Length" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">in. X</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input type="text" name="breadth" id="breadth" class="form-control"
+                                            placeholder="Breadth" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">in. X</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input type="text" name="height" id="height" class="form-control"
+                                            placeholder="Height" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">in.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="w-100"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="package_weight">Package Weight</label>
+                            <select name="package_weight" id="package_weight" class="form-control">
+                                <option value="0-2kg">0-2kg</option>
+                                <option value="2-5kg">2-5kg</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="shipment_cost">Shipment Cost</label>
+                            <input type="text" name="shipment_cost" id="shipment_cost" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="carrier_type">Carrier Type</label>
+                            <select name="carrier_type" id="carrier_type" class="form-control">
+                                <option value="box">Courier Service</option>
+                                <option value="envelope">Air Frieght</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="item_location">Item Location</label>
+                            <input type="text" name="item_location" id="item_location" class="form-control" />
                         </div>
                     </div>
                     <div class="w-100"></div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="">Street Address</label>
-                            <input name="street_address" class="form-control" />
+                            <label for="shipping_notes">Shipping Notes</label>
+                            <textarea name="shipping_notes" id="shipping_notes" class="form-control"
+                                rows="4"></textarea>
                         </div>
                     </div>
-                    <div class="w-100"></div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">City</label>
-                            <input name="city" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">State</label>
-                            <input name="state" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Postal Code</label>
-                            <input name="postal_code" class="form-control" />
-                        </div>
-                    </div>
-
                 </div>
-
-
             </div>
+
             <!-- step five end-->
 
             <!-- step six -->

@@ -39,10 +39,17 @@ class Lot(models.Model):
     condition = models.CharField(max_length=255, choices=ConditionChoices.choices)
 
     description = models.TextField(blank=True)
+
+    # selling details
     starting_price=models.DecimalField(max_digits=12, decimal_places=2)
-    current_price=models.DecimalField(max_digits=12, decimal_places=2, blank=True)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    buy_it_now_price=models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    reserve_price=models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+
+    auction_start_time = models.DateTimeField()
+    auction_duration = models.DateTimeField() # auctioning period of time
+    scheduled_time = models.DateTimeField()
+    quantity = models.IntegerField(default=1)
+
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -61,9 +68,22 @@ class Lot(models.Model):
     
     def __str__(self):
         return self.name
+    
+class LotShippingDetails(models.Model):
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="lotShippingDetails")
+    package_type = models.CharField(max_length=50)  # e.g., box, envelope
+    dimensions = models.CharField(max_length=50)  # e.g., 10x10x10
+    weight = models.DecimalField(max_digits=10, decimal_places=2)  # in kilograms
+    item_location = models.CharField(max_length=100)  # e.g., city, state, country
+    carrier = models.CharField(max_length=50)  # e.g., Trucking, Air Freight, Courier services like FedEx, UPS
+    shipment_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True) 
+    shipping_notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Shipping Details"
 
 class ItemImage(models.Model):
-    item = models.ForeignKey(Lot, on_delete=models.CASCADE)
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="upload_to='lots/%Y/%m/%d")
 
     def __str__(self):

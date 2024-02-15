@@ -339,8 +339,8 @@ function fetchCategories(searchValue) {
     .then((response) => response.json())
     .then((data) => {
       if (data.categories && data.categories.length > 0) {
-        generateCategoryRadios(data.categories);
         console.log(data);
+        generateCategoryRadios(data.categories);
       } else {
         document.getElementById('categoryResult').innerHTML =
           '<p>No categories found</p>';
@@ -374,15 +374,15 @@ function generateCategoryRadios(categories) {
 
     var radioInput = document.createElement('input');
     radioInput.type = 'radio';
-    radioInput.name = 'categoryResult';
-    radioInput.id = category.toLowerCase();
-    radioInput.value = category;
+    radioInput.name = 'category_type';
+    radioInput.id = category.id;
+    radioInput.value = category.name;
     radioInput.classList.add('form-check-input');
 
     var radioLabel = document.createElement('label');
     radioLabel.classList.add('form-check-label');
-    radioLabel.htmlFor = category.toLowerCase();
-    radioLabel.textContent = category;
+    radioLabel.htmlFor = category.name.toLowerCase();
+    radioLabel.textContent = category.name;
 
     radioDiv.appendChild(radioInput);
     radioDiv.appendChild(radioLabel);
@@ -393,46 +393,4 @@ function generateCategoryRadios(categories) {
 
 //-----------------------
 // Category search END
-//-----------------------
-
-//-----------------------
-// Utility START
-//-----------------------
-// adding tinymce as a rich text editor
-tinymce.init({
-  selector: 'textarea#lotDescription',
-  menubar: false,
-  plugins:
-    'anchor autolink charmap codesample emoticons link lists table visualblocks wordcount',
-  toolbar:
-    'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link table | align lineheight | tinycomments | checklist numlist bullist indent outdent',
-});
-
-// adding Tempus Dominus datetimepicker
-$(function () {
-  $('#startDate').datetimepicker({
-    format: 'YYYY/MM/DD HH:mm',
-    icons: {
-      time: 'fa fa-clock',
-      date: 'fa fa-calendar',
-      up: 'fa fa-chevron-up',
-      down: 'fa fa-chevron-down',
-      previous: 'fa fa-chevron-left',
-      next: 'fa fa-chevron-right',
-      today: 'fa fa-crosshairs',
-      clear: 'fa fa-trash',
-      close: 'fa fa-times',
-    },
-    sideBySide: true,
-    useCurrent: false,
-    minDate: moment(), // preventing selecting previous time
-  });
-
-  $('#schedule-calender').click(function () {
-    $('#startDate').datetimepicker('show');
-  });
-});
-
-//-----------------------
-// Utility END
 //-----------------------
