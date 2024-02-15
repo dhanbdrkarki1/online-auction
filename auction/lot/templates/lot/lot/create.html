@@ -6,7 +6,7 @@
 <div class="main-banner" style="padding-top:120px;" id="top">
     <div class="container">
 
-        <form id="lotForm" action="">
+        <form id="lotForm" action="{% url 'lots:lot_create' %}">
             {% csrf_token %}
 
             <!-- start step indicators -->
@@ -118,7 +118,6 @@
                                 Start my bid when I submit them
                             </label>
                         </div>
-
                         <div class="form-check mt-2">
                             <input class="form-check-input" type="radio" name="startBidOption" id="startBidOnSchedule"
                                 value="option2">
@@ -129,7 +128,7 @@
                         <div class="input-group mt-2">
                             <input type="text" id="startDate" class="form-control datetimepicker-input"
                                 data-toggle="datetimepicker" data-target="#startDate"
-                                placeholder="Select start date and time">
+                                placeholder="Select start date and time" disabled>
                             <div class="input-group-append">
                                 <div class="input-group-text"><i class="fa fa-calendar" id="schedule-calender"></i>
                                 </div>
@@ -137,6 +136,7 @@
                         </div>
                     </div>
                 </div>
+
 
 
                 <div class="form-group row">
@@ -179,7 +179,8 @@
                     <label for="auctionQuantity" class="col-sm-2 col-form-label">Quantity</label>
                     <div class="col-sm-10">
                         <div class="form-group">
-                            <input class="form-control col-lg-3" type="text" name="quantity" id="auctionQuantity" />
+                            <input class="form-control col-lg-3" type="text" min="1" name="quantity"
+                                id="auctionQuantity" value="1" />
                         </div>
                     </div>
                 </div>
@@ -199,20 +200,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Name</label>
-                            <input name="name" class="form-control" />
+                            <input name="receiver_name" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Phone Number</label>
-                            <input name="phoneNumber" class="form-control" />
+                            <input name="phone_number" class="form-control" />
                         </div>
                     </div>
                     <div class="w-100"></div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="">Street Address</label>
-                            <input name="streetAddress" class="form-control" />
+                            <input name="street_address" class="form-control" />
                         </div>
                     </div>
                     <div class="w-100"></div>
@@ -232,7 +233,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Postal Code</label>
-                            <input name="postalCode" class="form-control" />
+                            <input name="postal_code" class="form-control" />
                         </div>
                     </div>
 
@@ -246,7 +247,7 @@
             <div class="step" id="step6">
                 <h1 class="display-6">Preview</h1>
                 <p class="text-muted mb-4 text-justify">Please review the details you've entered:</p>
-                <div id="previewDetails">
+                <div id="previewDetails" class="mb-4">
                 </div>
             </div>
             <!-- step six end-->
@@ -269,7 +270,6 @@
 
 {% block js %}
 <script>
-    console.log("create..");
     tinymce.init({
         selector: 'textarea#lotDescription',
         menubar: false,
@@ -294,7 +294,6 @@
             },
             sideBySide: true,
             useCurrent: false,
-            stepping: 15,
             minDate: moment(), // preventing selecting previous time
         });
 
@@ -303,6 +302,29 @@
         });
     });
 
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // when bid on submit is clicked, disable scheduling date
+        var startBidOnSubmit = document.getElementById("bidOnSubmit");
+        var startBidOnSchedule = document.getElementById("startBidOnSchedule");
+        var startDateInput = document.getElementById("startDate");
+
+        startBidOnSubmit.addEventListener("change", function () {
+            if (this.checked) {
+                startDateInput.disabled = true;
+                startDateInput.required = false;
+                startDateInput.value = "";
+            }
+        });
+
+        startBidOnSchedule.addEventListener("change", function () {
+            if (this.checked) {
+                startDateInput.disabled = false;
+                startDateInput.required = true;
+            }
+        });
+    });
 
 </script>
 {% endblock %}

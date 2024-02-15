@@ -52,12 +52,17 @@ function nextPrev(n) {
 }
 
 function validateForm() {
-  var x, y, i;
+  var x = document.getElementsByClassName('step');
+  var y = x[currentTab].getElementsByTagName('input');
   var valid = true;
-  x = document.getElementsByClassName('step');
-  y = x[currentTab].getElementsByTagName('input');
+
+  // Reset validation classes for all input fields in the current tab:
+  for (var i = 0; i < y.length; i++) {
+    y[i].classList.remove('invalid');
+  }
+
   // A loop that checks every input field in the current tab:
-  for (i = 0; i < y.length; i++) {
+  for (var i = 0; i < y.length; i++) {
     // If a field is empty and not of type file...
     if (y[i].value.trim() === '' && y[i].type !== 'file') {
       // Add an "invalid" class to the field:
@@ -66,12 +71,27 @@ function validateForm() {
       valid = false;
     }
   }
+
+  // Additional validation for start date if "Start my bid when I submit them" is checked:
+  var startBidOnSubmit = document.getElementById('bidOnSubmit');
+  var startDateInput = document.getElementById('startDate');
+
+  if (startBidOnSubmit.checked && startDateInput.value.trim() === '') {
+    // If "Start my bid when I submit them" is checked and the start date is empty, mark it as valid:
+    valid = true;
+  } else if (!startBidOnSubmit.checked && startDateInput.value.trim() === '') {
+    // If "Start my bid when I submit them" is not checked and the start date is empty, mark it as invalid:
+    startDateInput.classList.add('invalid');
+    valid = false;
+  }
+
   // If the valid status is true, mark the step as finished and valid:
   if (valid) {
     document
       .getElementsByClassName('stepIndicator')
       [currentTab].classList.add('finish');
   }
+
   console.log('Form status:', valid);
   return valid;
 }
@@ -177,43 +197,124 @@ function generatePreview() {
   // Get uploaded images
   const uploadedImages = $('.upload-img-wrap img');
 
+  // Get description textarea value
+  const description = tinymce
+    .get('lotDescription')
+    .getContent({ format: 'text' });
+
+  console.log(description);
+
   // Clear previous preview details
   $('#previewDetails').empty();
 
   // Generate summary HTML
-  let summaryHTML = '<h4>Preview:</h4>';
+  let summaryHTML = `<div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-4">`;
 
-  // Display first uploaded image
   if (uploadedImages.length > 0) {
-    summaryHTML += `<div class="product-image"><img src="${uploadedImages[0].src}" alt="Product Image"></div>`;
+    summaryHTML += `
+    <div class="image-container" style="width: 250px; height: 250px; overflow: hidden;">
+    <img src="${uploadedImages[0].src}" style="height: 100%; width: 100%; object-fit: contain" class="card-img" alt="Product Image">
+    </div>
+    `;
   }
 
-  // Display product details
-  summaryHTML += '<div class="product-details">';
+  summaryHTML += `</div>
+            <div class="col-md-8">
+                <div class="card-body">`;
+
   formData.forEach((field) => {
     if (field.value.trim() !== '') {
-      summaryHTML += `<p><strong>${field.name}:</strong> ${field.value}</p>`;
+      if (field.name == 'lot_name') {
+        summaryHTML += `<h5 class="card-title">${field.value}</h5>`;
+      }
     }
   });
-  summaryHTML += '</div>';
 
-  // Display auction costs
-  summaryHTML += '<div class="auction-cost">';
-  summaryHTML += '<h5>Auction Costs:</h5>';
-  // Include VAT, Commission, Overall Cost logic here
-  summaryHTML += '</div>';
+  // Include description in the summary if it's not empty
+  if (description.trim() !== '') {
+    summaryHTML += `<p class="card-text">${description}</p>`;
+  }
 
-  // Display shipping details
-  summaryHTML += '<div class="shipping-details">';
-  summaryHTML += '<h5>Shipping Details:</h5>';
-  // Include shipping details logic here
-  summaryHTML += '</div>';
+  summaryHTML += `</div>
+        </div>
+    </div>
+    </div>`;
 
-  // Display bidding starting date
-  summaryHTML += '<div class="bidding-start-date">';
-  summaryHTML += '<h5>Bidding Starting Date:</h5>';
-  // Include bidding starting date logic here
-  summaryHTML += '</div>';
+  summaryHTML += `<div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Summary</h5>
+            <div class="row">`;
+
+  let auctionCostsHTML = '';
+  let shippingDetailsHTML = '';
+
+  // Display product details
+  formData.forEach((field) => {
+    if (field.value.trim() !== '') {
+      let label = field.name;
+
+      const labelsMap = {
+        starting_price: 'Starting Price',
+        buy_it_now_price: 'Buy It Now Price',
+        reserve_price: 'Reserve Price',
+        receiver_name: 'Receiver Name',
+        phone_number: 'Phone Number',
+        city: 'City',
+        state: 'State',
+        street_address: 'Receiver Address',
+      };
+
+      if (labelsMap[field.name]) {
+        label = labelsMap[field.name];
+      }
+
+      if (
+        field.name == 'starting_price' ||
+        field.name == 'buy_it_now_price' ||
+        field.name == 'reserve_price'
+      ) {
+        auctionCostsHTML += `<div class="col-md-12">
+                    <p class="text-muted">${label}: ${field.value}</p>
+                </div>`;
+      }
+
+      if (
+        field.name == 'receiver_name' ||
+        field.name == 'phone_number' ||
+        field.name == 'city' ||
+        field.name == 'street_address'
+      ) {
+        shippingDetailsHTML += `<div class="col-md-12">
+                    <p class="text-muted">${label}: ${field.value}</p>
+                </div>`;
+      }
+    }
+  });
+
+  // Append auction costs and shipping details
+  if (auctionCostsHTML !== '') {
+    summaryHTML += `<div class="col-md-6">
+            <h6 class="font-weight-bold">Auction Costs:</h6>
+            <div class="row">
+                ${auctionCostsHTML}
+            </div>
+        </div>`;
+  }
+
+  if (shippingDetailsHTML !== '') {
+    summaryHTML += `<div class="col-md-6">
+            <h6 class="font-weight-bold">Shipping Details:</h6>
+            <div class="row">
+                ${shippingDetailsHTML}
+            </div>
+        </div>`;
+  }
+
+  summaryHTML += `</div>
+        </div>
+    </div>`;
 
   // Append summary to the preview section
   $('#previewDetails').html(summaryHTML);
@@ -292,4 +393,46 @@ function generateCategoryRadios(categories) {
 
 //-----------------------
 // Category search END
+//-----------------------
+
+//-----------------------
+// Utility START
+//-----------------------
+// adding tinymce as a rich text editor
+tinymce.init({
+  selector: 'textarea#lotDescription',
+  menubar: false,
+  plugins:
+    'anchor autolink charmap codesample emoticons link lists table visualblocks wordcount',
+  toolbar:
+    'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link table | align lineheight | tinycomments | checklist numlist bullist indent outdent',
+});
+
+// adding Tempus Dominus datetimepicker
+$(function () {
+  $('#startDate').datetimepicker({
+    format: 'YYYY/MM/DD HH:mm',
+    icons: {
+      time: 'fa fa-clock',
+      date: 'fa fa-calendar',
+      up: 'fa fa-chevron-up',
+      down: 'fa fa-chevron-down',
+      previous: 'fa fa-chevron-left',
+      next: 'fa fa-chevron-right',
+      today: 'fa fa-crosshairs',
+      clear: 'fa fa-trash',
+      close: 'fa fa-times',
+    },
+    sideBySide: true,
+    useCurrent: false,
+    minDate: moment(), // preventing selecting previous time
+  });
+
+  $('#schedule-calender').click(function () {
+    $('#startDate').datetimepicker('show');
+  });
+});
+
+//-----------------------
+// Utility END
 //-----------------------
