@@ -6,7 +6,7 @@
 <div class="main-banner" style="padding-top:120px;" id="top">
     <div class="container">
 
-        <form id="lotForm" method="POST" action="{% url 'lots:lot_create' %}">
+        <form id="lotForm" method="POST" action="{% url 'lots:lot_create' %}" enctype="multipart/form-data">
             {% csrf_token %}
 
             <!-- start step indicators -->
@@ -53,7 +53,8 @@
                         <p class="mb-0"><i class="bi bi-cloud-arrow-up-fill upload-icon-large"></i></p>
                         <p class="mb-0">Drag and drop to upload</p>
                         <p class="mb-0">or browse to choose files</p>
-                        <input type="file" multiple="" data-max_length="10" class="upload-inputfile d-none">
+                        <input type="file" name="images" accept="image/*" data-max_length="10"
+                            class="upload-inputfile d-none" multiple />
                     </label>
                     <div class="upload-img-wrap m-1 d-none"></div>
                     <button class="btn btn-primary mx-1 my-4 add-more d-none"><i class="bi bi-plus-circle-fill"></i> Add
@@ -79,7 +80,6 @@
                 <div class="form-outline mb-4">
                     <label class="form-label" for="lotCondition">Condition</label>
                     <select id="lotCondition" name="lot_condition" class="form-control">
-                        <option value="" selected disabled>Choose Condition</option>
                         {% for value, label in lot_condition_choices %}
                         <option name="{{ label }}" value="{{ value }}">{{ value }}</option>
                         {% endfor %}
@@ -329,7 +329,7 @@
 
     $(function () {
         $('#startDate').datetimepicker({
-            format: 'YYYY/MM/DD HH:mm',
+            format: 'YYYY/MM/DD HH:mm:ss',
             icons: {
                 time: 'fa fa-clock',
                 date: 'fa fa-calendar',

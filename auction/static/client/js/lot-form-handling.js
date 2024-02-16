@@ -349,14 +349,13 @@ document
     fetchCategories(searchValue);
   });
 
-// generate radio buttons for categories
 function generateCategoryRadios(categories) {
   var categoryResultDiv = document.getElementById('categoryResult');
-  categoryResultDiv.innerHTML = ''; // Clear previous results
+  categoryResultDiv.innerHTML = '';
 
   categories.forEach(function (category) {
     var radioDiv = document.createElement('div');
-    radioDiv.classList.add('form-check', 'flex-column'); // Added 'flex-column' class
+    radioDiv.classList.add('form-check', 'flex-column');
 
     var radioInput = document.createElement('input');
     radioInput.type = 'radio';
@@ -367,7 +366,7 @@ function generateCategoryRadios(categories) {
 
     var radioLabel = document.createElement('label');
     radioLabel.classList.add('form-check-label');
-    radioLabel.htmlFor = category.name.toLowerCase();
+    radioLabel.htmlFor = category.id;
     radioLabel.textContent = category.name;
 
     radioDiv.appendChild(radioInput);
@@ -380,3 +379,36 @@ function generateCategoryRadios(categories) {
 //-----------------------
 // Category search END
 //-----------------------
+
+function storeImages() {
+  const uploadedImages = $('.upload-img-wrap img');
+  const imageSrcs = [];
+  console.log('store imagages');
+
+  // Collect the src attribute of each uploaded image
+  uploadedImages.each(function (index, img) {
+    const src = img.src;
+    imageSrcs.push(src);
+  });
+
+  // Send the image data to the server using AJAX
+  $.ajax({
+    url: '/lot/images/save/', // Replace '/save_images/' with the URL of your Django view
+    method: 'POST',
+    data: { images: imageSrcs }, // Send the image srcs as JSON data
+    success: function (response) {
+      console.log('Images saved successfully:', response);
+      // Optionally, do something with the response from the server
+    },
+    error: function (xhr, status, error) {
+      console.error('Error saving images:', error);
+    },
+  });
+}
+
+$('#lotForm').submit(function (event) {
+  event.preventDefault(); // Prevent the default form submission
+  $(this).unbind('submit').submit();
+  storeImages(); // Call the function to store the images
+  // Optionally, submit the form after storing the images
+});

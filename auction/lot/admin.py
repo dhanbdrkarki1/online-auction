@@ -2,7 +2,6 @@ from django.contrib import admin
 
 from .models import Category, Lot, LotImage, LotShippingDetails
 
-# Register your models here.
 
 admin.site.register(Category)
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from .choices import *
+from django.utils.text import slugify
 
 User=get_user_model()
 
@@ -35,22 +36,28 @@ class Lot(models.Model):
     description = models.TextField(blank=True)
 
     # selling details
-    starting_price=models.DecimalField(max_digits=12, decimal_places=2)
-    buy_it_now_price=models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    reserve_price=models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    starting_price=models.PositiveIntegerField()
+    buy_it_now_price=models.PositiveIntegerField(null=True, blank=True)
+    reserve_price=models.PositiveIntegerField(null=True, blank=True)
 
-    auction_start_time = models.DateTimeField()
+    auction_start_time = models.DateTimeField(null=True, blank=True)
     auction_duration = models.IntegerField(default=2, choices=DurationChoices.choices) # auctioning period of time
-    scheduled_time = models.DateTimeField()
-    quantity = models.IntegerField(default=1)
+    scheduled_time = models.DateTimeField(null=True, blank=True)
+    quantity = models.PositiveIntegerField(default=1)
 
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     is_auction_over = models.BooleanField(default=False)
 
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
     def get_absolute_url(self):
-        return reverse('auction:single-item',args=[self.id,self.slug])
+        return reverse('lots:lot_detail',args=[self.slug])
 
     class Meta:
         ordering=('name',)
@@ -71,7 +78,7 @@ class LotShippingDetails(models.Model):
     weight = models.CharField(max_length=50, choices=WeightRangeChoices.choices)  # e.g., box, envelope
     item_location = models.CharField(max_length=100)  # e.g., city, state, country
     carrier = models.CharField(max_length=50, choices=WeightRangeChoices.choices)  # e.g., Trucking, Air Freight, Courier services like FedEx, UPS
-    shipment_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True) 
+    shipment_cost = models.PositiveIntegerField(null=True, blank=True) 
     shipping_notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -79,7 +86,7 @@ class LotShippingDetails(models.Model):
 
 class LotImage(models.Model):
     lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="lotImages")
-    image = models.ImageField(upload_to="upload_to='lots/%Y/%m/%d")
+    image = models.ImageField(null=False, blank=False, upload_to="upload_to='lots/%Y/%m/%d")
 
     def __str__(self):
         return self.lot.name

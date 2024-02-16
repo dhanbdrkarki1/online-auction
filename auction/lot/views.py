@@ -1,31 +1,28 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from datetime import datetime
 
 from .choices import ConditionChoices, DurationChoices, PackageTypeChoices, WeightRangeChoices, CarrierTypeChoices
 from django.utils import timezone
-from .models import Lot, LotShippingDetails, Category
+from .models import Lot, LotShippingDetails, Category, LotImage
 
-# Create your views here.
 def lot_list(request):
-    return render(request, "lot/lot/list.html")
+    lots = Lot.objects.all()
+
+    context = {
+        'lots_list' : lots
+    }
+    return render(request, "lot/lot/list.html", context)
 
 def lot_create(request):
     if request.method == 'POST':
-        # Extract data from the form
         category_name = request.POST.get('category_type')
-        print(category_name)
         category = Category.objects.get(name=category_name)
         lot_name = request.POST.get('lot_name')
         lot_condition = request.POST.get('lot_condition')
         lot_description = request.POST.get('lot_description')
         auction_duration = request.POST.get('auction_duration')
-
         scheduled_time = request.POST.get('auction_scheduled_time')
-        print("-----------------")
-        print(scheduled_time)
-        print("-----------------")
-
-
         starting_price = request.POST.get('starting_price')
         buy_it_now_price = request.POST.get('buy_it_now_price')
         reserve_price = request.POST.get('reserve_price')
@@ -38,7 +35,17 @@ def lot_create(request):
         carrier_type = request.POST.get('carrier_type')
         shipping_notes = request.POST.get('shipping_notes')
         
-        # try:
+        auction_start_time = None
+        if scheduled_time is None:
+            scheduled_time = None
+            auction_start_time = timezone.now()
+        else:
+            scheduled_time = datetime.strptime(scheduled_time, "%Y/%m/%d %H:%M:%S")
+
+        
+        starting_price = int(starting_price) if starting_price else None
+        buy_it_now_price = int(buy_it_now_price) if buy_it_now_price else None
+        reserve_price = int(reserve_price) if reserve_price else None
 
         lot = Lot.objects.create(
             category=category,
@@ -49,9 +56,9 @@ def lot_create(request):
             starting_price=starting_price,
             buy_it_now_price=buy_it_now_price,
             reserve_price=reserve_price,
-            auction_start_time=timezone.now(), 
+            auction_start_time=auction_start_time, 
             auction_duration=auction_duration,
-            scheduled_time=timezone.now(),
+            scheduled_time=scheduled_time,
             quantity=quantity
         )
         
@@ -65,9 +72,10 @@ def lot_create(request):
             carrier=carrier_type,
             shipping_notes=shipping_notes
         )
+         
+         # store lot id here
+        request.session['lot_id'] = lot.pk
         return redirect('lots:lot_received')
-        # except Exception as e:
-        #     print(e)
     
     context = {
         'lot_condition_choices': [(label, value) for label, value in ConditionChoices.choices],
@@ -78,6 +86,32 @@ def lot_create(request):
     }
     return render(request, "lot/lot/create.html", context)
 
+def lot_detail(request, slug):
+    lot = get_object_or_404(Lot, slug=slug)
+    return render(request, 'lot/lot/detail.html', {'lot': lot})
+
+
+def save_lot_images(request):
+    if request.method == 'POST' and request.is_ajax():
+        lot_id = request.session.get('lot_id')
+        lot = Lot.objects.get(id=lot_id)
+
+        image_srcs = request.POST.getlist('images[]')  # Assuming images are sent as JSON data
+        for src in image_srcs:
+            print("----------------------", src)
+
+        return JsonResponse({'message': 'Images saved successfully'}, status=200)
+    else:
+        return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+
+        # # Handle image uploads
+        # images = request.FILES.getlist('images')  # Get list of uploaded images
+        # print(images)
+        # for image in images:
+        #     print(image)
+        #     LotImage.objects.create(lot=lot, image=image)
 
 def lot_received(request):
 
