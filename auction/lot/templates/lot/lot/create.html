@@ -80,7 +80,7 @@
                     <label class="form-label" for="lotCondition">Condition</label>
                     <select id="lotCondition" name="lot_condition" class="form-control">
                         <option value="" selected disabled>Choose Condition</option>
-                        {% for label, value in lot_condition_choices %}
+                        {% for value, label in lot_condition_choices %}
                         <option name="{{ label }}" value="{{ value }}">{{ value }}</option>
                         {% endfor %}
                     </select>
@@ -107,23 +107,21 @@
                     <div class="col-sm-10">
                         <div class="input-group">
                             <select id="totalDuration" name="auction_duration" class="form-control">
-                                <option value="2" selected>2 days</option>
-                                <option value="3">3 days</option>
-                                <option value="5">5 days</option>
-                                <option value="7">7 days</option>
-                                <option value="10">10 days</option>
+                                {% for value, label in lot_duration_choices %}
+                                <option name="{{ label }}" value="{{ value }}">{{ value }} days</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="form-check mt-2">
-                            <input class="form-check-input" type="radio" name="bid_on_submit" id="bidOnSubmit"
-                                value="option1" checked>
+                            <input class="form-check-input" type="radio" name="bid_on_submit" id="bidOnSubmit" value=""
+                                checked>
                             <label class="form-check-label" for="bidOnSubmit">
                                 Start my bid when I submit them
                             </label>
                         </div>
                         <div class="form-check mt-2">
-                            <input class="form-check-input" type="radio" name="schedule_bidding_time"
-                                id="startBidOnSchedule" value="option2">
+                            <input class="form-check-input" type="radio" name="bid_on_submit" id="startBidOnSchedule"
+                                value="">
                             <label class="form-check-label" for="startBidOnSchedule">
                                 Schedule to start on
                             </label>
@@ -138,6 +136,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
 
 
@@ -203,8 +202,9 @@
                         <div class="form-group">
                             <label for="package_type">Package Type</label>
                             <select name="package_type" id="package_type" class="form-control">
-                                <option value="box">Box</option>
-                                <option value="envelope">Envelope</option>
+                                {% for value, label in lot_packages_type_choices %}
+                                <option name="{{ label }}" value="{{ value }}">{{ value }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="input-group">
-                                        <input type="text" name="length" id="length" class="form-control"
+                                        <input type="text" name="item_length" id="length" class="form-control"
                                             placeholder="Length" />
                                         <div class="input-group-append">
                                             <span class="input-group-text">in. X</span>
@@ -223,7 +223,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group">
-                                        <input type="text" name="breadth" id="breadth" class="form-control"
+                                        <input type="text" name="item_breadth" id="breadth" class="form-control"
                                             placeholder="Breadth" />
                                         <div class="input-group-append">
                                             <span class="input-group-text">in. X</span>
@@ -232,7 +232,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group">
-                                        <input type="text" name="height" id="height" class="form-control"
+                                        <input type="text" name="item_height" id="height" class="form-control"
                                             placeholder="Height" />
                                         <div class="input-group-append">
                                             <span class="input-group-text">in.</span>
@@ -249,8 +249,9 @@
                         <div class="form-group">
                             <label for="package_weight">Package Weight</label>
                             <select name="package_weight" id="package_weight" class="form-control">
-                                <option value="0-2kg">0-2kg</option>
-                                <option value="2-5kg">2-5kg</option>
+                                {% for value, label in lot_weight_range_choices %}
+                                <option name="{{ label }}" value="{{ value }}">{{ value }} KG</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -265,8 +266,9 @@
                         <div class="form-group">
                             <label for="carrier_type">Carrier Type</label>
                             <select name="carrier_type" id="carrier_type" class="form-control">
-                                <option value="box">Courier Service</option>
-                                <option value="envelope">Air Frieght</option>
+                                {% for value, label in lot_carrier_type_choices %}
+                                <option name="{{ label }}" value="{{ value }}">{{ value }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -316,6 +318,7 @@
 
 {% block js %}
 <script>
+    console.log("{{ lot_condition_choices }}")
     tinymce.init({
         selector: 'textarea#lotDescription',
         menubar: false,

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from .choices import *
 
 User=get_user_model()
 
@@ -23,20 +24,13 @@ class Category(models.Model):
             models.Index(fields=['name'])
         ]
 
-class ConditionChoices(models.TextChoices):
-    NEW = 'New'
-    USED_EXCELLENT = 'Used - Excellent'
-    USED_GOOD = 'Used - Good'
-    USED_FAIR = 'Used - Fair'
-    USED_POOR = 'Used - Poor'
-
 class Lot(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='lots')
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lots')
     name=models.CharField(max_length=255,db_index=True)
     slug=models.SlugField(max_length=255,db_index=True)
 
-    condition = models.CharField(max_length=255, choices=ConditionChoices.choices)
+    condition = models.CharField(max_length=255, default='New', choices=ConditionChoices.choices)
 
     description = models.TextField(blank=True)
 
@@ -46,7 +40,7 @@ class Lot(models.Model):
     reserve_price=models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
 
     auction_start_time = models.DateTimeField()
-    auction_duration = models.DateTimeField() # auctioning period of time
+    auction_duration = models.IntegerField(default=2, choices=DurationChoices.choices) # auctioning period of time
     scheduled_time = models.DateTimeField()
     quantity = models.IntegerField(default=1)
 
@@ -68,24 +62,25 @@ class Lot(models.Model):
     
     def __str__(self):
         return self.name
-    
+
+
 class LotShippingDetails(models.Model):
     lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="lotShippingDetails")
-    package_type = models.CharField(max_length=50)  # e.g., box, envelope
+    package_type = models.CharField(max_length=50, choices=PackageTypeChoices.choices)  # e.g., box, envelope
     dimensions = models.CharField(max_length=50)  # e.g., 10x10x10
-    weight = models.DecimalField(max_digits=10, decimal_places=2)  # in kilograms
+    weight = models.CharField(max_length=50, choices=WeightRangeChoices.choices)  # e.g., box, envelope
     item_location = models.CharField(max_length=100)  # e.g., city, state, country
-    carrier = models.CharField(max_length=50)  # e.g., Trucking, Air Freight, Courier services like FedEx, UPS
+    carrier = models.CharField(max_length=50, choices=WeightRangeChoices.choices)  # e.g., Trucking, Air Freight, Courier services like FedEx, UPS
     shipment_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True) 
     shipping_notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user.username}'s Shipping Details"
+        return f"{self.lot.name}'s Shipping Details"
 
-class ItemImage(models.Model):
-    lot = models.ForeignKey(Lot, on_delete=models.CASCADE)
+class LotImage(models.Model):
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="lotImages")
     image = models.ImageField(upload_to="upload_to='lots/%Y/%m/%d")
 
     def __str__(self):
-        return self.item.name
+        return self.lot.name
     

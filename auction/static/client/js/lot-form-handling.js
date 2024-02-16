@@ -57,33 +57,20 @@ function validateForm() {
   var valid = true;
 
   // Reset validation classes for all input fields in the current tab:
-  for (var i = 0; i < y.length; i++) {
-    y[i].classList.remove('invalid');
-  }
+  // for (var i = 0; i < y.length; i++) {
+  //   y[i].classList.remove('invalid');
+  // }
 
-  // A loop that checks every input field in the current tab:
-  for (var i = 0; i < y.length; i++) {
-    // If a field is empty and not of type file...
-    if (y[i].value.trim() === '' && y[i].type !== 'file') {
-      // Add an "invalid" class to the field:
-      y[i].classList.add('invalid');
-      // Set the current valid status to false:
-      valid = false;
-    }
-  }
-
-  // Additional validation for start date if "Start my bid when I submit them" is checked:
-  var startBidOnSubmit = document.getElementById('bidOnSubmit');
-  var startDateInput = document.getElementById('startDate');
-
-  if (startBidOnSubmit.checked && startDateInput.value.trim() === '') {
-    // If "Start my bid when I submit them" is checked and the start date is empty, mark it as valid:
-    valid = true;
-  } else if (!startBidOnSubmit.checked && startDateInput.value.trim() === '') {
-    // If "Start my bid when I submit them" is not checked and the start date is empty, mark it as invalid:
-    startDateInput.classList.add('invalid');
-    valid = false;
-  }
+  // // A loop that checks every input field in the current tab:
+  // for (var i = 0; i < y.length; i++) {
+  //   // If a field is empty and not of type file...
+  //   if (y[i].value.trim() === '' && y[i].type !== 'file' && y[i] !== 'radio') {
+  //     // Add an "invalid" class to the field:
+  //     y[i].classList.add('invalid');
+  //     // Set the current valid status to false:
+  //     valid = false;
+  //   }
+  // }
 
   // If the valid status is true, mark the step as finished and valid:
   if (valid) {
@@ -259,11 +246,10 @@ function generatePreview() {
         starting_price: 'Starting Price',
         buy_it_now_price: 'Buy It Now Price',
         reserve_price: 'Reserve Price',
-        receiver_name: 'Receiver Name',
-        phone_number: 'Phone Number',
-        city: 'City',
-        state: 'State',
-        street_address: 'Receiver Address',
+        package_type: 'Package Type',
+        package_weight: 'Weight',
+        shipment_cost: 'Shipment Cost',
+        carrier_type: 'Carrier Type',
       };
 
       if (labelsMap[field.name]) {
@@ -281,10 +267,10 @@ function generatePreview() {
       }
 
       if (
-        field.name == 'receiver_name' ||
-        field.name == 'phone_number' ||
-        field.name == 'city' ||
-        field.name == 'street_address'
+        field.name == 'package_type' ||
+        field.name == 'package_weight' ||
+        field.name == 'shipment_cost' ||
+        field.name == 'carrier_type'
       ) {
         shippingDetailsHTML += `<div class="col-md-12">
                     <p class="text-muted">${label}: ${field.value}</p>
