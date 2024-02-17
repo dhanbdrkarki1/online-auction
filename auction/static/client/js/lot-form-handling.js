@@ -4,6 +4,10 @@ $(document).ready(function () {
   ImgUpload();
 });
 
+// ------------------------------------
+// multi step form handling start
+// ------------------------------------
+
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
 
@@ -93,8 +97,13 @@ function fixStepIndicator(n) {
   //... and adds the "active" class on the current step:
   x[n].className += ' active';
 }
+// ------------------------------------
+// multi step form handling start
+// ------------------------------------
 
+//-------------------
 // image upload
+//-------------------
 
 function ImgUpload() {
   var imgWrap = $('.upload-img-wrap');
@@ -108,7 +117,7 @@ function ImgUpload() {
   var addMoreButton = $('.add-more');
 
   $('.upload-inputfile').on('change', function (e) {
-    $('.upload-btn').hide();
+    $('.upload-btn').addClass('d-none');
     imgWrap.addClass('uploaded');
     addMoreButton.removeClass('d-none');
     imgWrap.removeClass('d-none');
@@ -145,9 +154,6 @@ function ImgUpload() {
       }
     });
     validateForm();
-
-    // Clear file input
-    $(this).val('');
   });
 
   $('body').on('click', '.upload-img-close', function (e) {
@@ -178,6 +184,13 @@ function ImgUpload() {
   });
 }
 
+//-------------------
+// image upload end
+//-------------------
+
+//-------------------
+// lot preview
+//-------------------
 function generatePreview() {
   // Get form inputs from previous steps
   const formData = $('#lotForm').serializeArray();
@@ -305,6 +318,9 @@ function generatePreview() {
   // Append summary to the preview section
   $('#previewDetails').html(summaryHTML);
 }
+//-------------------
+// lot preview end
+//-------------------
 
 //-----------------------
 // Category search
@@ -316,7 +332,7 @@ function fetchCategories(searchValue) {
   var categoriesUrl =
     "{% url 'lots:search_categories' %}" + '?search_query=' + searchValue;
   console.log(categoriesUrl);
-  fetch('/seller/search-categories/' + '?search_query=' + searchValue, {
+  fetch('/search/categories/' + '?search_query=' + searchValue, {
     method: 'GET',
     headers: {
       'X-CSRFToken': Cookies.get('csrftoken'),

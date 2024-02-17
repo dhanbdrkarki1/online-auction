@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from .choices import *
 from django.utils.text import slugify
+from django.utils import timezone
+from .utils import rename_image
 
 User=get_user_model()
 
@@ -84,9 +86,12 @@ class LotShippingDetails(models.Model):
     def __str__(self):
         return f"{self.lot.name}'s Shipping Details"
 
+
+
+
 class LotImage(models.Model):
     lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="lotImages")
-    image = models.ImageField(null=False, blank=False, upload_to="upload_to='lots/%Y/%m/%d")
+    image = models.ImageField(null=False, blank=False, upload_to=rename_image)
 
     def __str__(self):
         return self.lot.name

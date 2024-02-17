@@ -41,8 +41,6 @@ def lot_create(request):
             auction_start_time = timezone.now()
         else:
             scheduled_time = datetime.strptime(scheduled_time, "%Y/%m/%d %H:%M:%S")
-
-        
         starting_price = int(starting_price) if starting_price else None
         buy_it_now_price = int(buy_it_now_price) if buy_it_now_price else None
         reserve_price = int(reserve_price) if reserve_price else None
@@ -72,8 +70,13 @@ def lot_create(request):
             carrier=carrier_type,
             shipping_notes=shipping_notes
         )
-         
-         # store lot id here
+
+        images = request.FILES.getlist('lot_images')
+        print(images)
+        for image in images:
+            print(image)
+            LotImage.objects.create(lot=lot, image=image)
+        # storing lot_id for saving images
         request.session['lot_id'] = lot.pk
         return redirect('lots:lot_received')
     
@@ -90,31 +93,7 @@ def lot_detail(request, slug):
     lot = get_object_or_404(Lot, slug=slug)
     return render(request, 'lot/lot/detail.html', {'lot': lot})
 
-
-def save_lot_images(request):
-    if request.method == 'POST' and request.is_ajax():
-        lot_id = request.session.get('lot_id')
-        lot = Lot.objects.get(id=lot_id)
-
-        image_srcs = request.POST.getlist('images[]')  # Assuming images are sent as JSON data
-        for src in image_srcs:
-            print("----------------------", src)
-
-        return JsonResponse({'message': 'Images saved successfully'}, status=200)
-    else:
-        return JsonResponse({'error': 'Invalid request'}, status=400)
-
-
-
-        # # Handle image uploads
-        # images = request.FILES.getlist('images')  # Get list of uploaded images
-        # print(images)
-        # for image in images:
-        #     print(image)
-        #     LotImage.objects.create(lot=lot, image=image)
-
 def lot_received(request):
-
     return render(request, 'lot/lot/received.html')
 
 
