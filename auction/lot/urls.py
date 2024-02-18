@@ -8,7 +8,7 @@ urlpatterns = [
     path('seller/lot/create/', views.lot_create, name='lot_create'),
     path('lots/<slug:slug>/', views.lot_detail, name='lot_detail'),
 
-    path('seller/', views.seller_detail, name='seller_detail'),
+    path('seller/<slug:full_name>/', views.seller_detail, name='seller_detail'),
 
 
     path('lot/received/', views.lot_received, name='lot_received'),

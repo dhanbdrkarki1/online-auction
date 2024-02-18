@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager, Permiss
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from uuid import uuid4
+from django.urls import reverse
+
 
 User = settings.AUTH_USER_MODEL
 
@@ -79,6 +81,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             # Auto-generate a random username with "user-" prefix
             self.username = f"user-{str(uuid4())[:8]}"
         super().save(*args, **kwargs)
+
 
 
 class ShippingAddress(models.Model):

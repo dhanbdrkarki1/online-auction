@@ -111,6 +111,6 @@ def search_categories(request):
 
 
 
-def seller_detail(request):
+def seller_detail(request, full_name):
 
     return render(request, 'lot/seller/detail.html')

@@ -60,6 +60,12 @@ class Lot(models.Model):
 
     def get_absolute_url(self):
         return reverse('lots:lot_detail',args=[self.slug])
+    
+    def get_absolute_url_full_name(self):
+        url_string = f"{self.seller.first_name.lower()}-{self.seller.last_name.lower()}"
+        url_string = url_string.replace(' ', '-')
+        return reverse('lots:seller_detail', kwargs={'full_name': url_string})
+
 
     class Meta:
         ordering=('name',)
