@@ -3,6 +3,7 @@
         outline: none;
         border: none;
         display: inline-block;
+        width: 300px;
 
     }
 
@@ -16,22 +17,35 @@
     .search-nav-item {
         height: 40px;
     }
+
+    .submenu:hover ul {
+        display: block;
+    }
 </style>
+
 <!-- ***** Header Area Start ***** -->
 <header class="header-area header-sticky">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <nav class="main-nav">
-                    <a href="index.html" class="logo">
-                        <img src="assets/images/logo.png">
-
-                    </a>
                     <ul class="nav">
+                        <a class="nav-item mr-lg-3" href="{% url 'auctionapp:home' %}" class="logo">
+                            <h3>BidMe</h3>
+                        </a>
+                        <li class="submenu mr-lg-5">
+                            <a href="javascript:;">
+                                Categories
+                            </a>
+                            <ul>
+                                <li><a href="#">Fine Arts</a></li>
+                                <li><a href="#">Collectibles</a></li>
+                                <li><a href="#">Furnitures</a></li>
+                            </ul>
+                        </li>
                         <li class="nav-item rounded bg-light search-nav-item"><input type="text" id="search"
-                                class="bg-light bg-gradient" placeholder="Search bread, cakes, desserts"><span
+                                class="bg-light" placeholder="Search for arts, collectibles, etc"><span
                                 class="fa fa-search text-muted"></span></li>
-                        <li class="scroll-to-section"><a href="{% url 'auctionapp:home' %}" class="active">Home</a></li>
                         <li class="scroll-to-section"><a href="#">Sell</a></li>
                         <li class="scroll-to-section"><a href="#">
                                 <i class="bi bi-heart text-primary text-bold"></i>

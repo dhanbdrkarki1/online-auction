@@ -24,13 +24,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'social_django',
+    'easy_thumbnails',
     'auctionapp.apps.AuctionappConfig',
     'myadmin.apps.MyadminConfig',
     'account.apps.AccountConfig',
-
-    'django_extensions',
-    'social_django',
-
     'lot.apps.LotConfig',
 ]
 
@@ -183,3 +182,12 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD =  config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+
+# easy thumbnail to crop images to a specific aspect ratio
+THUMBNAIL_ALIASES = {
+    '': {
+        'home_lot_image_thumbnail': {'size': (300, 250), 'crop': 'smart', 'quality':100},
+        'lot_detail_thumbnail': {'size': (700, 466), 'crop': 'smart', 'quality': 100},
+
+    },
+}

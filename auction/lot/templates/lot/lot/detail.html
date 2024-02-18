@@ -1,13 +1,13 @@
 {% extends 'client/base.html' %}
 {% load static %}
 {% load lot_tags %}
-
+{% load thumbnail %}
 
 {% block content %}
 <style>
     #featured {
-        max-width: 500px;
-        max-height: 600px;
+        max-width: 100%;
+        max-height: 100%;
         object-fit: cover;
         cursor: pointer;
     }
@@ -27,14 +27,14 @@
     }
 
     #slide-wrapper {
-        max-width: 500px;
+        max-width: 800px;
         display: flex;
         min-height: 100px;
         align-items: center;
     }
 
     #slider {
-        width: 440px;
+        width: 635px;
         display: flex;
         flex-wrap: nowrap;
         overflow-x: hidden;
@@ -55,8 +55,25 @@
 
     .arrow:hover {
         opacity: 1;
-        width: 35px;
-        height: 35px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .thumbnail {
+            max-width: 100px;
+            /* Adjust as needed for smaller devices */
+            max-height: 80px;
+            /* Adjust as needed for smaller devices */
+        }
+
+        #slide-wrapper {
+            max-width: 100%;
+            overflow-x: smooth;
+            display: flex;
+            min-height: 100px;
+            align-items: center;
+            -webkit-overflow-scrolling: touch;
+        }
+
     }
 </style>
 
@@ -71,20 +88,19 @@
                 <!-- lot images start -->
                 <div class="row pr-xl-4">
 
-                    <img id="featured" class="mb-2" src="{% if lot_images %}{{ lot_images.0.image.url }}{% endif %}">
-
+                    <img id="featured" class="mb-2"
+                        src="{% if lot_images %}{{ lot_images.0.image|thumbnail_url:'lot_detail_thumbnail' }}{% endif %}">
 
                     <div id="slide-wrapper">
                         <i class="bi bi-chevron-left arrow" id="slideLeft"></i>
                         <div id="slider">
                             {% for image in lot_images %}
-                            <img class="thumbnail {% if forloop.first %} active {% endif %}"
-                                src="{{ image.image.url }}">
+                            <img class="thumbnail {% if forloop.first %}active{% endif %}"
+                                src="{{ image.image|thumbnail_url:'lot_detail_thumbnail' }}">
                             {% endfor %}
                         </div>
                         <i class="bi bi-chevron-right arrow pl-3" id="slideRight"></i>
                     </div>
-
                     <!-- lot images end -->
 
                     <!-- lot description start -->
@@ -414,11 +430,11 @@
         let buttonLeft = document.getElementById('slideLeft');
 
         buttonLeft.addEventListener('click', function () {
-            document.getElementById('slider').scrollLeft -= 180
+            document.getElementById('slider').scrollLeft -= 160
         })
 
         buttonRight.addEventListener('click', function () {
-            document.getElementById('slider').scrollLeft += 180
+            document.getElementById('slider').scrollLeft += 160
         })
     </script>
     {% endblock %}
