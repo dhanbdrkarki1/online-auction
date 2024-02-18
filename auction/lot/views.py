@@ -91,7 +91,10 @@ def lot_create(request):
 
 def lot_detail(request, slug):
     lot = get_object_or_404(Lot, slug=slug)
-    return render(request, 'lot/lot/detail.html', {'lot': lot})
+    lot_images = LotImage.objects.filter(lot=lot)
+    shipping_details = LotShippingDetails.objects.filter(lot=lot)
+
+    return render(request, 'lot/lot/detail.html', {'lot': lot, 'lot_images':lot_images, 'shipping_details':shipping_details})
 
 def lot_received(request):
     return render(request, 'lot/lot/received.html')
@@ -105,3 +108,9 @@ def search_categories(request):
         categories_dict = [{'id': category.id, 'name': category.name} for category in categories]
         return JsonResponse({'categories': categories_dict})
     return JsonResponse({}, status=400)
+
+
+
+def seller_detail(request):
+
+    return render(request, 'lot/seller/detail.html')
