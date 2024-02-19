@@ -43,8 +43,8 @@ class Lot(models.Model):
     reserve_price=models.PositiveIntegerField(null=True, blank=True)
 
     auction_start_time = models.DateTimeField(null=True, blank=True)
-    auction_duration = models.IntegerField(default=2, choices=DurationChoices.choices) # auctioning period of time
-    scheduled_time = models.DateTimeField(null=True, blank=True)
+    auction_duration = models.IntegerField(default=2, choices=DurationChoices.choices) # auctioning period of time: 2 ,4 ,5, 10
+    scheduled_time = models.DateTimeField(null=True, blank=True) # start auction only at scheduled time
     quantity = models.PositiveIntegerField(default=1)
 
     is_active = models.BooleanField(default=True)
@@ -66,7 +66,29 @@ class Lot(models.Model):
         url_string = url_string.replace(' ', '-')
         return reverse('lots:seller_detail', kwargs={'full_name': url_string})
 
+    # Calculate the closing time based on auction start time and duration
+    def get_closing_time(self):
+        return self.auction_start_time + timezone.timedelta(days=self.auction_duration)
 
+    # Check if the bidding for this lot is closed
+    def is_bidding_closed(self):
+        return self.get_closing_time() <= timezone.now()
+    
+    def get_time_left(self):
+        closing_time = self.get_closing_time()
+        now = timezone.now()
+        time_left = closing_time - now
+        days_left = time_left.days
+        hours_left = time_left.seconds // 3600
+        minutes_left = (time_left.seconds % 3600) // 60
+
+        if days_left > 0:
+            return f"{days_left} day{'s' if days_left > 1 else ''} left"
+        elif hours_left > 0:
+            return f"{hours_left} hour{'s' if hours_left > 1 else ''} left"
+        else:
+            return f"{minutes_left} minute{'s' if minutes_left > 1 else ''} left"
+    
     class Meta:
         ordering=('name',)
         indexes = [

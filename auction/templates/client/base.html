@@ -1,158 +1,160 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-<head>
+    <title>BidMe</title>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <!-- Additional CSS Files -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'client/css/bootstrap.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'client/css/font-awesome.css' %}"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+      rel="stylesheet"
+    />
 
-  <title>BidMe</title>
+    <!-- MDB -->
+    <!-- <link href="{% static 'client/css/mdb.min.css' %}" rel="stylesheet" /> -->
 
+    <link href="{% static 'client/css/toastr.min.css' %}" rel="stylesheet" />
 
-  <!-- Additional CSS Files -->
-  <link rel="stylesheet" type="text/css" href="{% static 'client/css/bootstrap.min.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'client/css/font-awesome.css' %}">
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
-    rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'client/css/lot-form.css' %}" />
 
+    <link
+      rel="stylesheet"
+      href="{% static 'client/css/templatemo-hexashop.css' %}"
+    />
 
-  <!-- MDB -->
-  <!-- <link href="{% static 'client/css/mdb.min.css' %}" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="{% static 'client/css/owl-carousel.css' %}" />
 
-  <link href="{% static 'client/css/toastr.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'client/css/lightbox.css' %}" />
+    <link rel="stylesheet" href="{% static 'client/css/product-image.css' %}" />
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"
+    />
 
-  <link rel="stylesheet" href="{% static 'client/css/lot-form.css' %}">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+      integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd"
+      crossorigin="anonymous"
+    />
+    {% block css %} {% endblock %}
+  </head>
 
-  <link rel="stylesheet" href="{% static 'client/css/templatemo-hexashop.css' %}">
-
-  <link rel="stylesheet" href="{% static 'client/css/owl-carousel.css' %}">
-
-  <link rel="stylesheet" href="{% static 'client/css/lightbox.css' %}">
-  <link rel="stylesheet" href="{% static 'client/css/product-image.css' %}">
-
-
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css">
-
-
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
-    integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
-  {% block css %}
-
-  {% endblock %}
-</head>
-
-<body>
-  <!-- ***** Preloader Start ***** -->
-  <div id="preloader">
-    <div class="jumper">
-      <div></div>
-      <div></div>
-      <div></div>
+  <body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+      <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
-  </div>
-  <!-- ***** Preloader End ***** -->
+    <!-- ***** Preloader End ***** -->
 
-  {% include 'includes/client/header.html' %}
-  {% include 'includes/common/notification.html' %}
+    {% include 'includes/client/header.html' %} {% include
+    'includes/common/notification.html' %} {% block content %} {% endblock %}
 
+    <!-- include modals here -->
+    {% block modal %} {% endblock %}
+    <!-- modal ended -->
 
+    <!-- jQuery -->
+    <!-- <script src="{% static 'client/js/jquery-2.1.0.min.js' %}"></script> -->
+    <script src="{% static 'client/js/jquery.min.js' %}"></script>
 
-  {% block content %}
+    <!-- Bootstrap -->
+    <script src="{% static 'client/js/popper.js' %}"></script>
+    <script src="{% static 'client/js/bootstrap.min.js' %}"></script>
 
-  {% endblock %}
+    <!-- Plugins -->
+    <script src="{% static 'client/js/toastr.min.js' %}"></script>
+    <script src="{% static 'client/js/owl-carousel.js' %}"></script>
+    <script src="{% static 'client/js/accordions.js' %}"></script>
+    <script src="{% static 'client/js/datepicker.js' %}"></script>
+    <script src="{% static 'client/js/scrollreveal.min.js' %}"></script>
+    <script src="{% static 'client/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'client/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'client/js/imgfix.min.js' %}"></script>
+    <script src="{% static 'client/js/slick.js' %}"></script>
+    <script src="{% static 'client/js/lightbox.js' %}"></script>
+    <script src="{% static 'client/js/isotope.js' %}"></script>
+    <script src="{% static 'client/js/lot-form-handling.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
 
-  <!-- include modals here -->
-  {% block modal %}
+    <!-- Global Init -->
+    <script src="{% static 'client/js/custom.js' %}"></script>
 
-  {% endblock %}
-  <!-- modal ended -->
-
-  <!-- jQuery -->
-  <!-- <script src="{% static 'client/js/jquery-2.1.0.min.js' %}"></script> -->
-  <script src="{% static 'client/js/jquery.min.js' %}"></script>
-
-  <!-- Bootstrap -->
-  <script src="{% static 'client/js/popper.js' %}"></script>
-  <script src="{% static 'client/js/bootstrap.min.js' %}"></script>
-
-  <!-- Plugins -->
-  <script src="{% static 'client/js/toastr.min.js' %}"></script>
-  <script src="{% static 'client/js/owl-carousel.js' %}"></script>
-  <script src="{% static 'client/js/accordions.js' %}"></script>
-  <script src="{% static 'client/js/datepicker.js' %}"></script>
-  <script src="{% static 'client/js/scrollreveal.min.js' %}"></script>
-  <script src="{% static 'client/js/waypoints.min.js' %}"></script>
-  <script src="{% static 'client/js/jquery.counterup.min.js' %}"></script>
-  <script src="{% static 'client/js/imgfix.min.js' %}"></script>
-  <script src="{% static 'client/js/slick.js' %}"></script>
-  <script src="{% static 'client/js/lightbox.js' %}"></script>
-  <script src="{% static 'client/js/isotope.js' %}"></script>
-  <script src="{% static 'client/js/lot-form-handling.js' %}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
-
-
-  <!-- Global Init -->
-  <script src="{% static 'client/js/custom.js' %}"></script>
-
-  <script>
-
-    $(function () {
-      var selectedClass = "";
-      $("p").click(function () {
-        selectedClass = $(this).attr("data-rel");
-        $("#portfolio").fadeTo(50, 0.1);
-        $("#portfolio div").not("." + selectedClass).fadeOut();
-        setTimeout(function () {
-          $("." + selectedClass).fadeIn();
-          $("#portfolio").fadeTo(50, 1);
-        }, 500);
-
+    <script>
+      $(function () {
+        var selectedClass = '';
+        $('p').click(function () {
+          selectedClass = $(this).attr('data-rel');
+          $('#portfolio').fadeTo(50, 0.1);
+          $('#portfolio div')
+            .not('.' + selectedClass)
+            .fadeOut();
+          setTimeout(function () {
+            $('.' + selectedClass).fadeIn();
+            $('#portfolio').fadeTo(50, 1);
+          }, 500);
+        });
       });
-    });
+    </script>
 
-  </script>
+    <script src="{% static 'client/js/js.cookie.min.js' %}"></script>
+    <script
+      src="https://cdn.tiny.cloud/1/8mi4jqf4ibau77s64pib2osa9gu71r0xtmpszazjn5h9ab4k/tinymce/6/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
+    <!-- Popperjs -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha256-BRqBN7dYgABqtY9Hd4ynE+1slnEw+roEPFzQ7TRRfcg="
+      crossorigin="anonymous"
+    ></script>
+    <!-- Tempus Dominus JavaScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/js/tempus-dominus.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- custom form handling: for update/display form data and get data on form on tab click-->
+    <script src="{% static 'client/js/form-handling.js' %}"></script>
+    <script src="{% static 'client/js/lot.js' %}"></script>
 
+    {% block js %} {% endblock %}
 
-  <script src="{% static 'client/js/js.cookie.min.js' %}"></script>
-
-  <!-- custom form handling: for update/display form data and get data on form on tab click-->
-  <script src="{% static 'client/js/form-handling.js' %}"></script>
-
-  <script src="https://cdn.tiny.cloud/1/8mi4jqf4ibau77s64pib2osa9gu71r0xtmpszazjn5h9ab4k/tinymce/6/tinymce.min.js"
-    referrerpolicy="origin"></script>
-  <!-- Popperjs -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha256-BRqBN7dYgABqtY9Hd4ynE+1slnEw+roEPFzQ7TRRfcg=" crossorigin="anonymous"></script>
-  <!-- Tempus Dominus JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/js/tempus-dominus.min.js"
-    crossorigin="anonymous"></script>
-
-
-
-
-  {% block js %}
-  {% endblock %}
-
-  <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-      // DOM loaded
-      {% block domready %}
-      {% endblock %}
-    })
-  </script>
-
-</body>
-
-
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        // DOM loaded
+        {% block domready %}
+        {% endblock %}
+      })
+    </script>
+  </body>
 </html>

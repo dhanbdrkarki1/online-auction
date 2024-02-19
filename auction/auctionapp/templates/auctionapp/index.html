@@ -150,7 +150,9 @@
                                     <p class="display-5 font-weight-bold text-capitalize">{{ lot.name }}</p>
                                     <p class="text-muted text-uppercase">current bid</p>
                                     <p>Rs. {{ lot.starting_price }}</p>
-                                    <p class="text-muted">1 day left</p>
+                                    <p class="text-muted">
+                                    {{ lot.get_time_left }}
+                                    </p>
                                 </div>
                             </div>
                         </a>
@@ -491,9 +493,5 @@
 
 {% include 'account/modal/loginModal.html' %}
 {% include 'account/modal/registerModal.html' %}
-
-{% endblock %}
-
-{% block js %}
 
 {% endblock %}
