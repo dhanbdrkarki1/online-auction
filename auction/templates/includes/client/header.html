@@ -1,35 +1,72 @@
+<style>
+    #search {
+        outline: none;
+        border: none;
+        display: inline-block;
+        width: 300px;
+
+    }
+
+    .fa-search {
+        font-size: 20px;
+        padding: 10px;
+        margin-bottom: 3px;
+        padding-right: 20px;
+    }
+
+    .search-nav-item {
+        height: 40px;
+    }
+
+    .submenu:hover ul {
+        display: block;
+    }
+</style>
+
 <!-- ***** Header Area Start ***** -->
 <header class="header-area header-sticky">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
-                        <img src="assets/images/logo.png">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li class="scroll-to-section"><a href="{% url 'auctionapp:home' %}" class="active">Home</a></li>
-                        <li class="scroll-to-section"><a href="#men">Men's</a></li>
-                        <li class="scroll-to-section"><a href="#women">Women's</a></li>
-                        <li class="scroll-to-section"><a href="#kids">Kid's</a></li>
-                        <li class="submenu">
-                            <a href="javascript:;">Pages</a>
+                        <a class="nav-item mr-lg-3" href="{% url 'auctionapp:home' %}" class="logo">
+                            <h3>BidMe</h3>
+                        </a>
+                        <li class="submenu mr-lg-5">
+                            <a href="javascript:;">
+                                Categories
+                            </a>
                             <ul>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="products.html">Products</a></li>
-                                <li><a href="single-product.html">Single Product</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="#">Fine Arts</a></li>
+                                <li><a href="#">Collectibles</a></li>
+                                <li><a href="#">Furnitures</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item rounded bg-light search-nav-item"><input type="text" id="search"
+                                class="bg-light" placeholder="Search for arts, collectibles, etc"><span
+                                class="fa fa-search text-muted"></span></li>
+                        <li class="scroll-to-section"><a href="#">Sell</a></li>
+                        <li class="scroll-to-section"><a href="#">
+                                <i class="bi bi-heart text-primary text-bold"></i>
+                            </a></li>
+                        <li class="scroll-to-section"><a href="#">
+                                <i class="bi bi-bell text-primary text-bold"></i>
+                            </a></li>
                         {% if request.user.is_authenticated %}
                         <li class="submenu">
                             <a href="javascript:;">
                                 Hello {{ request.user.first_name|default:request.user.username }}
                             </a>
                             <ul>
+                                <li><a href="#">My Favourite Lots</a></li>
+                                <li><a href="#">My Bids</a></li>
+                                <li><a href="#">My won lots</a></li>
+
+                                <li><a href="{% url 'lots:lots_list' %}">Lots in auction</a></li>
+                                <li><a href="#">My Sold Lots</a></li>
+
+
                                 <li><a href="{% url 'account:profile_info' %}">Settings</a></li>
                                 <li><a href="{% url 'account:logout' %}">Logout</a></li>
                             </ul>
@@ -43,7 +80,6 @@
                     <a class='menu-trigger'>
                         <span>Menu</span>
                     </a>
-                    <!-- ***** Menu End ***** -->
                 </nav>
             </div>
         </div>

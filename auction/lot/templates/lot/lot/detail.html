@@ -1,0 +1,470 @@
+{% extends 'client/base.html' %}
+{% load static %}
+{% load lot_tags %}
+{% load thumbnail %}
+
+{% block content %}
+<style>
+    #featured {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    .thumbnail {
+        object-fit: cover;
+        max-width: 180px;
+        max-height: 100px;
+        cursor: pointer;
+        margin: 5px;
+        border: 1px solid rgb(230, 220, 220);
+
+    }
+
+    .thumbnail:hover {
+        border: 1px solid rgb(185, 46, 46);
+    }
+
+    #slide-wrapper {
+        max-width: 800px;
+        display: flex;
+        min-height: 100px;
+        align-items: center;
+    }
+
+    #slider {
+        width: 635px;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+    }
+
+    #slider::-webkit-scrollbar {
+        display: none;
+    }
+
+    .arrow {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        opacity: .5;
+        transition: .3s;
+    }
+
+    .arrow:hover {
+        opacity: 1;
+    }
+
+    @media screen and (max-width: 768px) {
+        .thumbnail {
+            max-width: 100px;
+            /* Adjust as needed for smaller devices */
+            max-height: 80px;
+            /* Adjust as needed for smaller devices */
+        }
+
+        #slide-wrapper {
+            max-width: 100%;
+            overflow-x: smooth;
+            display: flex;
+            min-height: 100px;
+            align-items: center;
+            -webkit-overflow-scrolling: touch;
+        }
+
+    }
+</style>
+
+<div class="main-banner" style="padding-top:120px;" id="top">
+    <!-- Lot Detail Start -->
+    <div class="container py-5">
+        <div class="row">
+
+            <div class="col-lg-8 pb-5">
+                <h3 class="font-weight-semi-bold mb-4">{{ lot.name | title }}</h3>
+
+                <!-- lot images start -->
+                <div class="row pr-xl-4">
+
+                    <img id="featured" class="mb-2"
+                        src="{% if lot_images %}{{ lot_images.0.image|thumbnail_url:'lot_detail_thumbnail' }}{% endif %}">
+
+                    <div id="slide-wrapper">
+                        <i class="bi bi-chevron-left arrow" id="slideLeft"></i>
+                        <div id="slider">
+                            {% for image in lot_images %}
+                            <img class="thumbnail {% if forloop.first %}active{% endif %}"
+                                src="{{ image.image|thumbnail_url:'lot_detail_thumbnail' }}">
+                            {% endfor %}
+                        </div>
+                        <i class="bi bi-chevron-right arrow pl-3" id="slideRight"></i>
+                    </div>
+                    <!-- lot images end -->
+
+                    <!-- lot description start -->
+                    <div class="row mt-md-5">
+                        <div class="col">
+                            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                                <a class="nav-item nav-link active" data-toggle="tab" href="#item-overview">Item
+                                    Overview</a>
+                                <a class="nav-item nav-link" data-toggle="tab" href="#shipping">Shipping</a>
+                                <a class="nav-item nav-link" data-toggle="tab" href="#about-seller">About Seller</a>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="item-overview">
+                                    <h5 class="mb-3">Description</h5>
+                                    <p>
+                                        {{ lot.description|markdown }}
+                                    </p>
+                                </div>
+                                <div class="tab-pane fade" id="shipping">
+                                    <h5 class="mb-3">Shipping</h5>
+                                    <p class="text-bold">
+                                        Estimated delivery time
+                                    </p>
+                                    <p class="text-muted">Once you make your payment, the seller is required to ship
+                                        your order within 3 working days. Shipping to your location from Kathmandu
+                                        usually takes 2-8
+                                        days.
+                                        <br>
+                                        Current safety precautions in some regions mean shipping might take a little
+                                        longer. We are closely monitoring the situation and, so far, there haven’t been
+                                        many delays.
+                                        We’ll keep you updated if the situation changes.
+                                    </p>
+
+                                    <p class="text-bold mt-2">
+                                        Save shipping costs
+                                    </p>
+                                    <p class="text-muted">
+                                        You can pick up this object from the seller in:
+                                        {{ shipping_details.item_location }}.
+                                        Each lot has it's own Shipping, Handling, and Insurance Cost. You MAY NOT
+                                        combine
+                                        shipping costs however, items will be
+                                        shipped to you in the same mailing package when possible.
+                                    </p>
+                                </div>
+                                <div class="tab-pane fade" id="about-seller">
+                                    <div class="row">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <img src="{% static 'client/images/images/shoe2.jpg' %}"
+                                                            class="img-fluid rounded" alt="Seller Image">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h3 class="card-title">
+                                                            <a href="{{ lot.get_absolute_url_full_name }}">
+                                                                {{ lot.seller.first_name }} {{ lot.seller.last_name }}
+                                                            </a>
+                                                        </h3>
+                                                        <p class="card-text text-muted">Kathmandu, Nepal</p>
+                                                        <p class="card-text text-muted">Bidme memeber since
+                                                            {{ lot.seller.created_at|date:"F j, Y" }}
+
+                                                        </p>
+                                                        <p class="card-text">
+                                                            <a href="{{ lot.get_absolute_url_full_name }}"
+                                                                class="text-primary">View Seller Profile</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-md-6">
+                                                        <a href="#" class="btn btn-secondary btn-block">
+                                                            <i class="bi bi-chat-dots"></i> Chat with
+                                                            Seller</a>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a href="#" class="btn btn-primary btn-block">
+                                                            <i class="bi bi-plus"></i> Follow
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
+                                            <div class="media mb-4">
+                                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
+                                                    style="width: 45px" />
+                                                <div class="media-body">
+                                                    <h6>
+                                                        John Doe<small> - <i>01 Jan 2045</i></small>
+                                                    </h6>
+                                                    <div class="text-primary mb-2">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star-half-alt"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                    <p>
+                                                        Diam amet duo labore stet elitr ea clita ipsum, tempor
+                                                        labore accusam ipsum et no at. Kasd diam tempor rebum
+                                                        magna dolores sed sed eirmod ipsum.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="mb-4">Leave a review</h4>
+                                            <small>Your email address will not be published. Required fields
+                                                are marked *</small>
+                                            <div class="d-flex my-3">
+                                                <p class="mb-0 mr-2">Your Rating * :</p>
+                                                <div class="text-primary">
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <form>
+                                                <div class="form-group">
+                                                    <label for="message">Your Review *</label>
+                                                    <textarea id="message" cols="30" rows="5"
+                                                        class="form-control"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="name">Your Name *</label>
+                                                    <input type="text" class="form-control" id="name" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">Your Email *</label>
+                                                    <input type="email" class="form-control" id="email" />
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    <input type="submit" value="Leave Your Review"
+                                                        class="btn btn-primary px-3" />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- lot description end -->
+                </div>
+            </div>
+
+            <div class="col-lg-4 pb-5">
+
+                <h5 id="countdown_{{ lot.pk }}" class="font-weight-semi-bold mb-4">
+                </h5>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-muted">Current Bid</p>
+                        <h3 class="card-title">Rs. {{ lot.starting_price }}</h3>
+                        <div class="form-outline mb-4">
+                            <select id="bidAmount" name="bid_amount" class="form-control">
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary">Place a Bid</button>
+                        <p class="card-text mb-4">
+                            <p class="text-muted"><i class="bi bi-truck"></i> Rs. 100 from Kathmandu, arrives in 2-8 days
+                            </p>
+                            <p class="text-muted"><i class="bi bi-bank"></i> Buyer Protection fee: 9% + € 3</p>
+                            <p class="text-muted" id="closingTimeText_{{ lot.pk }}"></p>
+
+                        </p>
+                    
+
+                        <hr>
+                        <div class="row">
+                            <div class="col text-muted">
+                                <small>Bidder 123</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>2 hours ago</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>Rs. 500</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-bold">
+                                <small>Bidder 123</small>
+                            </div>
+                            <div class="col text-bold">
+                                <small>2 hours ago</small>
+                            </div>
+                            <div class="col text-bold">
+                                <small>Rs. 500</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-muted">
+                                <small>Bidder 123</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>2 hours ago</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>Rs. 500</small>
+                            </div>
+                        </div>
+
+                        <p class="text-bold my-2" id="seeAllBids" style="cursor: pointer;">See all bids(5) <i
+                                class="bi bi-chevron-down"></i></p>
+
+                        <div class="row user-bid" style="display: none;">
+                            <div class="col text-muted">
+                                <small>Bidder 123</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>2 hours ago</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>Rs. 500</small>
+                            </div>
+                        </div>
+                        <div class="row user-bid" style="display: none;">
+                            <div class="col text-muted">
+                                <small>Bidder 123</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>2 hours ago</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>Rs. 500</small>
+                            </div>
+                        </div>
+                        <div class="row user-bid" style="display: none;">
+                            <div class="col text-muted">
+                                <small>Bidder 123</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>2 hours ago</small>
+                            </div>
+                            <div class="col text-muted">
+                                <small>Rs. 500</small>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <h6 class="text-bold">Any Questions?</h6>
+                        <p class="card-text mb-4">
+                        <p class="text-muted"><i class="bi bi-question-circle-fill"></i>
+                            <a href="#">Get in touch via our Help
+                                Centre</a>
+                        </p>
+                        <h6 class="text-bold mt-3">Payment Options</h6>
+                        <div class="mt-3">
+                            <img src="{% static 'client/images/logo/esewa.png' %}" alt="esewa"
+                                style="width: 80px; height: 40px;">
+                            <img src="{% static 'client/images/logo/khalti.png' %}" alt="khalti"
+                                style="width: 80px; height: 40px;">
+                        </div>
+                        <h6 class="text-bold mt-3">
+                            Share this object with your friends
+                        </h6>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endblock %}
+    <!-- Lot Detail End -->
+
+    {% block js %}
+    <script>
+    $(document).ready(function() {
+        // get remaining time and update countdown for lot id
+        var closingTime_{{ lot.pk }} = new Date('{{ lot.get_closing_time|date:"Y-m-d H:i:s" }}').getTime();
+        var countdown_{{ lot.pk }} = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = closingTime_{{ lot.pk }} - now;
+            if (distance < 0) {
+                clearInterval(countdown_{{ lot.pk }});
+                document.getElementById('countdown_{{ lot.pk }}').innerHTML = 'Bidding closed.';
+                return;
+            }
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            var remainingTime = '';
+            if (days > 0) {
+                remainingTime += `${days}d `;
+            }
+            if (hours > 0 || days > 0) {
+                remainingTime += `${hours}h `;
+            }
+            if (minutes > 0 || hours > 0 || days > 0) {
+                remainingTime += `${minutes}m `;
+            }
+            remainingTime += `${seconds}s`;
+
+            var lotClosingTimeString = new Date(closingTime_{{ lot.pk }}).toLocaleString('en-US', { weekday: 'long', hour: 'numeric', minute: 'numeric' });
+            console.log(lotClosingTimeString);
+            document.getElementById('countdown_{{ lot.pk }}').innerHTML = `Closes in ${remainingTime}`;
+            document.getElementById('closingTimeText_{{ lot.pk }}').innerHTML = `<i class="bi bi-hourglass-bottom"></i> Closes: ${lotClosingTimeString}`;
+
+        }, 1000);
+    });
+
+    // generate bid amount selection option
+    document.addEventListener('DOMContentLoaded', function () {
+        var select = document.getElementById('bidAmount');
+        var placeBidBtn = document.getElementById('placeBidBtn');
+        var startingPrice = {{ lot.starting_price }};
+
+        // get the maximum bid limit based on the starting price
+        function calculateMaxBidLimit(startingPrice) {
+            var multiplier = 2; 
+            var additionalAmount = 500;
+            return startingPrice * multiplier + additionalAmount;
+        }
+
+        var maxBidLimit = calculateMaxBidLimit(startingPrice);
+
+        // increments based on the maximum bid limit
+        function generateIncrements(maxBidLimit) {
+            var increments = [];
+            var increment = 20;
+
+            while (increment <= maxBidLimit - startingPrice && increments.length < 15) {
+                increments.push(increment);
+                increment += 50; // Increment by 50 for example
+            }
+            return increments;
+        }
+        function generateOptions(maxBidLimit) {
+            var increments = generateIncrements(maxBidLimit);
+
+            increments.forEach(function (increment) {
+                var option = document.createElement('option');
+                option.text = 'Rs. ' + (startingPrice + increment);
+                option.value = startingPrice + increment;
+                select.add(option);
+            });
+        }
+        generateOptions(maxBidLimit);
+
+        placeBidBtn.addEventListener('click', function () {
+            var selectedAmount = select.value;
+            console.log('Selected bid amount:', selectedAmount);
+        });
+    });
+
+
+
+
+    </script>
+    {% endblock %}

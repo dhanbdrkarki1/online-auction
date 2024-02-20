@@ -8,6 +8,8 @@ urlpatterns = [
     path('', include('auctionapp.urls', namespace='auctionapp')),
     path('myadmin/', include('myadmin.urls', namespace='myadmin')),
     path('account/', include('account.urls', namespace='account')),
+    path('', include('lot.urls', namespace='lots')),
+
     path('social-auth/', include('social_django.urls', namespace='social')),
 
 ]

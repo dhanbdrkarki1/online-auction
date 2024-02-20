@@ -1,0 +1,83 @@
+{% extends 'client/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-banner" style="padding-top:120px;" id="top">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col-auto">
+                <a href="{% url 'lots:lot_create' %}" class="nav-item nav-link btn btn-primary"><i
+                        class="bi bi-plus-circle-fill"></i> Create new
+                    lot</a>
+            </div>
+        </div>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-lot-in-auction-tab" data-toggle="tab"
+                    href="#nav-lot-in-auction" role="tab" aria-controls="nav-lot-in-auction" aria-selected="true">Lots
+                    in Auction</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                    aria-controls="nav-profile" aria-selected="false">Offered Lots</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                    aria-controls="nav-contact" aria-selected="false">Orders</a>
+            </div>
+        </nav>
+
+
+
+        <div class="tab-content" id="nav-tabContent">
+
+            <!-- Lots in auction -->
+            <div class="tab-pane fade show active" id="nav-lot-in-auction" role="tabpanel"
+                aria-labelledby="nav-lot-in-auction-tab">
+                <h3 class="mt-3">Here are all your lots.</h3>
+                {% if lots_list %}
+
+                <table id="lotsInAuctionTable" class="table mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Lot Name</th>
+                            <th scope="col">Starting Price</th>
+                            <th scope="col">Auction Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lot in lots_list %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td><a href="{{ lot.get_absolute_url }}">{{ lot.name }}</a>
+                            </td>
+                            <td>{{ lot.starting_price }}</td>
+                            <td>{{ lot.auction_duration }} days</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="text-muted">You have not lots at the moment.</p>
+                {% endif %}
+            </div>
+
+
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">offererd lots
+            </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Orders</div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+        $('#lotsInAuctionTable').DataTable({
+            response: true,
+        });
+    });
+</script>
+{% endblock %}
