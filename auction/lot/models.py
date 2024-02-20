@@ -66,14 +66,15 @@ class Lot(models.Model):
         url_string = url_string.replace(' ', '-')
         return reverse('lots:seller_detail', kwargs={'full_name': url_string})
 
-    # Calculate the closing time based on auction start time and duration
+    # closing time based on auction start time and duration
     def get_closing_time(self):
         return self.auction_start_time + timezone.timedelta(days=self.auction_duration)
 
-    # Check if the bidding for this lot is closed
+    # Checking if the bidding for this lot is closed
     def is_bidding_closed(self):
         return self.get_closing_time() <= timezone.now()
     
+    # time left to complete the live auction
     def get_time_left(self):
         closing_time = self.get_closing_time()
         now = timezone.now()
