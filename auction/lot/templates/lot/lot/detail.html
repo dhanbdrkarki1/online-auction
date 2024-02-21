@@ -2,7 +2,7 @@
 {% load static %}
 {% load lot_tags %}
 {% load thumbnail %}
-
+{% load humanize %}
 {% block content %}
 <style>
     #featured {
@@ -257,99 +257,79 @@
 
             <div class="col-lg-4 pb-5">
 
-                <h5 id="countdown_{{ lot.pk }}" class="font-weight-semi-bold mb-4">
+                <h5 id="countdown_{{ lot.id }}" class="font-weight-semi-bold mb-4">
                 </h5>
                 <div class="card">
                     <div class="card-body">
+                        {% if bids %}
                         <p class="text-muted">Current Bid</p>
-                        <h3 class="card-title">Rs. {{ lot.starting_price }}</h3>
-                        <div class="form-outline mb-4">
-                            <select id="bidAmount" name="bid_amount" class="form-control">
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-primary">Place a Bid</button>
+                        <h3 class="card-title">Rs. <span id="currentBidAmt">{{ bids.0.amount }}</span></h3>
+                        {% else %}
+                        <p class="text-muted" id="bidText">Starting Bid</p>
+                        <h3 class="card-title">Rs. <span id="currentBidAmt">{{ lot.starting_price }}
+                        </h3>
+                        {% endif %}
+                        <form id='bidForm'>
+                            <div class="form-outline mb-4">
+                                <select id="bidAmount" name="bid_amount" class="form-control">
+                                </select>
+                            </div>
+                            <button id="placeBidBtn" type="submit" class="btn btn-primary">Place a Bid</button>
+                        </form>
                         <p class="card-text mb-4">
                             <p class="text-muted"><i class="bi bi-truck"></i> Rs. 100 from Kathmandu, arrives in 2-8 days
                             </p>
                             <p class="text-muted"><i class="bi bi-bank"></i> Buyer Protection fee: 9% + € 3</p>
-                            <p class="text-muted" id="closingTimeText_{{ lot.pk }}"></p>
+                            <p class="text-muted" id="closingTimeText_{{ lot.id }}"></p>
 
                         </p>
                     
 
                         <hr>
-                        <div class="row">
-                            <div class="col text-muted">
-                                <small>Bidder 123</small>
-                            </div>
-                            <div class="col text-muted">
-                                <small>2 hours ago</small>
-                            </div>
-                            <div class="col text-muted">
-                                <small>Rs. 500</small>
-                            </div>
+                        <div id="top3BidsContainer">
+                            {% for bid in bids|slice:"3" %}
+                                <div class="row user-bid">
+                                    <div class="col text-muted">
+                                        <small>{% if bid.bidder == request.user %} You {% else %} Bidder {{ bid.bidder.get_username_display }} {% endif %}</small>
+                                    </div>
+                                    <div class="col text-muted">
+                                        <small>{{ bid.bidded_at|naturaltime }}</small>
+                                    </div>
+                                    <div class="col text-muted">
+                                        <small>Rs. {{ bid.amount|intcomma }}</small>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="row">
-                            <div class="col text-bold">
-                                <small>Bidder 123</small>
-                            </div>
-                            <div class="col text-bold">
-                                <small>2 hours ago</small>
-                            </div>
-                            <div class="col text-bold">
-                                <small>Rs. 500</small>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col text-muted">
-                                <small>Bidder 123</small>
-                            </div>
-                            <div class="col text-muted">
-                                <small>2 hours ago</small>
-                            </div>
-                            <div class="col text-muted">
-                                <small>Rs. 500</small>
-                            </div>
-                        </div>
+                        {% if bids|length > 3 %}
+                            <p id="seeAllBids" class="text-bold my-2" style="cursor: pointer;">See all bids (<span id='totalBids'>{{ bids|length }} </span>) <i class="bi bi-chevron-down"></i></p>
+                        {% else %}
+                            <p id="seeAllBids" class="text-bold my-2 d-none" style="cursor: pointer;">See all bids (<span id='totalBids'>{{ bids|length }} </span>) <i class="bi bi-chevron-down"></i></p>
+                        {% endif %}
+                        <div id="seeAllBidsContainer">
+                            {% if bids|length > 3 %}
 
-                        <p class="text-bold my-2" id="seeAllBids" style="cursor: pointer;">See all bids(5) <i
-                                class="bi bi-chevron-down"></i></p>
-
-                        <div class="row user-bid" style="display: none;">
-                            <div class="col text-muted">
-                                <small>Bidder 123</small>
+                                {% for bid in bids|slice:"3:" %}
+                                    <div class="row user-bid" style="display: none;">
+                                        <div class="col text-muted">
+                                            <small>Bidder {{ bid.bidder.get_username_display }}</small>
+                                        </div>
+                                        <div class="col text-muted">
+                                            <small>{{ bid.bidded_at|naturaltime }}</small>
+                                        </div>
+                                        <div class="col text-muted">
+                                            <small>Rs. {{ bid.amount|intcomma }}</small>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                             </div>
-                            <div class="col text-muted">
-                                <small>2 hours ago</small>
-                            </div>
-                            <div class="col text-muted">
-                                <small>Rs. 500</small>
-                            </div>
-                        </div>
-                        <div class="row user-bid" style="display: none;">
-                            <div class="col text-muted">
-                                <small>Bidder 123</small>
-                            </div>
-                            <div class="col text-muted">
-                                <small>2 hours ago</small>
-                            </div>
-                            <div class="col text-muted">
-                                <small>Rs. 500</small>
-                            </div>
-                        </div>
-                        <div class="row user-bid" style="display: none;">
-                            <div class="col text-muted">
-                                <small>Bidder 123</small>
-                            </div>
-                            <div class="col text-muted">
-                                <small>2 hours ago</small>
-                            </div>
-                            <div class="col text-muted">
-                                <small>Rs. 500</small>
-                            </div>
-                        </div>
-
+                        
+                        {% if bids|length == 0 %}
+                            <p class="text-bold" id="noBidMsg">No bids placed.</p>
+                        {% endif %}
                     </div>
+
                 </div>
 
                 <div class="card mt-5">
@@ -381,16 +361,16 @@
     <!-- Lot Detail End -->
 
     {% block js %}
-    <script>
+<script>
     $(document).ready(function() {
         // get remaining time and update countdown for lot id
         var closingTime_{{ lot.pk }} = new Date('{{ lot.get_closing_time|date:"Y-m-d H:i:s" }}').getTime();
-        var countdown_{{ lot.pk }} = setInterval(function () {
+        var countdown_{{ lot.id }} = setInterval(function () {
             var now = new Date().getTime();
-            var distance = closingTime_{{ lot.pk }} - now;
+            var distance = closingTime_{{ lot.id }} - now;
             if (distance < 0) {
-                clearInterval(countdown_{{ lot.pk }});
-                document.getElementById('countdown_{{ lot.pk }}').innerHTML = 'Bidding closed.';
+                clearInterval(countdown_{{ lot.id }});
+                document.getElementById('countdown_{{ lot.id }}').innerHTML = 'Bidding closed.';
                 return;
             }
 
@@ -411,60 +391,237 @@
             }
             remainingTime += `${seconds}s`;
 
-            var lotClosingTimeString = new Date(closingTime_{{ lot.pk }}).toLocaleString('en-US', { weekday: 'long', hour: 'numeric', minute: 'numeric' });
-            console.log(lotClosingTimeString);
-            document.getElementById('countdown_{{ lot.pk }}').innerHTML = `Closes in ${remainingTime}`;
-            document.getElementById('closingTimeText_{{ lot.pk }}').innerHTML = `<i class="bi bi-hourglass-bottom"></i> Closes: ${lotClosingTimeString}`;
-
-        }, 1000);
+            var lotClosingTimeString = new Date(closingTime_{{ lot.id }}).toLocaleString('en-US',
+            { weekday: 'long', hour: 'numeric', minute: 'numeric'
+            });
+            document.getElementById('countdown_{{ lot.id }}').innerHTML = `Closes in ${remainingTime
+            }`;
+            document.getElementById('closingTimeText_{{ lot.id }}').innerHTML = `<i class="bi bi-hourglass-bottom"></i> Closes: ${lotClosingTimeString
+            }`;
+        },
+        1000);
     });
 
-    // generate bid amount selection option
-    document.addEventListener('DOMContentLoaded', function () {
-        var select = document.getElementById('bidAmount');
-        var placeBidBtn = document.getElementById('placeBidBtn');
-        var startingPrice = {{ lot.starting_price }};
+//----------------------------------------------------
+    // function to list bidding amount in dropdown
+//----------------------------------------------------
+    var startingPrice = {{ lot.starting_price }};
+    var highestBidPrice = {% if bids %}{{ bids.0.amount }}{% else %}{{ lot.starting_price }}{% endif %};
+    var bidAmountSelect = document.getElementById('bidAmount');
 
-        // get the maximum bid limit based on the starting price
-        function calculateMaxBidLimit(startingPrice) {
-            var multiplier = 2; 
-            var additionalAmount = 500;
+
+    // get the maximum bid limit based on the starting price or the highest bid amount
+    function calculateMaxBidLimit(startingPrice, highestBidPrice) {
+        var multiplier = 2;
+        var additionalAmount = 500;
+        if (highestBidPrice !== null && highestBidPrice > startingPrice) {
+            return highestBidPrice * multiplier + additionalAmount;
+        } else {
             return startingPrice * multiplier + additionalAmount;
         }
+    }
 
-        var maxBidLimit = calculateMaxBidLimit(startingPrice);
 
-        // increments based on the maximum bid limit
-        function generateIncrements(maxBidLimit) {
-            var increments = [];
-            var increment = 20;
+    var maxBidLimit = calculateMaxBidLimit(startingPrice, highestBidPrice);
 
-            while (increment <= maxBidLimit - startingPrice && increments.length < 15) {
-                increments.push(increment);
-                increment += 50; // Increment by 50 for example
-            }
-            return increments;
+    // increments based on the maximum bid limit
+    function generateIncrements(maxBidLimit, highestBidPrice) {
+        var increments = [];
+        var increment = 20;
+        var startingPrice = highestBidPrice || {{ lot.starting_price }}; 
+
+        while (startingPrice + increment <= maxBidLimit && increments.length < 15) {
+            increments.push(increment);
+            increment += 50;
         }
-        function generateOptions(maxBidLimit) {
-            var increments = generateIncrements(maxBidLimit);
+        return increments;
+    }
+    
+    // generate dropwdown items of bidding prices
+    function generateBiddingPricesOptions(maxBidLimit, highestBidPrice) {
+        console.log('generating prices..');
+        console.log(highestBidPrice);
 
-            increments.forEach(function (increment) {
-                var option = document.createElement('option');
-                option.text = 'Rs. ' + (startingPrice + increment);
-                option.value = startingPrice + increment;
-                select.add(option);
-            });
-        }
-        generateOptions(maxBidLimit);
 
-        placeBidBtn.addEventListener('click', function () {
-            var selectedAmount = select.value;
-            console.log('Selected bid amount:', selectedAmount);
+        var increments = generateIncrements(maxBidLimit, highestBidPrice);
+
+        increments.forEach(function (increment) {
+            var option = document.createElement('option');
+            option.text = 'Rs. ' + (highestBidPrice + increment);
+            option.value = highestBidPrice + increment;
+            bidAmountSelect.add(option);
         });
-    });
+    }
+    
+        // generate bid amount selection option
+        generateBiddingPricesOptions(maxBidLimit, highestBidPrice);
+
+    //----------------------------------------------------
+    // END list bidding amount in dropdown here
+    //----------------------------------------------------
+
+    // submitting the bid form
+    var bidForm = document.getElementById('bidForm');
+    bidForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var selectedAmount = bidAmountSelect.value;
+            // bid confirmation alert
+            Swal.fire({
+                title: `Confirm bid of Rs.${selectedAmount}!`,
+                text: "Please note that all bids are binding. You are required to purchase any lot you win. The bid price does not include shipping cost and the auction fee.",
+                showCancelButton: true,
+                confirmButtonText: "Confirm",
+                cancelButtonText: "Cancel",
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-primary mr-5',
+                    cancelButton: 'btn btn-secondary'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const csrftoken = Cookies.get('csrftoken');
+
+                    fetch('{% url 'lots:place_bid' lot_id=lot.id %}',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrftoken,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({bid_amount:selectedAmount})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Success");
+                        updateBids();
+                        console.log("update bids called");
+
+                        if (data.status === 'ok') {
+                            Swal.fire({
+                                title: "Thanks for your bid!",
+                                text: "Your bid has been successfully placed. You now hold the highest bid!",
+                                icon: "success",
+                                buttonsStyling: false,
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                }
+                            });
+                        } else {
+                            console.log("not okay");
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                }
+            });
+        });
+
+    {% if bids|length > 3 %}
+    document.getElementById('seeAllBids').addEventListener('click', toggleBidDisplay);
+    {% endif %}
+
+    // only the bids after the top 3 will be hidden when collapsing, and the top 3 bids will remain visible.
+    // When expanding, all bids after the top 3 will be shown.
+    function toggleBidDisplay() {
+        console.log('toggleBidDisplay');
+        var bids = document.getElementsByClassName('user-bid');
+        var icon = document.getElementById('seeAllBids').getElementsByTagName('i')[0];
+        for (var i = 3; i < bids.length; i++) {
+            if (bids[i].style.display === 'none') {
+                bids[i].style.display = 'flex';
+            } else {
+                bids[i].style.display = 'none';
+            }
+        }
+
+        if (bids[3].style.display === 'none') {
+            icon.classList.remove('bi-chevron-up');
+            icon.classList.add('bi-chevron-down');
+        } else {
+            icon.classList.remove('bi-chevron-down');
+            icon.classList.add('bi-chevron-up');
+        }
+    }
+
+    // Function to update bids dynamically
+    function updateBids() {
+        console.log("update bids is triggered");
+        var url = `{% url 'lots:get_latest_bids' lot.id %}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                var allTimeHighestPrice = data[0]['amount'];
+                console.log(allTimeHighestPrice);
+                var bidsCount = data.length;
+                var currentBidAmt = document.getElementById('currentBidAmt');
+                var bidPriceText = document.getElementById("bidText");
+                var noBidMsg = document.getElementById('noBidMsg');
+                if (noBidMsg !== null) {
+                    noBidMsg.classList.add('d-none');
+                }
 
 
+                var seeAllBids = document.getElementById('seeAllBids');
+                
+                // if "seeAllBids" already exists, hide the no bids message
+                if (seeAllBids !== null){
+                    if(bidsCount > 3){
+                        seeAllBids.classList.remove('d-none');
+                    }
+                }
+                
+                if(bidPriceText !== null){
+                    bidPriceText.innerHTML = "Current Bid";
+                }
+                currentBidAmt.innerHTML = allTimeHighestPrice;
+                
+                var top3BidsContainer = document.getElementById('top3BidsContainer');
+                var seeAllBidsContainer = document.getElementById('seeAllBidsContainer');
 
+                // Clear existing bids
+                top3BidsContainer.innerHTML = ''; 
+                if(bidsCount > 2){
+                    seeAllBidsContainer.innerHTML = '';
+                }
 
-    </script>
+                data.forEach((bid, index) => {
+                    var isCurrentUser = "{{ request.user.get_username_display }}" === bid.bidder;
+                    var bidderDisplay = isCurrentUser ? "You" : "Bidder " + bid.bidder;
+
+                    var bidHtml = `<div class="row user-bid">
+                                        <div class="col text-muted">
+                                            <small>${bidderDisplay}</small>
+                                        </div>
+                                        <div class="col text-muted">
+                                            <small>${bid.bidded_at}</small>
+                                        </div>
+                                        <div class="col text-muted">
+                                            <small>Rs. ${bid.amount}</small>
+                                        </div>
+                                    </div>`;
+                    if (index < 3) {
+                        top3BidsContainer.insertAdjacentHTML('beforeend', bidHtml);  // Append new top 3 bid HTML
+                    } else {
+                        seeAllBidsContainer.insertAdjacentHTML('beforeend', bidHtml);  // Append new see all bid HTML
+                    }
+                });
+                // updating bids count
+                document.getElementById('totalBids').innerHTML = bidsCount;
+
+                // generate bid amount selection option
+                bidAmountSelect.innerHTML = '';
+                maxBidLimit = calculateMaxBidLimit(highestBidPrice, allTimeHighestPrice);
+                console.log(highestBidPrice, allTimeHighestPrice, maxBidLimit);
+                generateBiddingPricesOptions(maxBidLimit, allTimeHighestPrice);
+
+                toggleBidDisplay();
+
+            })
+        .catch(error => console.error('Error fetching bids:', error));
+    }
+
+</script>
     {% endblock %}

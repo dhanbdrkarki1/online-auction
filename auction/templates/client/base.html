@@ -50,6 +50,9 @@
 
     <link rel="stylesheet" href="{% static 'client/css/lightbox.css' %}" />
     <link rel="stylesheet" href="{% static 'client/css/product-image.css' %}" />
+    <link rel="stylesheet" href="{% static 'common/css/sweetalert2.min.css' %}" />
+
+
 
     <link
       rel="stylesheet"
@@ -145,9 +148,11 @@
     ></script>
     <!-- custom form handling: for update/display form data and get data on form on tab click-->
     <script src="{% static 'client/js/form-handling.js' %}"></script>
-    <script src="{% static 'client/js/lot.js' %}"></script>
+    <script src="{% static 'common/js/sweetalert2.min.js' %}"></script>
 
+    
     {% block js %} {% endblock %}
+    <script src="{% static 'client/js/lot.js' %}"></script>
 
     <script>
       document.addEventListener('DOMContentLoaded', (event) => {

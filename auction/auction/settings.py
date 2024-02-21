@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'social_django',
     'easy_thumbnails',
+    'django.contrib.humanize',
     'auctionapp.apps.AuctionappConfig',
     'myadmin.apps.MyadminConfig',
     'account.apps.AccountConfig',

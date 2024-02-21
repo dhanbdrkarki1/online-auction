@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from datetime import datetime
-
+from django.contrib import messages
 from .choices import ConditionChoices, DurationChoices, PackageTypeChoices, WeightRangeChoices, CarrierTypeChoices
 from django.utils import timezone
-from .models import Lot, LotShippingDetails, Category, LotImage
+from .models import Lot, LotShippingDetails, Category, LotImage, Bid
+import json
+from django.contrib.humanize.templatetags import humanize
+
 
 def lot_list(request):
     lots = Lot.objects.all()
@@ -93,8 +96,9 @@ def lot_detail(request, slug):
     lot = get_object_or_404(Lot, slug=slug)
     lot_images = LotImage.objects.filter(lot=lot)
     shipping_details = LotShippingDetails.objects.filter(lot=lot)
+    bids = Bid.objects.filter(lot=lot).order_by('-amount')
 
-    return render(request, 'lot/lot/detail.html', {'lot': lot, 'lot_images':lot_images, 'shipping_details':shipping_details})
+    return render(request, 'lot/lot/detail.html', {'lot': lot, 'lot_images':lot_images, 'shipping_details':shipping_details, 'bids': bids})
 
 def lot_received(request):
     return render(request, 'lot/lot/received.html')
@@ -114,3 +118,42 @@ def search_categories(request):
 def seller_detail(request, full_name):
 
     return render(request, 'lot/seller/detail.html')
+
+
+
+def place_bid(request, lot_id):
+    lot = get_object_or_404(Lot, id=lot_id)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        bid_amount = data.get('bid_amount')
+        print(bid_amount)
+        bid = Bid.objects.create(lot=lot, bidder=request.user, amount=bid_amount)
+        return JsonResponse({'status': 'ok'})
+
+
+
+def get_latest_bids(request, lot_id):
+    lot = get_object_or_404(Lot, id=lot_id)
+    bids = lot.bids.order_by('-amount') 
+    bids_count = lot.bids.count()
+    print(bids_count)
+
+    # bids data
+    data = []
+    for bid in bids:
+        formatted_bidded_at = humanize.naturaltime(bid.bidded_at)
+        formatted_amount = humanize.intcomma(bid.amount)
+        data.append({
+            'bidder': bid.bidder.get_username_display(),
+            'amount': formatted_amount,
+            'bidded_at': formatted_bidded_at
+        })
+    return JsonResponse(data, safe=False)
+
+def check_bid(request, lot_id):
+    lot = get_object_or_404(Lot, id=lot_id)
+    
+    # Check if there is any bid for the lot
+    bid_exists = Bid.objects.filter(lot=lot).exists()
+    
+    return JsonResponse({'bid_exists': bid_exists})

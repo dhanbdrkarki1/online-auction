@@ -82,6 +82,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             self.username = f"user-{str(uuid4())[:8]}"
         super().save(*args, **kwargs)
 
+    def get_username_display(self):
+            if self.username.startswith('user-'):
+                return self.username[len('user-'):]
+            return self.username
+
 
 
 class ShippingAddress(models.Model):

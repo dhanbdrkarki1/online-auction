@@ -125,3 +125,28 @@ class LotImage(models.Model):
     def __str__(self):
         return self.lot.name
     
+
+class Bid(models.Model):
+    lot = models.ForeignKey('Lot', on_delete=models.CASCADE, related_name='bids')
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bids')
+    amount = models.PositiveIntegerField()
+    bidded_at = models.DateTimeField(default=timezone.now)
+    accepted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Bid on {self.lot} by {self.bidder.username} for Rs. {self.amount}"
+
+    # def save(self, *args, **kwargs):
+    #     # Validate the bid amount
+    #     if self.amount <= 0:
+    #         raise ValueError("Bid amount must be greater than zero.")
+        
+    #     # Check if the bid amount is greater than the current highest bid
+    #     current_highest_bid = self.lot.get_current_highest_bid()
+    #     if current_highest_bid and self.amount <= current_highest_bid.amount:
+    #         raise ValueError("Bid amount must be higher than the current highest bid.")
+        
+    #     # Automatically accept the bid if it meets certain criteria
+    #     if self.amount >= self.lot.starting_price * 1.1:
+    #         self.accepted = True
+    #     super().save(*args, **kwargs)
