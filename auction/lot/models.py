@@ -99,7 +99,7 @@ class Lot(models.Model):
         ]
     
     def __str__(self):
-        return self.name
+        return f"{self.name} added by {self.seller.first_name}"
 
 
 class LotShippingDetails(models.Model):

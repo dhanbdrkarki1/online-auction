@@ -274,7 +274,12 @@
                                 <select id="bidAmount" name="bid_amount" class="form-control">
                                 </select>
                             </div>
-                            <button id="placeBidBtn" type="submit" class="btn btn-primary">Place a Bid</button>
+                            {% if request.user == lot.seller %}
+                                <button id="placeBidBtn" type="submit" class="btn btn-primary d-none">Place a Bid</button>
+                            {% else %}
+                                <button id="placeBidBtn" type="submit" class="btn btn-primary">Place a Bid</button>
+                            {% endif %}
+
                         </form>
                         <p class="card-text mb-4">
                             <p class="text-muted"><i class="bi bi-truck"></i> Rs. 100 from Kathmandu, arrives in 2-8 days
@@ -407,7 +412,6 @@
 //----------------------------------------------------
     var startingPrice = {{ lot.starting_price }};
     var highestBidPrice = {% if bids %}{{ bids.0.amount }}{% else %}{{ lot.starting_price }}{% endif %};
-    var bidAmountSelect = document.getElementById('bidAmount');
 
 
     // get the maximum bid limit based on the starting price or the highest bid amount
@@ -423,7 +427,7 @@
 
 
     var maxBidLimit = calculateMaxBidLimit(startingPrice, highestBidPrice);
-
+    console.log("maxBidLimit", maxBidLimit);
     // increments based on the maximum bid limit
     function generateIncrements(maxBidLimit, highestBidPrice) {
         var increments = [];
@@ -440,16 +444,20 @@
     // generate dropwdown items of bidding prices
     function generateBiddingPricesOptions(maxBidLimit, highestBidPrice) {
         console.log('generating prices..');
-        console.log(highestBidPrice);
-
-
+        console.log(typeof highestBidPrice);
+        if (typeof highestBidPrice === 'string') {
+            // highestBidPrice value uses django intcomma
+            highestBidPrice = parseInt(highestBidPrice.replace(/,/g, ''));
+        }
         var increments = generateIncrements(maxBidLimit, highestBidPrice);
-
+        
+        var bidAmountOptions = document.getElementById('bidAmount');
+        bidAmountOptions.innerHTML = '';
         increments.forEach(function (increment) {
             var option = document.createElement('option');
             option.text = 'Rs. ' + (highestBidPrice + increment);
             option.value = highestBidPrice + increment;
-            bidAmountSelect.add(option);
+            bidAmountOptions.add(option);
         });
     }
     
@@ -464,6 +472,8 @@
     var bidForm = document.getElementById('bidForm');
     bidForm.addEventListener('submit', function (e) {
         e.preventDefault();
+        var bidAmountSelect = document.getElementById('bidAmount');
+
         var selectedAmount = bidAmountSelect.value;
             // bid confirmation alert
             Swal.fire({
@@ -492,11 +502,11 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log("Success");
-                        updateBids();
-                        console.log("update bids called");
-
                         if (data.status === 'ok') {
+                            console.log("Success");
+                            updateBids();
+                            console.log("update bids called");
+
                             Swal.fire({
                                 title: "Thanks for your bid!",
                                 text: "Your bid has been successfully placed. You now hold the highest bid!",
@@ -521,28 +531,6 @@
     document.getElementById('seeAllBids').addEventListener('click', toggleBidDisplay);
     {% endif %}
 
-    // only the bids after the top 3 will be hidden when collapsing, and the top 3 bids will remain visible.
-    // When expanding, all bids after the top 3 will be shown.
-    function toggleBidDisplay() {
-        console.log('toggleBidDisplay');
-        var bids = document.getElementsByClassName('user-bid');
-        var icon = document.getElementById('seeAllBids').getElementsByTagName('i')[0];
-        for (var i = 3; i < bids.length; i++) {
-            if (bids[i].style.display === 'none') {
-                bids[i].style.display = 'flex';
-            } else {
-                bids[i].style.display = 'none';
-            }
-        }
-
-        if (bids[3].style.display === 'none') {
-            icon.classList.remove('bi-chevron-up');
-            icon.classList.add('bi-chevron-down');
-        } else {
-            icon.classList.remove('bi-chevron-down');
-            icon.classList.add('bi-chevron-up');
-        }
-    }
 
     // Function to update bids dynamically
     function updateBids() {
@@ -612,15 +600,39 @@
                 document.getElementById('totalBids').innerHTML = bidsCount;
 
                 // generate bid amount selection option
-                bidAmountSelect.innerHTML = '';
-                maxBidLimit = calculateMaxBidLimit(highestBidPrice, allTimeHighestPrice);
-                console.log(highestBidPrice, allTimeHighestPrice, maxBidLimit);
-                generateBiddingPricesOptions(maxBidLimit, allTimeHighestPrice);
+
+                var bidLimit = calculateMaxBidLimit(highestBidPrice, allTimeHighestPrice);
+                console.log(highestBidPrice, allTimeHighestPrice, bidLimit);
+                generateBiddingPricesOptions(bidLimit, allTimeHighestPrice);
 
                 toggleBidDisplay();
 
             })
         .catch(error => console.error('Error fetching bids:', error));
+    }
+
+
+    // only the bids after the top 3 will be hidden when collapsing, and the top 3 bids will remain visible.
+    // When expanding, all bids after the top 3 will be shown.
+    function toggleBidDisplay() {
+        console.log('toggleBidDisplay');
+        var bids = document.getElementsByClassName('user-bid');
+        var icon = document.getElementById('seeAllBids').getElementsByTagName('i')[0];
+        for (var i = 3; i < bids.length; i++) {
+            if (bids[i].style.display === 'none') {
+                bids[i].style.display = 'flex';
+            } else {
+                bids[i].style.display = 'none';
+            }
+        }
+
+        if (bids[3].style.display === 'none') {
+            icon.classList.remove('bi-chevron-up');
+            icon.classList.add('bi-chevron-down');
+        } else {
+            icon.classList.remove('bi-chevron-down');
+            icon.classList.add('bi-chevron-up');
+        }
     }
 
 </script>
