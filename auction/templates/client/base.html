@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>BidMe</title>
+    <title>{% block title %} BidMe {% endblock %}</title>
 
     <!-- Additional CSS Files -->
     <link
@@ -50,9 +50,10 @@
 
     <link rel="stylesheet" href="{% static 'client/css/lightbox.css' %}" />
     <link rel="stylesheet" href="{% static 'client/css/product-image.css' %}" />
-    <link rel="stylesheet" href="{% static 'common/css/sweetalert2.min.css' %}" />
-
-
+    <link
+      rel="stylesheet"
+      href="{% static 'common/css/sweetalert2.min.css' %}"
+    />
 
     <link
       rel="stylesheet"
@@ -150,7 +151,6 @@
     <script src="{% static 'client/js/form-handling.js' %}"></script>
     <script src="{% static 'common/js/sweetalert2.min.js' %}"></script>
 
-    
     {% block js %} {% endblock %}
     <script src="{% static 'client/js/lot.js' %}"></script>
 
