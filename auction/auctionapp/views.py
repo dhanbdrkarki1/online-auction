@@ -38,6 +38,7 @@ def favorite_lots(request):
     favorite_lots = request.user.favorite_lots.all()
     return render(request, 'auctionapp/favorite_lots.html', {'favorite_lots': favorite_lots})
 
+# can remove stop words, stemming and ranking results
 def search_lots(request):
     search_results = []
     context = None
