@@ -1,6 +1,32 @@
-    .item .down-content {
-        padding-top: 30px;
-        position: relative;
-        z-index: 3;
-        background-color: #fff;
+#search {
+        outline: none;
+        border: none;
+        display: inline-block;
+        width: 300px;
+
     }
+
+.fa-search {
+        font-size: 20px;
+        padding: 10px;
+        margin-bottom: 3px;
+        padding-right: 20px;
+    }
+
+.search-nav-item {
+        height: 40px;
+    }
+
+.submenu:hover ul {
+        display: block;
+    }   
+.item .down-content {
+    padding-top: 30px;
+    position: relative;
+    z-index: 3;
+    background-color: #fff;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

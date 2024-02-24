@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'django.contrib.postgres',
     'social_django',
     'easy_thumbnails',
     'django.contrib.humanize',
@@ -32,6 +33,9 @@ INSTALLED_APPS = [
     'myadmin.apps.MyadminConfig',
     'account.apps.AccountConfig',
     'lot.apps.LotConfig',
+    'chat.apps.ChatConfig',
+
+
 ]
 
 

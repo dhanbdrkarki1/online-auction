@@ -3,6 +3,8 @@ from auctionapp.models import *
 from django.shortcuts import render
 from lot.models import Category, Lot
 from django.contrib.auth.decorators import login_required
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+
 
 def index(request):
     categories = Category.objects.all()
@@ -35,3 +37,22 @@ def lots_based_on_category(request, catgory_slug):
 def favorite_lots(request):
     favorite_lots = request.user.favorite_lots.all()
     return render(request, 'auctionapp/favorite_lots.html', {'favorite_lots': favorite_lots})
+
+def search_lots(request):
+    search_results = []
+    context = None
+    if 'query' in request.GET:
+        query = request.GET.get('query', '')
+        search_vector = SearchVector('name', weight='A') + \
+            SearchVector('description', weight='B')
+        search_query = SearchQuery(query)
+        search_results = Lot.objects.annotate(
+            search=search_vector,
+            rank=SearchRank(search_vector, search_query)
+        ).filter(search=search_query).order_by('-rank')
+
+        context = {
+            'query':query,
+            'results': search_results
+        }
+    return render(request, 'auctionapp/search_results.html', context)

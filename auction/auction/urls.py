@@ -9,6 +9,8 @@ urlpatterns = [
     path('myadmin/', include('myadmin.urls', namespace='myadmin')),
     path('account/', include('account.urls', namespace='account')),
     path('', include('lot.urls', namespace='lots')),
+    path('', include('chat.urls', namespace='chat')),
+
 
     path('social-auth/', include('social_django.urls', namespace='social')),
 
