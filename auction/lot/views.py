@@ -7,10 +7,11 @@ from django.utils import timezone
 from .models import Lot, LotShippingDetails, Category, LotImage, Bid
 import json
 from django.contrib.humanize.templatetags import humanize
-
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 def lot_list(request):
-    lots = Lot.objects.all()
+    lots = Lot.objects.filter(seller=request.user)
 
     context = {
         'lots_list' : lots
@@ -157,3 +158,28 @@ def check_bid(request, lot_id):
     bid_exists = Bid.objects.filter(lot=lot).exists()
     
     return JsonResponse({'bid_exists': bid_exists})
+
+
+@login_required
+@require_POST
+def toggle_favorite(request):
+    lot_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if lot_id and action:
+        try:
+            lot = Lot.objects.get(pk=lot_id)
+            user = request.user
+            if action == 'add-to-favourite':
+                lot.favorites.add(user)
+                print('added')
+                return JsonResponse({'status': 'ok'})
+            else:
+                lot.favorites.remove(user)
+                print('remove')
+
+                return JsonResponse({'status': 'ok'})
+
+        except Lot.DoesNotExist:
+            return JsonResponse({'status': 'error'})
+    else:
+        return JsonResponse({'status': 'error'})

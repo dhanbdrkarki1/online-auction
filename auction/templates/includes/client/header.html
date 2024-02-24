@@ -1,3 +1,4 @@
+{% block css %}
 <style>
     #search {
         outline: none;
@@ -22,6 +23,8 @@
         display: block;
     }
 </style>
+{% endblock %}
+
 
 <!-- ***** Header Area Start ***** -->
 <header class="header-area header-sticky">
@@ -38,16 +41,19 @@
                                 Categories
                             </a>
                             <ul>
-                                <li><a href="#">Fine Arts</a></li>
-                                <li><a href="#">Collectibles</a></li>
-                                <li><a href="#">Furnitures</a></li>
+                                {% for category in categories %}
+
+                                <li><a href="{% url 'auctionapp:lots_based_on_category' catgory_slug=category.slug %}">
+                                        {{ category.name }}</a>
+                                </li>
+                                {% endfor %}
                             </ul>
                         </li>
                         <li class="nav-item rounded bg-light search-nav-item"><input type="text" id="search"
                                 class="bg-light" placeholder="Search for arts, collectibles, etc"><span
                                 class="fa fa-search text-muted"></span></li>
                         <li class="scroll-to-section"><a href="#">Sell</a></li>
-                        <li class="scroll-to-section"><a href="#">
+                        <li class="scroll-to-section"><a href="{% url 'auctionapp:favorite_lots' %}">
                                 <i class="bi bi-heart text-primary text-bold"></i>
                             </a></li>
                         <li class="scroll-to-section"><a href="#">
@@ -59,7 +65,7 @@
                                 Hello {{ request.user.first_name|default:request.user.username }}
                             </a>
                             <ul>
-                                <li><a href="#">My Favourite Lots</a></li>
+                                <li><a href="{% url 'auctionapp:favorite_lots' %}">My Favourite Lots</a></li>
                                 <li><a href="#">My Bids</a></li>
                                 <li><a href="#">My won lots</a></li>
 

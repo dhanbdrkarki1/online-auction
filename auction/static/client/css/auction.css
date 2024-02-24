@@ -1,0 +1,6 @@
+    .item .down-content {
+        padding-top: 30px;
+        position: relative;
+        z-index: 3;
+        background-color: #fff;
+    }

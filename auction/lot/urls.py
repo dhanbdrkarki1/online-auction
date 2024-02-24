@@ -12,6 +12,8 @@ urlpatterns = [
 
 
     path('lot/received/', views.lot_received, name='lot_received'),
+    path('toggle_favorite/', views.toggle_favorite, name='toggle_favorite'),
+
 
     path('search/categories/', views.search_categories, name='search_categories'),
 

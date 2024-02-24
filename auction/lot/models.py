@@ -46,6 +46,7 @@ class Lot(models.Model):
     auction_duration = models.IntegerField(default=2, choices=DurationChoices.choices) # auctioning period of time: 2 ,4 ,5, 10
     scheduled_time = models.DateTimeField(null=True, blank=True) # start auction only at scheduled time
     quantity = models.PositiveIntegerField(default=1)
+    favorites = models.ManyToManyField(User, blank=True, related_name='favorite_lots')
 
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
