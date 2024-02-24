@@ -45,7 +45,9 @@ def search_lots(request):
     if 'query' in request.GET:
         query = request.GET.get('query', '')
         search_vector = SearchVector('name', weight='A') + \
-            SearchVector('description', weight='B')
+            SearchVector('description', weight='B') + \
+            SearchVector('category__name', weight='C')
+
         search_query = SearchQuery(query)
         search_results = Lot.objects.annotate(
             search=search_vector,
