@@ -157,8 +157,8 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <img src="{% static 'client/images/images/shoe2.jpg' %}"
-                                                            class="img-fluid rounded" alt="Seller Image">
+                                                        <img src="{{ lot.seller.profile_image.url }}"
+                                                            style="height:170px;width:170px;" class="img-fluid rounded-circle" alt="{{ lot.seller.get_user_full_name }}">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <h3 class="card-title">
@@ -179,7 +179,7 @@
                                                 </div>
                                                 <div class="row mt-3">
                                                     <div class="col-md-6">
-                                                        <a href="#" class="btn btn-secondary btn-block">
+                                                        <a href="{% url 'chat:user_chat' other_user_id=lot.seller.id %}" class="btn btn-secondary btn-block">
                                                             <i class="bi bi-chat-dots"></i> Chat with
                                                             Seller</a>
                                                     </div>
@@ -365,12 +365,18 @@
             </div>
         </div>
     </div>
-    
+    {{ request.user.id|json_script:"user" }}
+    {{ request.user.username|json_script:"request-user" }}
+    {{ lot.seller.id|json_script:"other-userid" }}
+
     {% endblock %}
     <!-- Lot Detail End -->
 
+
+
     {% block js %}
 <script>
+
     $(document).ready(function() {
         // get remaining time and update countdown for lot id
         var closingTime_{{ lot.pk }} = new Date('{{ lot.get_closing_time|date:"Y-m-d H:i:s" }}').getTime();

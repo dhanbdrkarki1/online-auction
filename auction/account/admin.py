@@ -11,7 +11,7 @@ class CutomUserAdmin(UserAdmin):
     search_fields = ('email','username','first_name','last_name',)
     fieldsets = (
         (None, {'fields': ('username','email', 'password',)}),
-        ('Personal Info', {'fields': ('first_name','last_name', 'phone_number',)}),
+        ('Personal Info', {'fields': ('first_name','last_name', 'phone_number','profile_image')}),
         ('Permissions', {'fields': ('is_verified','is_staff', 'is_active', 'is_admin', 'is_superuser')}),
     )
     add_fieldsets = (

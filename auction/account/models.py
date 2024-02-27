@@ -56,7 +56,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=15, null = True, blank=True)
     is_phone_number_confirmed = models.BooleanField(default=False)
     phone_number_confirmation_token = models.CharField(max_length=50, blank=True, null=True)
-    profile_image = models.ImageField(null = True, blank=True, upload_to=rename_profile_image)
+    profile_image = models.ImageField(default='user.png', upload_to=rename_profile_image)
 
 
     created_at = models.DateTimeField(auto_now_add=True)

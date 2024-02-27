@@ -70,8 +70,36 @@
             <h1 class="h3 mb-3">Messages</h1>
             <div class="card">
                 <div class="row g-0">
+
+
                     <!-- CHAT USER LIST -->
                     <div class="col-12 col-lg-5 col-xl-3 border-right">
+                        <div class="px-4 d-md-block">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1">
+                                    <input type="text" class="form-control my-3" placeholder="Search...">
+                                </div>
+                            </div>
+                        </div>
+
+                        {% for user in users_chatted_with %}
+                        <a href="{% url 'chat:user_chat' other_user_id=user.id %}"
+                            class="list-group-item list-group-item-action border-0">
+                            <div class="d-flex align-items-start">
+                                <img src="{{ user.profile_image.url }}" class="rounded-circle mr-1"
+                                    alt="{{ user.get_full_name }}" width="40" height="40">
+                                <div class="flex-grow-1 ml-3">
+                                    {{ user.get_user_full_name }}
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                        <hr class="d-block d-lg-none mt-1 mb-0">
+                    </div>
+                    <!-- CHAT USER LIST -->
+
+
+                    <!-- <div class="col-12 col-lg-5 col-xl-3 border-right">
                         <div class="px-4 d-md-block">
                             <div class="d-flex align-items-center">
                                 <div class="flex-grow-1">
@@ -123,22 +151,23 @@
                         </a>
 
                         <hr class="d-block d-lg-none mt-1 mb-0">
-                    </div>
+                    </div> -->
 
                     <!-- END CHAT USER LIST -->
 
 
                     <!-- USER MESSAGES -->
+                    {% if other_user %}
+
                     <div class="col-12 col-lg-7 col-xl-9">
                         <div class="py-2 px-4 border-bottom d-lg-block">
                             <div class="d-flex align-items-center py-1">
                                 <div class="position-relative">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                                        class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                                    <img src="{{ other_user.profile_image.url }}" class="rounded-circle mr-1"
+                                        alt="{{ other_user.get_user_full_name }}" width="40" height="40">
                                 </div>
                                 <div class="flex-grow-1 pl-3">
-                                    <strong>Sharon Lessman</strong>
-                                    <div class="text-muted small"><em>Typing...</em></div>
+                                    <strong>{{ other_user.get_user_full_name }}</strong>
                                 </div>
                             </div>
                         </div>
@@ -174,6 +203,17 @@
                             </div>
                         </div>
                     </div>
+                    {% else %}
+                    <div class="my-5 col-lg-7 col-xl-9 d-flex align-items-center justify-content-center">
+                        <div class="text-center">
+                            <img src="{% static 'client/images/chat/chat.png' %}" alt="Chat" class="img-fluid"
+                                style="max-width: 100px;">
+                            <h2>Welcome to chat!</h2>
+                            <p>Start a direct chat with the seller.</p>
+                        </div>
+                    </div>
+
+                    {% endif %}
                     <!-- END USER MESSAGES -->
 
                 </div>

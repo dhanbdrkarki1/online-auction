@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function (event) {
+  console.log('chat init');
   let location = window.location;
   let wsStart = 'ws://';
 
@@ -6,10 +7,10 @@ document.addEventListener('DOMContentLoaded', function (event) {
     wsStart = 'wss://';
   }
 
-  // ankita giri = user_id = 37
-  // sagar = user_id = 39
-
-  var otherUserId = 39;
+  var currentUrl = location.href;
+  var urlParts = currentUrl.split('/');
+  var otherUserId = urlParts[urlParts.length - 2];
+  console.log(otherUserId);
   const urlChat =
     'ws://' + window.location.host + `/ws/chat/` + otherUserId + '/';
 

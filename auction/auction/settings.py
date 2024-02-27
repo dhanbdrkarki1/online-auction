@@ -194,6 +194,7 @@ THUMBNAIL_ALIASES = {
     '': {
         'home_lot_image_thumbnail': {'size': (300, 250), 'crop': 'smart', 'quality':100},
         'lot_detail_thumbnail': {'size': (700, 466), 'crop': 'smart', 'quality': 100},
+        'seller_profile_image_thumbnail': {'size': (200, 200), 'crop': 'smart', 'quality': 100},
 
     },
 }
