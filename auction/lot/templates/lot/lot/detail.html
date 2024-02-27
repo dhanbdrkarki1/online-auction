@@ -368,16 +368,43 @@
     {{ request.user.id|json_script:"user" }}
     {{ request.user.username|json_script:"request-user" }}
     {{ lot.seller.id|json_script:"other-userid" }}
+    {{ lot.slug|json_script:"lot-slug" }}
+
 
     {% endblock %}
     <!-- Lot Detail End -->
-
-
 
     {% block js %}
 <script>
 
     $(document).ready(function() {
+        console.log('lot init');
+        let location = window.location;
+        let wsStart = 'ws://';
+
+        if (location.protocol === 'https') {
+            wsStart = 'wss://';
+        }
+
+        let lotSlug = JSON.parse(
+            document.getElementById('lot-slug').textContent
+        );
+        
+        const urlLot = wsStart + location.host + `/ws/lots/` + lotSlug + '/';
+
+        const requestUser = JSON.parse(
+            document.getElementById('request-user').textContent
+        );
+
+
+        const lotDetailSocket = new WebSocket(urlLot);
+
+        lotDetailSocket.onopen = async function (e) {
+            console.log('open', e);
+        };
+
+
+
         // get remaining time and update countdown for lot id
         var closingTime_{{ lot.pk }} = new Date('{{ lot.get_closing_time|date:"Y-m-d H:i:s" }}').getTime();
         var countdown_{{ lot.id }} = setInterval(function () {
