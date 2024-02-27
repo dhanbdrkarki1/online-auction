@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from uuid import uuid4
 from django.urls import reverse
-
+from .utils import rename_profile_image
 
 User = settings.AUTH_USER_MODEL
 
@@ -40,6 +40,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     user = models.OneToOneField(User, null=True, blank= True, on_delete=models.CASCADE)
     username = models.CharField(max_length=50, unique=True, null = True)
@@ -55,6 +56,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=15, null = True, blank=True)
     is_phone_number_confirmed = models.BooleanField(default=False)
     phone_number_confirmation_token = models.CharField(max_length=50, blank=True, null=True)
+    profile_image = models.ImageField(null = True, blank=True, upload_to=rename_profile_image)
 
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -86,6 +88,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             if self.username.startswith('user-'):
                 return self.username[len('user-'):]
             return self.username
+    
+    def get_user_full_name(self):
+        full_name = f"{self.first_name} {self.last_name}"
+        return full_name
 
 
 

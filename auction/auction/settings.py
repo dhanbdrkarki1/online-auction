@@ -18,6 +18,7 @@ ALLOWED_HOSTS = ['bidme.com','localhost','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -25,10 +26,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'django.contrib.humanize',
     'django.contrib.postgres',
     'social_django',
     'easy_thumbnails',
-    'django.contrib.humanize',
     'auctionapp.apps.AuctionappConfig',
     'myadmin.apps.MyadminConfig',
     'account.apps.AccountConfig',
@@ -194,5 +195,16 @@ THUMBNAIL_ALIASES = {
         'home_lot_image_thumbnail': {'size': (300, 250), 'crop': 'smart', 'quality':100},
         'lot_detail_thumbnail': {'size': (700, 466), 'crop': 'smart', 'quality': 100},
 
+    },
+}
+
+ASGI_APPLICATION = 'auction.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+        'hosts': [('127.0.0.1', 6379)],
+        },
     },
 }

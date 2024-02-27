@@ -42,7 +42,9 @@
     integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous" />
   <link rel="stylesheet" href="{% static 'client/css/auction.css' %}" />
 
-  {% block css %} {% endblock %}
+  {% block css %}
+
+  {% endblock %}
 </head>
 
 <body>
@@ -144,7 +146,6 @@
 
   <script>
     const csrftoken = Cookies.get('csrftoken');
-    console.log(csrftoken);
     document.addEventListener('DOMContentLoaded', (event) => {
       // DOM loaded
       console.log('domready...');
@@ -193,7 +194,6 @@
 
       const searchInput = document.getElementById('search');
       const searchSubmit = document.getElementById('search-submit');
-      console.log(searchInput);
 
       const searchForm = document.getElementById('searchItem');
 
