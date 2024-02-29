@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     console.log('open', e);
   };
 
+  // when data is received
   chatSocket.onmessage = async function (e) {
     console.log('message', e);
 

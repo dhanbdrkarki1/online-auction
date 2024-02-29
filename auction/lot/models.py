@@ -5,6 +5,7 @@ from .choices import *
 from django.utils.text import slugify
 from django.utils import timezone
 from .utils import rename_image
+from channels.db import database_sync_to_async
 
 User=get_user_model()
 
@@ -100,8 +101,13 @@ class Lot(models.Model):
         ]
     
     def __str__(self):
-        return f"{self.name} added by {self.seller.first_name}"
+        seller_name = self.get_seller_name()
 
+        return f"{self.name} added by {seller_name}"
+
+    @database_sync_to_async
+    def get_seller_name(self):
+        return self.seller.get_username_display()
 
 class LotShippingDetails(models.Model):
     lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="lotShippingDetails")
