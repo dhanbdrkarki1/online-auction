@@ -48,10 +48,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def chat_message(self, event):
         await self.send(text_data=json.dumps(event))
 
-    # async def get_user_full_name(self, username):
-    #     user = await self.get_user(username)
-    #     return user.get_user_full_name()
-    
     @sync_to_async
     def get_user_full_name(self, username):
         full_name = User.objects.get(username=username).get_user_full_name()

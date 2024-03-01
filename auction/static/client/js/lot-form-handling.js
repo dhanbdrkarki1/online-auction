@@ -13,27 +13,32 @@ showTab(currentTab); // Display the current tab
 
 function showTab(n) {
   var x = document.getElementsByClassName('step');
-  // Hide all steps
-  for (var i = 0; i < x.length; i++) {
-    x[i].style.display = 'none';
-  }
-  // Display the selected step
-  x[n].style.display = 'block';
+  // Check if the index 'n' is within the bounds of the 'x' array
+  if (n >= 0 && n < x.length) {
+    // Hide all steps
+    for (var i = 0; i < x.length; i++) {
+      x[i].style.display = 'none';
+    }
+    // Display the selected step
+    x[n].style.display = 'block';
 
-  // Fix Previous/Next buttons
-  if (n == 0) {
-    document.getElementById('prevBtn').style.display = 'none';
-  } else {
-    document.getElementById('prevBtn').style.display = 'inline';
-  }
-  if (n == x.length - 1) {
-    document.getElementById('nextBtn').innerHTML = 'Submit';
-  } else {
-    document.getElementById('nextBtn').innerHTML = 'Next';
-  }
+    // Fix Previous/Next buttons
+    if (n == 0) {
+      document.getElementById('prevBtn').style.display = 'none';
+    } else {
+      document.getElementById('prevBtn').style.display = 'inline';
+    }
+    if (n == x.length - 1) {
+      document.getElementById('nextBtn').innerHTML = 'Submit';
+    } else {
+      document.getElementById('nextBtn').innerHTML = 'Next';
+    }
 
-  // Update step indicator
-  fixStepIndicator(n);
+    // Update step indicator
+    fixStepIndicator(n);
+  } else {
+    console.error('Invalid tab index:', n);
+  }
 }
 
 function nextPrev(n) {

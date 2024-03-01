@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import Lot, Bid
 from channels.db import database_sync_to_async
+from django.contrib.humanize.templatetags import humanize
 
 User = get_user_model()
 
@@ -69,8 +70,9 @@ class BidConsumer(AsyncWebsocketConsumer):
         for bid in bids:
             latest_bids.append({
                 'bidder': bid.bidder.get_username_display(),
-                'amount': bid.amount,
-                'bidded_at': bid.bidded_at.strftime("%Y-%m-%d %H:%M:%S")
+                'amount': str(humanize.intcomma(bid.amount)),  # Convert to regular string
+                'bidded_at': str(humanize.naturaltime(bid.bidded_at))  # Convert to regular string
             })
         print("latest bids------", latest_bids)
         return latest_bids
+

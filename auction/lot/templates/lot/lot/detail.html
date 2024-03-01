@@ -534,7 +534,10 @@
                         const latestBids = bidData.latest_bids;
                         updateBids(latestBids);
 
-                        Swal.fire({
+
+                    };
+
+                    Swal.fire({
                             title: "Thanks for your bid!",
                             text: "Your bid has been successfully placed. You now hold the highest bid!",
                             icon: "success",
@@ -543,7 +546,6 @@
                                 confirmButton: 'btn btn-primary'
                             }
                         });
-                    };
 
 
                 }
@@ -618,13 +620,16 @@
                 var bidLimit = calculateMaxBidLimit(highestBidPrice, allTimeHighestPrice);
                 console.log(highestBidPrice, allTimeHighestPrice, bidLimit);
                 generateBiddingPricesOptions(bidLimit, allTimeHighestPrice);
-                toggleBidDisplay();
+                if(bidsCount > 2){
+                    toggleBidDisplay();
+                }
     }
 
-        {% if bids|length > 3 %}
+    
+    {% if bids|length > 3 %}
     document.getElementById('seeAllBids').addEventListener('click', toggleBidDisplay);
     {% endif %}
-
+    
     // only the bids after the top 3 will be hidden when collapsing, and the top 3 bids will remain visible.
     // When expanding, all bids after the top 3 will be shown.
     function toggleBidDisplay() {
@@ -647,6 +652,8 @@
             icon.classList.add('bi-chevron-up');
         }
     }
+
+
 
 </script>
     {% endblock %}
