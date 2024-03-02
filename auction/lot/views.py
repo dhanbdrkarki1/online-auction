@@ -95,6 +95,8 @@ def lot_create(request):
         if scheduled_time:
             delay = (bidding_closing_time - current_time).total_seconds()
             print("Delayed by.......", delay)
+
+            # apply_async -> alternative to delay but allow customization like task routing, task expiration time, priority
             notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=100)
             # notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=delay)
 
