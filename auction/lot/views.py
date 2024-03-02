@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from datetime import datetime
+from datetime import timedelta
 from django.contrib import messages
 from .choices import ConditionChoices, DurationChoices, PackageTypeChoices, WeightRangeChoices, CarrierTypeChoices
 from django.utils import timezone
@@ -9,6 +10,7 @@ import json
 from django.contrib.humanize.templatetags import humanize
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from .tasks import notify_winner_and_close_bidding
 
 def lot_list(request):
     lots = Lot.objects.filter(seller=request.user)
@@ -39,47 +41,65 @@ def lot_create(request):
         carrier_type = request.POST.get('carrier_type')
         shipping_notes = request.POST.get('shipping_notes')
         
-        auction_start_time = None
+        current_time = timezone.now()
         if scheduled_time is None:
-            scheduled_time = None
-            auction_start_time = timezone.now()
+            auction_start_time = current_time
+            scheduled_time = auction_start_time
         else:
             scheduled_time = datetime.strptime(scheduled_time, "%Y/%m/%d %H:%M:%S")
+            auction_start_time = scheduled_time
+        
+        bidding_closing_time = auction_start_time + timedelta(days=int(auction_duration))
+
         starting_price = int(starting_price) if starting_price else None
         buy_it_now_price = int(buy_it_now_price) if buy_it_now_price else None
         reserve_price = int(reserve_price) if reserve_price else None
 
-        lot = Lot.objects.create(
-            category=category,
-            seller=request.user,
-            name=lot_name,
-            condition=lot_condition,
-            description=lot_description,
-            starting_price=starting_price,
-            buy_it_now_price=buy_it_now_price,
-            reserve_price=reserve_price,
-            auction_start_time=auction_start_time, 
-            auction_duration=auction_duration,
-            scheduled_time=scheduled_time,
-            quantity=quantity
-        )
-        
-        LotShippingDetails.objects.create(
-            lot=lot,
-            package_type=package_type,
-            dimensions=dimensions,
-            weight=package_weight,
-            item_location=item_location,
-            shipment_cost=shipment_cost,
-            carrier=carrier_type,
-            shipping_notes=shipping_notes
-        )
+        try:
 
-        images = request.FILES.getlist('lot_images')
-        print(images)
-        for image in images:
-            print(image)
-            LotImage.objects.create(lot=lot, image=image)
+            lot = Lot.objects.create(
+                category=category,
+                seller=request.user,
+                name=lot_name,
+                condition=lot_condition,
+                description=lot_description,
+                starting_price=starting_price,
+                buy_it_now_price=buy_it_now_price,
+                reserve_price=reserve_price,
+                auction_start_time=auction_start_time, 
+                auction_duration=auction_duration,
+                scheduled_time=scheduled_time,
+                quantity=quantity
+            )
+            
+            LotShippingDetails.objects.create(
+                lot=lot,
+                package_type=package_type,
+                dimensions=dimensions,
+                weight=package_weight,
+                item_location=item_location,
+                shipment_cost=shipment_cost,
+                carrier=carrier_type,
+                shipping_notes=shipping_notes
+            )
+
+            images = request.FILES.getlist('lot_images')
+            print(images)
+            for image in images:
+                print(image)
+                LotImage.objects.create(lot=lot, image=image)
+        except Exception as e:
+            print(e)
+
+        # Schedule task if auction is scheduled for a future time
+        if scheduled_time:
+            delay = (bidding_closing_time - current_time).total_seconds()
+            print("Delayed by.......", delay)
+            notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=100)
+            # notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=delay)
+
+
+
         # storing lot_id for saving images
         request.session['lot_id'] = lot.pk
         return redirect('lots:lot_received')

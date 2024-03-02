@@ -1,37 +1,10 @@
 from celery import shared_task
 from django.core.mail import send_mail
-from .models import Bid
+from .models import Bid, Lot
 from django.contrib.humanize.templatetags import humanize
 from django.conf import settings
+from django.utils import timezone
 
-# @shared_task
-# def bid_placed(bid_id):
-#     """
-#     Task to send an e-mail notification when an bid is
-#     successfully created.
-#     """
-#     try:
-#         bid = Bid.objects.get(id=bid_id)
-#         bid_amount = str(humanize.intcomma(bid.amount))
-#         print("bid_id..........", bid_id)
-#         subject = f'Your bid has been placed successfully'
-#         message = f'Dear {bid.bidder.first_name},\n\n' \
-#                   f'You have successfully placed a bid.\n' \
-#                   f'Your bid ID is {bid.id}.\n' \
-#                   f'Bid amount: {bid_amount}\n'
-#         sender = 'hunterdbk5@gmail.com'
-#         receipient_list = ['dhan.karki@study.lbef.edu.np']
-#         mail_sent = send_mail(subject, message, sender, receipient_list)
-#         if(mail_sent):
-#             print("email sent...")
-#         else:
-#             print("email not sent...")
-
-#         return mail_sent
-#     except Bid.DoesNotExist:
-#         print("Bid does not exist.......................")
-#         return False 
-    
 @shared_task
 def email_on_bid_placed(bid_id, lot_id):
     """
@@ -77,3 +50,42 @@ def email_on_bid_placed(bid_id, lot_id):
     except Bid.DoesNotExist:
         print("Bid does not exist.......................")
         return False 
+
+
+@shared_task
+def notify_winner_and_close_bidding(lot_id):
+    try:
+        lot = Lot.objects.get(id=lot_id)
+        
+        end_time = lot.auction_start_time + timezone.timedelta(hours=lot.auction_duration)
+        # check if the lot has any bids
+        has_bids_on_lot = lot.bids.exists()
+        print("Total bids: " , lot.bids.count())
+
+        # if bids on lot, send mail to winner otherwise seller informing no bids placed.
+        if has_bids_on_lot:
+            highest_bid = Bid.objects.filter(lot=lot).order_by('-amount').first()
+            
+            if highest_bid:
+                highest_bidder_email = highest_bid.bidder.email
+                sender = settings.EMAIL_HOST_USER
+
+                subject = f'Bid Won for {lot.name}🎉🎊'
+                message = f'Congratulations! You have the highest bid for lot {lot.name}. You have the highest bid for lot {lot.name}. Your bid amount is {highest_bid.amount}. Your lot will be delivered soon within the business days.'
+                
+                # Send email to the highest bidder
+                send_mail(subject, message, sender, [highest_bidder_email])
+                print(f"Notification sent to {highest_bidder_email} for winning lot {lot.name}")
+
+            lot.is_auction_over = True
+            lot.save()
+            print(f"Auction for lot {lot_id} has ended. Winner notified and bidding closed.")
+        else:
+            seller_mail = lot.seller.email
+            subject = f'Auction for lot {lot.name} has ended'
+            message = f'The auction for lot {lot.name} has ended, but no bids were placed.'
+            send_mail(subject, message, sender, [seller_mail])
+            print(f"Auction for lot {lot_id} has ended. Notification sent to {seller_mail} for lot {lot.name}. No bids placed.")
+        
+    except Lot.DoesNotExist:
+        print("Lot does not exist")
