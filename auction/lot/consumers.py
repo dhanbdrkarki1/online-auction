@@ -5,7 +5,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import Lot, Bid
 from channels.db import database_sync_to_async
 from django.contrib.humanize.templatetags import humanize
-
+from .tasks import email_on_bid_placed
 User = get_user_model()
 
 class BidConsumer(AsyncWebsocketConsumer):
@@ -55,7 +55,11 @@ class BidConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def save_bid(self, lot, bid_amount):
         bidder = self.user
-        return Bid.objects.create(lot=lot, bidder=bidder, amount=bid_amount)
+        bid = Bid.objects.create(lot=lot, bidder=bidder, amount=bid_amount)
+        bro = email_on_bid_placed.delay(bid.id, self.lot_id)
+        print(bro)
+
+        return bid
 
     @database_sync_to_async
     def get_lot(self):
