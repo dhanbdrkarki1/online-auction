@@ -278,7 +278,7 @@
                                 <select id="bidAmount" name="bid_amount" class="form-control">
                                 </select>
                             </div>
-                            {% if request.user == lot.seller or lot.is_auction_over == True or lot.is_active == True %}
+                            {% if request.user == lot.seller or lot.is_auction_over == True or lot.is_active == False %}
                                 <button id="placeBidBtn" type="submit" class="btn btn-primary d-none">Place a Bid</button>
                             {% else %}
                                 <button id="placeBidBtn" type="submit" class="btn btn-primary">Place a Bid</button>
@@ -656,4 +656,5 @@
 
 </script>
 <script src="{% static 'client/js/lot.js' %}"></script>
+
     {% endblock %}
