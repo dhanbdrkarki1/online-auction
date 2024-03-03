@@ -507,9 +507,9 @@
                         wsStart = 'wss://';
                     }
 
-                    let lotId = JSON.parse(
-                        document.getElementById('lot-id').textContent
-                    );
+                    let lotId = JSON.parse(document.getElementById('lot-id').textContent);
+                    var lot_slug = "{{ lot.slug }}";
+                    console.log("log slug", lot_slug);
                     const urlBid = wsStart + location.host + `/ws/place-bid/` + lotId + '/';
 
                     const requestUser = JSON.parse(
@@ -522,19 +522,10 @@
                         console.log('WebSocket connection established. Sending bid...');
                         bidSocket.send(JSON.stringify({
                             'bidAmount': selectedBidAmount,
+                            'lotSlug':lot_slug,
                         }));
                     };
 
-                    bidSocket.onmessage = async function (e) {
-                        console.log('Message received from server:', e.data);
-                        const bidData = JSON.parse(e.data);
-                        console.log(bidData);
-
-                        const latestBids = bidData.latest_bids;
-                        updateBids(latestBids);
-
-
-                    };
 
                     Swal.fire({
                             title: "Thanks for your bid!",

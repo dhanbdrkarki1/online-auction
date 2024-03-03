@@ -11,6 +11,11 @@ from django.contrib.humanize.templatetags import humanize
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .tasks import notify_winner_and_close_bidding
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+from django.core import serializers
+
+
 
 def lot_list(request):
     lots = Lot.objects.filter(seller=request.user)
