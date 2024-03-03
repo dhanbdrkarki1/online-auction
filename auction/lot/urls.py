@@ -19,4 +19,15 @@ urlpatterns = [
     path('search/categories/', views.search_categories, name='search_categories'),
 
     path('get-latest-bids/<str:lot_id>/', views.get_latest_bids, name='get_latest_bids'),
+
+    # Sold Lots
+    path('seller/lots/sold', views.sold_lots, name='sold_lots'),
+
+    # all the bids made by user
+    path('user/bids/', views.user_bids, name='user_bids'),
+
+    # all the lot won by the user
+    path('user/lots/won/', views.user_won_lots, name='won_lots'),
+
+
 ]

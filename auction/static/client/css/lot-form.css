@@ -1,5 +1,6 @@
 .search-icon {
     position: relative;
+    cursor: pointer;
 }
 
 .search-icon input[type="text"] {
@@ -136,90 +137,90 @@
 
 /* image upload */
 
-                .upload-btn {
-                    display: inline-block;
-                    font-weight: 600;
-                    color: #4045ba;
-                    text-align: center;
-                    min-width: 200px;
-                    padding: 20px;
-                    transition: all 0.3s ease;
-                    cursor: pointer;
-                    border: 2px dashed #4045ba;
-                    border-radius: 10px;
-                }
-        
-                .upload-btn:hover {
-                    background-color: rgba(64, 69, 186, 0.1);
-                }
-        
-                .upload-img-wrap {
-                    display: none;
-                    display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                    gap: 10px;
-                    box-shadow: 0 4px 6px rgba(103, 69, 69, 0.1);
-                    border: 1px solid #ddd;
-                    padding: 20px;
-                    cursor: move;
-                }
-        
-                .upload-img-wrap.uploaded {
-                    display: grid;
-                }
-        
-                .upload-img-box {
-                    width: 100%;
-                    position: relative;
-                }
-        
-                .upload-img-box.large {
-                    width: calc(100% - 20px);
-                    grid-column: span 2;
-                }
-        
-                .upload-img-close {
-                    width: 24px;
-                    height: 24px;
-                    border-radius: 50%;
-                    background-color: rgba(0, 0, 0, 0.5);
-                    position: absolute;
-                    top: 5px;
-                    right: 5px;
-                    display: none;
-                    justify-content: center;
-                    align-items: center;
-                    cursor: pointer;
-                    z-index: 1;
-                    color: white;
-                    font-size: 18px;
-                }
-        
-                .upload-img-box:hover .upload-img-close {
-                    display: flex;
-                }
-        
-                .img-bg {
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-size: cover;
-                    position: relative;
-                }
-        
-        
-                .upload-btn p {
-                    margin: 5px 0;
-                }
-        
-                .upload-btn i {
-                    margin-right: 5px;
-                }
-        
-                .upload-icon-large {
-                    font-size: 10em;
-                    text-align: center;
-                }
-        
-                .d-none {
-                    display: none !important;
-                }
+.upload-btn {
+    display: inline-block;
+    font-weight: 600;
+    color: #4045ba;
+    text-align: center;
+    min-width: 200px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px dashed #4045ba;
+    border-radius: 10px;
+}
+
+.upload-btn:hover {
+    background-color: rgba(64, 69, 186, 0.1);
+}
+
+.upload-img-wrap {
+    display: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    box-shadow: 0 4px 6px rgba(103, 69, 69, 0.1);
+    border: 1px solid #ddd;
+    padding: 20px;
+    cursor: move;
+}
+
+.upload-img-wrap.uploaded {
+    display: grid;
+}
+
+.upload-img-box {
+    width: 100%;
+    position: relative;
+}
+
+.upload-img-box.large {
+    width: calc(100% - 20px);
+    grid-column: span 2;
+}
+
+.upload-img-close {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1;
+    color: white;
+    font-size: 18px;
+}
+
+.upload-img-box:hover .upload-img-close {
+    display: flex;
+}
+
+.img-bg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+
+.upload-btn p {
+    margin: 5px 0;
+}
+
+.upload-btn i {
+    margin-right: 5px;
+}
+
+.upload-icon-large {
+    font-size: 10em;
+    text-align: center;
+}
+
+.d-none {
+    display: none !important;
+}

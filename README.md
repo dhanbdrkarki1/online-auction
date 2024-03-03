@@ -41,3 +41,8 @@ rabbitmq:management
 
 Here, RabbitMQ run on port 5672, and its web-based
 management user interface on port 15672.
+
+# OR, Flower
+
+celery -A auction flower
+url: http://localhost:5555/

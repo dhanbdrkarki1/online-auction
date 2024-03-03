@@ -1,0 +1,50 @@
+{% extends 'client/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="main-banner" style="padding-top:120px;" id="top">
+    <div class="container">
+        <!-- Sold Lots in auction -->
+        <h3 class="mt-3">Here are all your sold lots.</h3>
+        {% if sold_lots %}
+
+        <table id="soldLotsTable" class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Lot Name</th>
+                    <th scope="col">Starting Price</th>
+                    <th scope="col">Auction Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lot in sold_lots %}
+                <tr>
+                    <td scope="row">{{ forloop.counter }}</td>
+                    <td><a href="{{ lot.get_absolute_url }}">{{ lot.name }}</a>
+                    </td>
+                    <td>{{ lot.starting_price|intcomma }}</td>
+                    <td>{{ lot.auction_duration }} days</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">You don't have have any lots sold yet.</p>
+        {% endif %}
+        <!-- END Sold Lots in auction -->
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+        $('#soldLotsTable').DataTable({
+            response: true,
+        });
+    });
+</script>
+{% endblock %}

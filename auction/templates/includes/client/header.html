@@ -1,3 +1,8 @@
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'client/css/templatemo-hexashop.css' %}" />
+
+{% endblock %}
 <!-- ***** Header Area Start ***** -->
 <header class="header-area header-sticky">
     <div class="container">
@@ -9,7 +14,7 @@
                             <h3>BidMe</h3>
                         </a>
                         <li class="submenu mr-lg-5">
-                            <a href="javascript:;">
+                            <a href="#">
                                 Categories
                             </a>
                             <ul>
@@ -30,7 +35,7 @@
                             </form>
 
                         </li>
-                        <li class="scroll-to-section"><a href="#">Sell</a></li>
+                        <li class="scroll-to-section"><a href="{% url 'lots:lot_create' %}">Sell</a></li>
                         <li class="scroll-to-section"><a href="{% url 'auctionapp:favorite_lots' %}">
                                 <i class="bi bi-heart text-primary text-bold"></i>
                             </a></li>
@@ -39,18 +44,18 @@
                             </a></li>
                         {% if request.user.is_authenticated %}
                         <li class="submenu">
-                            <a href="javascript:;">
+                            <a href="#">
                                 Hello {{ request.user.first_name|default:request.user.username }}
                             </a>
                             <ul>
                                 <li><a href="{% url 'auctionapp:favorite_lots' %}">My Favourite Lots</a></li>
-                                <li><a href="#">My Bids</a></li>
+                                <li><a href="{% url 'lots:user_bids' %}">My Bids</a></li>
 
                                 <li><a href="{% url 'chat:chat_view' %}">Messages</a></li>
-                                <li><a href="#">My won lots</a></li>
+                                <li><a href="{% url 'lots:won_lots' %}">My won lots</a></li>
 
                                 <li><a href="{% url 'lots:lots_list' %}">Lots in auction</a></li>
-                                <li><a href="#">My Sold Lots</a></li>
+                                <li><a href="{% url 'lots:sold_lots' %}">My Sold Lots</a></li>
 
 
                                 <li><a href="{% url 'account:profile_info' %}">Settings</a></li>

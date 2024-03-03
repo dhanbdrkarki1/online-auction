@@ -120,8 +120,8 @@ def lot_detail(request, slug):
     lot_images = LotImage.objects.filter(lot=lot)
     shipping_details = LotShippingDetails.objects.filter(lot=lot)
     bids = Bid.objects.filter(lot=lot).order_by('-amount')
-
-    return render(request, 'lot/lot/detail.html', {'lot': lot, 'lot_images':lot_images, 'shipping_details':shipping_details, 'bids': bids})
+    context = {'lot': lot, 'lot_images':lot_images, 'shipping_details':shipping_details, 'bids': bids}
+    return render(request, 'lot/lot/detail.html', context)
 
 def lot_received(request):
     return render(request, 'lot/lot/received.html')
@@ -205,3 +205,27 @@ def toggle_favorite(request):
             return JsonResponse({'status': 'error'})
     else:
         return JsonResponse({'status': 'error'})
+    
+
+def sold_lots(request):
+    sold_lots = Lot.objects.filter(is_auction_over=True)
+    print("Sold lots########", sold_lots)
+    return render(request, 'lot/lot/sold.html', {'sold_lots': sold_lots})
+
+
+def user_bids(request):
+    user_bids = Bid.objects.filter(bidder=request.user).order_by('-bidded_at')
+    return render(request, 'lot/lot/bids.html', {'user_bids': user_bids})
+
+
+def user_won_lots(request):
+    user_bids = Bid.objects.filter(bidder=request.user)
+    won_lots = []
+
+    for bid in user_bids:
+        # Checking if the bid is the highest for the lot and the auction period has ended
+        # if bid.is_highest_bid() and bid.lot.is_auction_over:
+        if bid.is_highest_bid():
+            won_lots.append(bid.lot)
+    return render(request, 'lot/lot/won.html', {'won_lots': won_lots})
+

@@ -278,7 +278,7 @@
                                 <select id="bidAmount" name="bid_amount" class="form-control">
                                 </select>
                             </div>
-                            {% if request.user == lot.seller %}
+                            {% if request.user == lot.seller or lot.is_auction_over == True or lot.is_active == True %}
                                 <button id="placeBidBtn" type="submit" class="btn btn-primary d-none">Place a Bid</button>
                             {% else %}
                                 <button id="placeBidBtn" type="submit" class="btn btn-primary">Place a Bid</button>
@@ -377,47 +377,42 @@
 <script>
 
     $(document).ready(function() {
-// get remaining time and update countdown for lot id
-var closingTime_{{ lot.pk }} = new Date('{{ lot.get_closing_time|date:"Y-m-d H:i:s" }}').getTime();
-var countdown_{{ lot.id }} = setInterval(function () {
-    var now = new Date().getTime();
-    var distance = closingTime_{{ lot.id }} - now;
-    if (distance < 0) {
-        clearInterval(countdown_{{ lot.id }});
-        document.getElementById('countdown_{{ lot.id }}').innerHTML = 'Bidding closed.';
-        return;
-    }
+        // get remaining time and update countdown for lot id
+        var closingTime_{{ lot.pk }} = new Date('{{ lot.get_closing_time|date:"Y-m-d H:i:s" }}').getTime();
+        console.log(closingTime_{{ lot.pk }});
+        var countdown_{{ lot.id }} = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = closingTime_{{ lot.id }} - now;
+            if (distance < 0) {
+                clearInterval(countdown_{{ lot.id }});
+                document.getElementById('countdown_{{ lot.id }}').innerHTML = 'Bidding closed.';
+                return;
+            }
 
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    var remainingTime = '';
-    if (days > 0) {
-        remainingTime += `${days}d `;
-    }
-    if (hours > 0 || days > 0) {
-        remainingTime += `${hours}h `;
-    }
-    if (minutes > 0 || hours > 0 || days > 0) {
-        remainingTime += `${minutes}m `;
-    }
-    remainingTime += `${seconds}s`;
+            var remainingTime = '';
+            if (days > 0) {
+                remainingTime += `${days}d `;
+            }
+            if (hours > 0 || days > 0) {
+                remainingTime += `${hours}h `;
+            }
+            if (minutes > 0 || hours > 0 || days > 0) {
+                remainingTime += `${minutes}m `;
+            }
+            remainingTime += `${seconds}s`;
 
-    // Update the remaining time in the HTML element
-    document.getElementById('countdown_{{ lot.id }}').innerHTML = `Closes in ${remainingTime}`;
-
-    // Optional: Display the closing time in a specific format
-    var lotClosingTimeString = new Date(closingTime_{{ lot.id }}).toLocaleString('en-US', {
-        weekday: 'long',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-    });
-    document.getElementById('closingTimeText_{{ lot.id }}').innerHTML = `<i class="bi bi-hourglass-bottom"></i> Closes: ${lotClosingTimeString}`;
-}, 1000);
-
+            var lotClosingTimeString = new Date(closingTime_{{ lot.id }}).toLocaleString('en-US',
+            { weekday: 'long', hour: 'numeric', minute: 'numeric'
+            });
+            document.getElementById('countdown_{{ lot.id }}').innerHTML = `Closes in ${remainingTime}`;
+            document.getElementById('closingTimeText_{{ lot.id }}').innerHTML = `<i class="bi bi-hourglass-bottom"></i> Closes: ${lotClosingTimeString}`;
+        },
+        1000);
     });
 
 //----------------------------------------------------
@@ -660,4 +655,5 @@ var countdown_{{ lot.id }} = setInterval(function () {
 
 
 </script>
+<script src="{% static 'client/js/lot.js' %}"></script>
     {% endblock %}

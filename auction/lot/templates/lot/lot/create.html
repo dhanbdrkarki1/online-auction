@@ -1,5 +1,9 @@
 {% extends 'client/base.html' %}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'client/css/lot-form.css' %}" />
+
+{% endblock %}
 
 {% block content %}
 
@@ -31,7 +35,7 @@
                 <h3 class="mb-2">Search category</h3>
                 <div class="mb-3 search-icon">
                     <input type="text" class="form-control" name="category_search_query"
-                        placeholder="e.g., art, jwellery, paintings, etc." name="category" />
+                        placeholder="e.g., art, jwellery, paintings, etc." name="category" id="searchInput" />
                 </div>
 
                 <!-- category result -->
@@ -319,7 +323,7 @@
 
 {% block js %}
 <script>
-    console.log("{{ lot_condition_choices }}")
+
     tinymce.init({
         selector: 'textarea#lotDescription',
         menubar: false,
@@ -354,6 +358,7 @@
 
 
     document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('searchInput').focus();
 
         // when bid on submit is clicked, disable scheduling date
         var startBidOnSubmit = document.getElementById("bidOnSubmit");
@@ -377,4 +382,5 @@
     });
 
 </script>
+<script src="{% static 'client/js/lot-form-handling.js' %}"></script>
 {% endblock %}
