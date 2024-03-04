@@ -111,9 +111,7 @@ class Lot(models.Model):
         ]
     
     def __str__(self):
-        seller_name = self.get_seller_name()
-
-        return f"{self.name} added by {seller_name}"
+        return self.name
 
     @database_sync_to_async
     def get_seller_name(self):
@@ -129,10 +127,10 @@ class LotShippingDetails(models.Model):
     shipment_cost = models.PositiveIntegerField(null=True, blank=True) 
     shipping_notes = models.TextField(blank=True, null=True)
 
+    # shipment status
+
     def __str__(self):
         return f"{self.lot.name}'s Shipping Details"
-
-
 
 
 class LotImage(models.Model):
@@ -149,9 +147,6 @@ class Bid(models.Model):
     amount = models.PositiveIntegerField()
     bidded_at = models.DateTimeField(default=timezone.now)
     accepted = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"Bid on {self.lot} by {self.bidder.username} for Rs. {self.amount}"
 
     # return the highest bid for the lot
     def is_highest_bid(self):

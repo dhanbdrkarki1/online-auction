@@ -35,13 +35,13 @@ class BidConsumer(AsyncWebsocketConsumer):
         await self.save_bid(lot, bid_amount)
         bids = await self.get_latest_bids(lot)
         
-        await self.channel_layer.group_send(
-            self.lot_group_name,
-            {
-                'type': 'send_latest_bids',
-                'latest_bids': bids
-            }
-        )
+        # await self.channel_layer.group_send(
+        #     self.lot_group_name,
+        #     {
+        #         'type': 'send_latest_bids',
+        #         'latest_bids': bids
+        #     }
+        # )
 
         # Broadcast bid update to LotConsumer
         await self.channel_layer.group_send(
@@ -53,13 +53,13 @@ class BidConsumer(AsyncWebsocketConsumer):
             }
         )
 
-    async def send_latest_bids(self, event):
-        await self.send(text_data=json.dumps(event))
+    # async def send_latest_bids(self, event):
+    #     await self.send(text_data=json.dumps(event))
 
     @database_sync_to_async
     def save_bid(self, lot, bid_amount):
         bidder = self.user
-        bid = Bid.objects.create(lot=lot, bidder=bidder, amount=bid_amount)
+        bid = Bid.objects.create(lot=lot, bidder=bidder, amount=bid_amount, accepted=True)
         email_on_bid_placed.delay(bid.id, self.lot_id)
         return bid
 
