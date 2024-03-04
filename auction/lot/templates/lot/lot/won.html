@@ -7,12 +7,12 @@
         <!-- Sold Lots in auction -->
         <h3 class="mt-3">Here are all your won lots.</h3>
         {% if won_lots %}
-
-        <table id="soldLotsTable" class="table mt-4">
+        <table id="soldLotsTable" class="table mt-4 display responsive nowrap" width="100%">
             <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Lot Name</th>
+                    <th scope="col">Highest Bid Amount</th>
                     <th scope="col">Starting Price</th>
                     <th scope="col">Auction Duration</th>
                 </tr>
@@ -21,8 +21,8 @@
                 {% for lot in won_lots %}
                 <tr>
                     <td scope="row">{{ forloop.counter }}</td>
-                    <td><a href="{{ lot.get_absolute_url }}">{{ lot.name }}</a>
-                    </td>
+                    <td><a href="{{ lot.get_absolute_url }}">{{ lot.name }}</a></td>
+                    <td>{{ lot.highest_bid_amount|intcomma }}</td>
                     <td>{{ lot.starting_price|intcomma }}</td>
                     <td>{{ lot.auction_duration }} days</td>
                 </tr>
@@ -30,20 +30,20 @@
             </tbody>
         </table>
         {% else %}
-        <p class="text-muted">You don't have have any lots sold yet.</p>
+        <p class="text-muted">You don't have any lots sold yet.</p>
         {% endif %}
-        <!-- END Sold Lots in auction -->
-
     </div>
 </div>
-
 {% endblock %}
 
 {% block js %}
 <script>
     $(document).ready(function () {
         $('#soldLotsTable').DataTable({
-            response: true,
+            responsive: true,
+            searching: false,
+            paging: false,
+            info: false,
         });
     });
 </script>

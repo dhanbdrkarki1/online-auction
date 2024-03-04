@@ -14,6 +14,7 @@ from .tasks import notify_winner_and_close_bidding
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.core import serializers
+from django.db.models import Max, OuterRef, Subquery, F
 
 
 
@@ -121,12 +122,15 @@ def lot_create(request):
     return render(request, "lot/lot/create.html", context)
 
 def lot_detail(request, slug):
-    lot = get_object_or_404(Lot, slug=slug)
-    lot_images = LotImage.objects.filter(lot=lot)
-    shipping_details = LotShippingDetails.objects.filter(lot=lot)
-    bids = Bid.objects.filter(lot=lot).order_by('-amount')
-    context = {'lot': lot, 'lot_images':lot_images, 'shipping_details':shipping_details, 'bids': bids}
-    return render(request, 'lot/lot/detail.html', context)
+    try:
+        lot = get_object_or_404(Lot, slug=slug)
+        lot_images = LotImage.objects.filter(lot=lot)
+        shipping_details = LotShippingDetails.objects.filter(lot=lot)
+        bids = Bid.objects.filter(lot=lot).order_by('-amount')
+        context = {'lot': lot, 'lot_images':lot_images, 'shipping_details':shipping_details, 'bids': bids}
+        return render(request, 'lot/lot/detail.html', context)
+    except Exception as e:
+        print("Error found", e)
 
 def lot_received(request):
     return render(request, 'lot/lot/received.html')
@@ -224,13 +228,20 @@ def user_bids(request):
 
 
 def user_won_lots(request):
-    user_bids = Bid.objects.filter(bidder=request.user)
-    won_lots = []
+    try:
+        # Get the highest bid amount for each lot
+        highest_bids = Bid.objects.filter(lot=OuterRef('pk')).values('lot').annotate(max_amount=Max('amount'))
+        
+        # Retrieve lots where the auction is over and bids are accepted
+        won_lots = Lot.objects.filter(is_auction_over=True, bids__accepted=True)
 
-    for bid in user_bids:
-        # Checking if the bid is the highest for the lot and the auction period has ended
-        # if bid.is_highest_bid() and bid.lot.is_auction_over:
-        if bid.is_highest_bid():
-            won_lots.append(bid.lot)
-    return render(request, 'lot/lot/won.html', {'won_lots': won_lots})
-
+        # Filter lots where the current user has the highest bid
+        won_lots = won_lots.annotate(
+            highest_bid_amount=Subquery(highest_bids.filter(lot=OuterRef('pk')).values('max_amount')[:1])
+        ).filter(
+            highest_bid_amount=F('bids__amount'),
+            bids__bidder=request.user
+        ).distinct()
+        return render(request, 'lot/lot/won.html', {'won_lots': won_lots})
+    except Exception as e:
+        print("Error in user won lots", e)
