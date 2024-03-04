@@ -96,14 +96,18 @@
                         src="{% if lot_images %}{{ lot_images.0.image|thumbnail_url:'lot_detail_thumbnail' }}{% endif %}">
 
                     <div id="slide-wrapper">
+                        {% if lot_images|length > 4 %}
                         <i class="bi bi-chevron-left arrow" id="slideLeft"></i>
+                        {% endif %}
                         <div id="slider">
                             {% for image in lot_images %}
                             <img class="thumbnail {% if forloop.first %}active{% endif %}"
                                 src="{{ image.image|thumbnail_url:'lot_detail_thumbnail' }}">
                             {% endfor %}
                         </div>
+                        {% if lot_images|length > 4 %}
                         <i class="bi bi-chevron-right arrow pl-3" id="slideRight"></i>
+                        {% endif %}
                     </div>
                     <!-- lot images end -->
 
@@ -265,26 +269,34 @@
                 </h5>
                 <div class="card">
                     <div class="card-body">
-                        {% if bids %}
+                    {% if not lot.is_auction_over or bids %}
+                        {% if bids and not lot.is_auction_over %}
                         <p class="text-muted">Current Bid</p>
+                        <h3 class="card-title">Rs. <span id="currentBidAmt">{{ bids.0.amount }}</span></h3>
+                        {% elif lot.is_auction_over %}
+                        <p class="text-muted">Final Bid</p>
                         <h3 class="card-title">Rs. <span id="currentBidAmt">{{ bids.0.amount }}</span></h3>
                         {% else %}
                         <p class="text-muted" id="bidText">Starting Bid</p>
                         <h3 class="card-title">Rs. <span id="currentBidAmt">{{ lot.starting_price }}
                         </h3>
                         {% endif %}
-                        <form id='bidForm'>
-                            <div class="form-outline mb-4">
-                                <select id="bidAmount" name="bid_amount" class="form-control">
-                                </select>
-                            </div>
-                            {% if request.user == lot.seller or lot.is_auction_over == True or lot.is_active == False %}
-                                <button id="placeBidBtn" type="submit" class="btn btn-primary d-none">Place a Bid</button>
-                            {% else %}
-                                <button id="placeBidBtn" type="submit" class="btn btn-primary">Place a Bid</button>
-                            {% endif %}
 
-                        </form>
+                        {% if not lot.is_auction_over %}
+                            {% if request.user.is_authenticated %}
+                            <form id='bidForm'>
+                                <div class="form-outline mb-4">
+                                    <select id="bidAmount" name="bid_amount" class="form-control">
+                                    </select>
+                                </div>
+                                {% if request.user == lot.seller or lot.is_auction_over == True or lot.is_active == False %}
+                                    <button id="placeBidBtn" type="submit" class="btn btn-primary d-none">Place a Bid</button>
+                                {% else %}
+                                    <button id="placeBidBtn" type="submit" class="btn btn-primary">Place a Bid</button>
+                                {% endif %}
+
+                            </form>
+                            {% endif %}
                         <p class="card-text mb-4">
                             <p class="text-muted"><i class="bi bi-truck"></i> Rs. 100 from Kathmandu, arrives in 2-8 days
                             </p>
@@ -294,7 +306,10 @@
                         </p>
                     
 
+                        {% endif %}
                         <hr>
+
+                        {% endif %}
                         <div id="top3BidsContainer">
                             {% for bid in bids|slice:"3" %}
                                 <div class="row user-bid">

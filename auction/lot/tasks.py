@@ -63,12 +63,12 @@ def notify_winner_and_close_bidding(lot_id):
         print("Total bids: " , lot.bids.count())
 
         # if bids on lot, send mail to winner otherwise seller informing no bids placed.
+        sender = settings.EMAIL_HOST_USER
         if has_bids_on_lot:
             highest_bid = Bid.objects.filter(lot=lot).order_by('-amount').first()
             
             if highest_bid:
                 highest_bidder_email = highest_bid.bidder.email
-                sender = settings.EMAIL_HOST_USER
 
                 subject = f'Bid Won for {lot.name}🎉🎊'
                 message = f'Congratulations! You have the highest bid for lot {lot.name}. You have the highest bid for lot {lot.name}. Your bid amount is {highest_bid.amount}. Your lot will be delivered soon within the business days.'
