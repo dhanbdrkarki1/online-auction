@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'lot.apps.LotConfig',
     'chat.apps.ChatConfig',
     'api.apps.ApiConfig',
+    'payment.apps.PaymentConfig',
 
 ]
 

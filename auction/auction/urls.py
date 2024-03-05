@@ -15,8 +15,8 @@ urlpatterns = [
     path('social-auth/', include('social_django.urls', namespace='social')),
 
     # auction api
-    path('api/', include('api.urls')),
-
+    path('api/', include('api.urls', namespace='auction_api')),
+    path('payment/', include('payment.urls', namespace='payment')),
 ]
 
 if settings.DEBUG:

@@ -1,76 +1,3 @@
-// var dataTable;
-// $(document).ready(function () {
-//   loadDataTable();
-// });
-
-// function loadDataTable() {
-//   dataTable = $('#wonLotsTable').DataTable({
-//     ajax: { url: '/api/lots/won' },
-//     columns: [
-//       { data: 'id', width: '20%' },
-//       { data: 'name', width: '10%' },
-//       { data: 'highest_bid_amount', width: '30%' },
-//       { data: 'starting_price', width: '10%' },
-//       { data: 'auction_duration', width: '10%' },
-
-//       //   { data: 'price', width: '10%' },
-//       //   { data: 'stockQuantity', width: '10%' },
-//       //   {
-//       //     data: 'createdDate',
-//       //     render: function (data) {
-//       //       return formatDateTime(data);
-//       //     },
-//       //     width: '15%',
-//       //   },
-//       //   {
-//       //     data: 'modifiedDate',
-//       //     render: function (data) {
-//       //       return formatDateTime(data);
-//       //     },
-//       //     width: '15%',
-//       //   },
-//       //   {
-//       //     data: 'productId',
-//       //     render: function (data) {
-//       //       return `<div class="w-75 btn-group" role="group">
-//       //                     <a href="/admin/product/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit </a>
-//       //                     <a onClick=Delete('/admin/product/delete?id=${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete </a>
-//       //                     </div>
-//       //                 `;
-//       //     },
-//       //     width: '15%',
-//       //   },
-//     ],
-//     responsive: true,
-//     searching: false,
-//     paging: false,
-//     info: false,
-//   });
-// }
-
-// function Delete(url) {
-//   Swal.fire({
-//     title: 'Are you sure?',
-//     text: "You won't be able to revert this!",
-//     icon: 'warning',
-//     showCancelButton: true,
-//     confirmButtonColor: '#3085d6',
-//     cancelButtonColor: '#d33',
-//     confirmButtonText: 'Yes, delete it!',
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       $.ajax({
-//         url: url,
-//         type: 'DELETE',
-//         success: function (data) {
-//           dataTable.ajax.reload();
-//           toaster.success(data.message);
-//         },
-//       });
-//     }
-//   });
-// }
-
 var dataTable;
 
 $(document).ready(function () {
@@ -103,7 +30,7 @@ function loadDataTable() {
         data: 'id',
         render: function (data, type, row) {
           return `<div class="w-75 btn-group" role="group">
-                                <button type="button" class="btn btn-primary mx-2 payment-button" data-lot-id="${row.id}"> <i class="bi bi-cash"></i> Pay Now </button>
+                                <button type="button" class="btn btn-primary mx-2 payment-button" data-lot-id="${row.id}" data-highest-bid-amount="${row.highest_bid_amount}"> <i class="bi bi-cash"></i> Pay Now </button>
                                 <a href="/lots/${row.slug}/" class="btn btn-secondary mx-2"> <i class="bi bi-eye-fill"></i> View </a>
                                 </div>
                             `;
@@ -123,21 +50,34 @@ function loadDataTable() {
   // Handle click on Pay Now button
   $('#tblLotsWon').on('click', '.payment-button', function () {
     var lotId = $(this).data('lot-id');
+    var highestBidAmount = $(this).data('highest-bid-amount'); // Define highestBidAmount here
     $('#paymentModal').modal('show');
     $('#paymentModal').find('.payment-option').data('lot-id', lotId);
+    $('#paymentModal')
+      .find('.payment-option')
+      .data('highest-bid-amount', highestBidAmount);
   });
 
   // Handle click on payment option
   $('.payment-option').click(function () {
     var paymentType = $(this).data('payment');
     var lotId = $(this).data('lot-id');
+    var highestBidAmount = $(this).data('highest-bid-amount');
+
     $('#paymentModal').modal('hide');
-    payWithPaymentType(paymentType, lotId);
+
+    payWithPaymentType(paymentType, lotId, highestBidAmount);
   });
 
-  function payWithPaymentType(paymentType, lotId) {
+  function payWithPaymentType(paymentType, lotId, highestBidAmount) {
     console.log(
-      'Processing payment with ' + paymentType + ' for lot ID ' + lotId
+      'Processing payment with ' +
+        paymentType +
+        ' for lot ID ' +
+        lotId +
+        ' with highest bid amount ' +
+        highestBidAmount
     );
+    window.location.href = `/payment/request/${paymentType}/?lot_id=${lotId}&amount=${highestBidAmount}`;
   }
 }
