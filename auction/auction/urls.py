@@ -14,6 +14,9 @@ urlpatterns = [
 
     path('social-auth/', include('social_django.urls', namespace='social')),
 
+    # auction api
+    path('api/', include('api.urls')),
+
 ]
 
 if settings.DEBUG:

@@ -30,12 +30,13 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'social_django',
     'easy_thumbnails',
+    'rest_framework',
     'auctionapp.apps.AuctionappConfig',
     'myadmin.apps.MyadminConfig',
     'account.apps.AccountConfig',
     'lot.apps.LotConfig',
     'chat.apps.ChatConfig',
-
+    'api.apps.ApiConfig',
 
 ]
 

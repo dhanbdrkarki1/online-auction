@@ -228,20 +228,4 @@ def user_bids(request):
 
 
 def user_won_lots(request):
-    try:
-        # Get the highest bid amount for each lot
-        highest_bids = Bid.objects.filter(lot=OuterRef('pk')).values('lot').annotate(max_amount=Max('amount'))
-        
-        # Retrieve lots where the auction is over and bids are accepted
-        won_lots = Lot.objects.filter(is_auction_over=True, bids__accepted=True)
-
-        # Filter lots where the current user has the highest bid
-        won_lots = won_lots.annotate(
-            highest_bid_amount=Subquery(highest_bids.filter(lot=OuterRef('pk')).values('max_amount')[:1])
-        ).filter(
-            highest_bid_amount=F('bids__amount'),
-            bids__bidder=request.user
-        ).distinct()
-        return render(request, 'lot/lot/won.html', {'won_lots': won_lots})
-    except Exception as e:
-        print("Error in user won lots", e)
+    return render(request, 'lot/lot/won.html')
