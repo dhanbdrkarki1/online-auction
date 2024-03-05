@@ -1,13 +1,13 @@
 var dataTable;
 
 $(document).ready(function () {
-  loadDataTable();
+  loadUnpaidLotsDataTable();
 });
 
-function loadDataTable() {
-  dataTable = $('#tblLotsWon').DataTable({
+function loadUnpaidLotsDataTable() {
+  dataTable = $('#tblUnpaidLots').DataTable({
     ajax: {
-      url: '/api/lots/won',
+      url: '/api/lots/won/unpaid',
       dataSrc: '',
     },
     columns: [
@@ -43,12 +43,12 @@ function loadDataTable() {
     paging: false,
     info: false,
     language: {
-      emptyTable: 'No data available in table',
+      emptyTable: 'No update lot lefts..',
     },
   });
 
   // Handle click on Pay Now button
-  $('#tblLotsWon').on('click', '.payment-button', function () {
+  $('#tblUnpaidLots').on('click', '.payment-button', function () {
     var lotId = $(this).data('lot-id');
     var highestBidAmount = $(this).data('highest-bid-amount'); // Define highestBidAmount here
     $('#paymentModal').modal('show');

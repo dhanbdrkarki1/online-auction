@@ -2,23 +2,56 @@
 {% load static %}
 {% load humanize %}
 {% block content %}
-<div class="main-banner" style="padding-top:120px;" id="top">
+<div class="main-banner" style="padding-top: 120px;" id="top">
     <div class="container">
-        <!-- Sold Lots in auction -->
-        <h3 class="mt-3">Here are all your won lots.</h3>
-        <table id="tblLotsWon" class="table mt-4 display responsive nowrap" width="100%">
-            <thead>
-                <tr>
-                    <th scope="col">Lot Name</th>
-                    <th scope="col">Amount Bidded</th>
-                    <th scope="col">Starting Price</th>
-                    <th scope="col">Duration (in Days)</th>
-                    <th scope="col">Started At</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="unpaid-lots-tab" data-toggle="tab" href="#unpaid-lots" role="tab"
+                    aria-controls="unpaid-lots" aria-selected="true">Unpaid Lots</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="paid-lots-tab" data-toggle="tab" href="#paid-lots" role="tab"
+                    aria-controls="paid-lots" aria-selected="false">Paid Lots</a>
+            </li>
+        </ul>
 
-        </table>
+        <!-- Tab Content -->
+        <div class="tab-content" id="myTabContent">
+            <!-- Unpaid Lots Tab Pane -->
+            <div class="tab-pane fade show active" id="unpaid-lots" role="tabpanel" aria-labelledby="unpaid-lots-tab">
+                <table id="tblUnpaidLots" class="table mt-4 display responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">Lot Name</th>
+                            <th scope="col">Amount Bidded</th>
+                            <th scope="col">Starting Price</th>
+                            <th scope="col">Duration (in Days)</th>
+                            <th scope="col">Started At</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <!-- Paid Lots Tab Pane -->
+            <div class="tab-pane fade" id="paid-lots" role="tabpanel" aria-labelledby="paid-lots-tab">
+                <table id="tblPaidLots" class="table mt-4 display responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">Lot Name</th>
+                            <th scope="col">Amount Bidded</th>
+                            <th scope="col">Payment Method</th>
+
+                            <th scope="col">Starting Price</th>
+                            <th scope="col">Duration (in Days)</th>
+                            <th scope="col">Started At</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -52,6 +85,8 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'client/js/tables/won_lots.js' %}"></script>
+<script src="{% static 'client/js/tables/won_and_unpaid_lots.js' %}"></script>
+<script src="{% static 'client/js/tables/won_and_paid_lots.js' %}"></script>
+
 
 {% endblock %}

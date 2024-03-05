@@ -30,6 +30,8 @@ class Category(models.Model):
             models.Index(fields=['name'])
         ]
 
+
+
 class Lot(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='lots')
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lots')
