@@ -28,3 +28,12 @@ class CarrierTypeChoices(models.TextChoices):
     COURIER = 'Courier'
     AIR_FREIGHT = 'Air Freight'
     TRUCKING = 'Trucking'
+
+
+
+SHIPPING_STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('in_transit', 'In Transit'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled'),
+    )
