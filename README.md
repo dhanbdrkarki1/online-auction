@@ -50,3 +50,8 @@ management user interface on port 15672.
 
 celery -A auction flower
 url: http://localhost:5555/
+
+# enable venv
+
+.\venv\Scripts\activate
+cd .\auction\

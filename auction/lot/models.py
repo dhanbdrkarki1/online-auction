@@ -154,9 +154,3 @@ class Bid(models.Model):
     def is_highest_bid(self):
             highest_bid = Bid.objects.filter(lot=self.lot).order_by('-amount').first()
             return self == highest_bid
-
-    # def highest_bid(self):
-    #     highest_bid = Bid.objects.filter(lot=self.lot).order_by('-amount').first()
-    #     if highest_bid:
-    #         return highest_bid.amount
-    #     return None
