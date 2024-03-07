@@ -93,7 +93,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         full_name = f"{self.first_name} {self.last_name}"
         return full_name
 
+    def get_absolute_url_username(self):
+        return reverse('lots:seller_detail', kwargs={'username': self.username})
 
+    
 
 class ShippingAddress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="shipping_addresses")

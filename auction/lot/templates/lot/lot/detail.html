@@ -118,14 +118,52 @@
                                 <a class="nav-item nav-link active" data-toggle="tab" href="#item-overview">Item
                                     Overview</a>
                                 <a class="nav-item nav-link" data-toggle="tab" href="#shipping">Shipping</a>
-                                <a class="nav-item nav-link" data-toggle="tab" href="#about-seller">About Seller</a>
                             </div>
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="item-overview">
-                                    <h5 class="mb-3">Description</h5>
-                                    <p>
-                                        {{ lot.description|markdown }}
-                                    </p>
+                                        <h5 class="mb-3">Description</h5>
+                                        <p>
+                                            {{ lot.description|markdown }}
+                                        </p>
+
+                                        <div class="card mt-4">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <img src="{{ lot.seller.profile_image.url }}"
+                                                            style="height:170px;width:170px;" class="img-fluid rounded-circle" alt="{{ lot.seller.get_user_full_name }}">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h3 class="card-title">
+                                                            <a href="{{ lot.seller.get_absolute_url_username }}">
+                                                                {{ lot.seller.first_name }} {{ lot.seller.last_name }}
+                                                            </a>
+                                                        </h3>
+                                                        <p class="card-text text-muted">Kathmandu, Nepal</p>
+                                                        <p class="card-text text-muted">Bidme memeber since
+                                                            {{ lot.seller.created_at|date:"F j, Y" }}
+
+                                                        </p>
+                                                        <p class="card-text">
+                                                            <a href="{{ lot.seller.get_absolute_url_username }}"
+                                                                class="text-primary">View Seller Profile</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-md-6">
+                                                        <a href="{% url 'chat:user_chat' other_user_id=lot.seller.id %}" class="btn btn-secondary btn-block">
+                                                            <i class="bi bi-chat-dots"></i> Chat with
+                                                            Seller</a>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a href="#" class="btn btn-primary btn-block">
+                                                            <i class="bi bi-plus"></i> Follow
+                                                        </a>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="shipping">
                                     <h5 class="mb-3">Shipping</h5>
@@ -154,107 +192,6 @@
                                         shipping costs however, items will be
                                         shipped to you in the same mailing package when possible.
                                     </p>
-                                </div>
-                                <div class="tab-pane fade" id="about-seller">
-                                    <div class="row">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <img src="{{ lot.seller.profile_image.url }}"
-                                                            style="height:170px;width:170px;" class="img-fluid rounded-circle" alt="{{ lot.seller.get_user_full_name }}">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <h3 class="card-title">
-                                                            <a href="{{ lot.get_absolute_url_full_name }}">
-                                                                {{ lot.seller.first_name }} {{ lot.seller.last_name }}
-                                                            </a>
-                                                        </h3>
-                                                        <p class="card-text text-muted">Kathmandu, Nepal</p>
-                                                        <p class="card-text text-muted">Bidme memeber since
-                                                            {{ lot.seller.created_at|date:"F j, Y" }}
-
-                                                        </p>
-                                                        <p class="card-text">
-                                                            <a href="{{ lot.get_absolute_url_full_name }}"
-                                                                class="text-primary">View Seller Profile</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="row mt-3">
-                                                    <div class="col-md-6">
-                                                        <a href="{% url 'chat:user_chat' other_user_id=lot.seller.id %}" class="btn btn-secondary btn-block">
-                                                            <i class="bi bi-chat-dots"></i> Chat with
-                                                            Seller</a>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <a href="#" class="btn btn-primary btn-block">
-                                                            <i class="bi bi-plus"></i> Follow
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
-                                            <div class="media mb-4">
-                                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-                                                    style="width: 45px" />
-                                                <div class="media-body">
-                                                    <h6>
-                                                        John Doe<small> - <i>01 Jan 2045</i></small>
-                                                    </h6>
-                                                    <div class="text-primary mb-2">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star-half-alt"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </div>
-                                                    <p>
-                                                        Diam amet duo labore stet elitr ea clita ipsum, tempor
-                                                        labore accusam ipsum et no at. Kasd diam tempor rebum
-                                                        magna dolores sed sed eirmod ipsum.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h4 class="mb-4">Leave a review</h4>
-                                            <small>Your email address will not be published. Required fields
-                                                are marked *</small>
-                                            <div class="d-flex my-3">
-                                                <p class="mb-0 mr-2">Your Rating * :</p>
-                                                <div class="text-primary">
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                </div>
-                                            </div>
-                                            <form>
-                                                <div class="form-group">
-                                                    <label for="message">Your Review *</label>
-                                                    <textarea id="message" cols="30" rows="5"
-                                                        class="form-control"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="name">Your Name *</label>
-                                                    <input type="text" class="form-control" id="name" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="email">Your Email *</label>
-                                                    <input type="email" class="form-control" id="email" />
-                                                </div>
-                                                <div class="form-group mb-0">
-                                                    <input type="submit" value="Leave Your Review"
-                                                        class="btn btn-primary px-3" />
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

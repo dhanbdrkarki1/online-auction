@@ -15,6 +15,8 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.core import serializers
 from django.db.models import Max, OuterRef, Subquery, F
+from django.contrib.auth import get_user_model
+User=get_user_model()
 
 
 
@@ -147,9 +149,15 @@ def search_categories(request):
 
 
 
-def seller_detail(request, full_name):
+def seller_detail(request, username):
+    seller = get_object_or_404(User, username=username)
+    seller_lots = Lot.objects.filter(seller=seller)
+    context = {
+        'seller': seller,
+        'seller_lots': seller_lots
+    }
+    return render(request, 'lot/seller/detail.html', context)
 
-    return render(request, 'lot/seller/detail.html')
 
 
 
