@@ -16,16 +16,17 @@ function loadUnpaidLotsDataTable() {
         render: function (data, type, row) {
           return '<a href="/lots/' + row.slug + '/' + '">' + data + '</a>';
         },
+        width: '15%',
       },
       { data: 'highest_bid_amount' },
-      { data: 'starting_price' },
-      { data: 'auction_duration' },
       {
         data: 'auction_start_time',
         render: function (data) {
           return formatDateTime(data);
         },
       },
+      { data: 'auction_duration' },
+
       {
         data: 'id',
         render: function (data, type, row) {
@@ -43,14 +44,14 @@ function loadUnpaidLotsDataTable() {
     paging: false,
     info: false,
     language: {
-      emptyTable: 'No update lot lefts..',
+      emptyTable: 'No lot has been won till yet..',
     },
   });
 
   // Handle click on Pay Now button
   $('#tblUnpaidLots').on('click', '.payment-button', function () {
     var lotId = $(this).data('lot-id');
-    var highestBidAmount = $(this).data('highest-bid-amount'); // Define highestBidAmount here
+    var highestBidAmount = $(this).data('highest-bid-amount');
     $('#paymentModal').modal('show');
     $('#paymentModal').find('.payment-option').data('lot-id', lotId);
     $('#paymentModal')

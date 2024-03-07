@@ -30,10 +30,3 @@ class CarrierTypeChoices(models.TextChoices):
     TRUCKING = 'Trucking'
 
 
-
-SHIPPING_STATUS_CHOICES = (
-        ('pending', 'Pending'),
-        ('in_transit', 'In Transit'),
-        ('delivered', 'Delivered'),
-        ('cancelled', 'Cancelled'),
-    )

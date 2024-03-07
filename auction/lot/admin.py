@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Lot, LotImage, LotShippingDetails, Bid
+from .models import Category, Lot, LotImage, LotShippingDetails, Bid, LotShippingStatus
 
 
 admin.site.register(Category)
@@ -40,3 +40,9 @@ class BidAdmin(admin.ModelAdmin):
     list_display_links = ('lot',)
 
 
+@admin.register(LotShippingStatus)
+class LotShippingStatusAdmin(admin.ModelAdmin):
+    list_display = ['id', 'lot', 'status', 'status_updated_at', 'delivery_date',]
+    list_filter = ('status',)
+    ordering = ('-status_updated_at', 'delivery_date',)
+    search_fields = ('lot',)

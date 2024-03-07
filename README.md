@@ -55,3 +55,4 @@ url: http://localhost:5555/
 
 .\venv\Scripts\activate
 cd .\auction\
+py manage.py runserver

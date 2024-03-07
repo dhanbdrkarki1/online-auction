@@ -167,7 +167,7 @@ class LotShippingStatus(models.Model):
     lot = models.OneToOneField(Lot, on_delete=models.CASCADE, related_name="shipping_status")
     status = models.CharField(max_length=20, choices=SHIPPING_STATUS_CHOICES, default='pending')
     status_updated_at = models.DateTimeField(auto_now=True)
-    delivery_date = models.DateField(null=True, blank=True)
+    delivery_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"Shipping status for {self.lot.name}"

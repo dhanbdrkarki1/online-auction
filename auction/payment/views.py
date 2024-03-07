@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from lot.models import Lot
+from lot.models import Lot, LotShippingStatus
 from payment.models import Transaction
 import xml.etree.ElementTree as ET
 import requests
@@ -50,9 +50,10 @@ def esewa_verify(request):
                 final_price=int(float(amount)), 
                 status=True,
                 payment_method="Esewa")
+            shipping_status = LotShippingStatus.objects.create(lot=lot)
             return redirect(reverse_lazy('lots:won_lots'))
         else:
-            url = reverse_lazy('myapp:esewa_request')
+            url = reverse_lazy('payment:esewa_request')
             url += f'?lot_id={lot_id}&amount={amount}'
             return redirect(url)
 
