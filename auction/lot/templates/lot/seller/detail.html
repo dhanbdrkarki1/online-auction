@@ -37,6 +37,9 @@
                                         {{ seller.created_at|date:"F j, Y" }}
 
                                     </p>
+                                    <a href="{% url 'reviews:seller_reviews' username=seller.username %}">
+                                        5 Reviews
+                                    </a>
                                 </div>
                             </div>
                             <div class="row mt-3">

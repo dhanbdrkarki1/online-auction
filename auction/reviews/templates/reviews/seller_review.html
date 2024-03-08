@@ -1,0 +1,221 @@
+{% extends 'client/base.html' %}
+{% load review_filters %}
+{% load static %}
+{% load thumbnail %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'client/css/reviews.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="main-banner" style="padding-top:120px;" id="top">
+    <!-- Reviews Start -->
+    <section class="container mt-2">
+        <div class="row">
+            <div class="col-lg-12 bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
+                <h5 class="mb-0 mb-4">Ratings for seller <a href="{{ seller.get_absolute_url_username }}">{{ seller.get_user_full_name }}</a></h5>
+                <div class="graph-star-rating-header">
+                    <div class="star-rating">
+                        <a href="#"><i class="icofont-ui-rating active"></i></a>
+                        <a href="#"><i class="icofont-ui-rating active"></i></a>
+                        <a href="#"><i class="icofont-ui-rating active"></i></a>
+                        <a href="#"><i class="icofont-ui-rating active"></i></a>
+                        <a href="#"><i class="icofont-ui-rating"></i></a> <b class="text-black ml-2">Total Reviews:
+                            {{ reviews.count }}</b>
+                    </div>
+                    <p class="text-black mb-4 mt-2">Rated {{ average_rating }} out of 5</p>
+                </div>
+                <div class="graph-star-rating-body">
+                    {% for rating, percentage in star_ratings.items %}
+                    <div class="rating-list">
+                        <div class="rating-list-left text-primary mr-3">
+                            {% for star_value in 5|range_from_one_to %}
+                                {% if star_value <= rating %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="rating-list-center">
+                            <div class="progress">
+                                <div style="width: {{ percentage }}%" aria-valuemax="100" aria-valuemin="0"
+                                    aria-valuenow="{{ percentage }}" role="progressbar" class="progress-bar bg-primary">
+                                    <span class="sr-only">{{ percentage }}% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rating-list-right text-black">{{ percentage|floatformat:"2" }}%</div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="row mt-5">
+        {% if has_transaction %}
+
+        <div class="col-md-6">
+        {% else %}
+        <div class="col-md-12">
+
+        {% endif %}
+                <h4 class="mb-4">Reviews from Bidders</h4>
+                {% for review in reviews %}
+                <div class="row">
+                    <div class="media mb-4">
+                        <img src="{{ review.reviewer.profile_image.url }}" alt="Image" class="img-fluid mr-3 mt-1"
+                            style="width: 45px; border-radius:50%;" />
+                        <div class="media-body">
+                            <h6>
+                                {{ review.reviewer.get_user_full_name }}<small> - <i>{{ review.created|date:"d M Y g:i A" }}
+                                    </i></small>
+                            </h6>
+                            <div class="text-primary mb-2">
+                                {% for _ in "12345" %}
+                                {% if forloop.counter <= review.rating %} <i class="fas fa-star"></i>
+                                    {% else %}
+                                    <i class="far fa-star"></i>
+                                    {% endif %}
+                                    {% endfor %}
+                            </div>
+                            <p>
+                                {{ review.feedback }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p> Seller does not have any reviews yet.</p>
+                {% endfor %}
+
+            </div>
+
+            <!-- review box section -->
+            {% if has_transaction %}
+                <div class="col-md-6">
+                    <h4 class="mb-4">Leave a review</h4>
+                    <div class="d-flex my-3" id="ratingStars">
+                        <p class="mb-0 mr-2">Your Rating * :</p>
+                        <div class="text-primary">
+                            <i class="bi bi-star" data-value="1"></i>
+                            <i class="bi bi-star" data-value="2"></i>
+                            <i class="bi bi-star" data-value="3"></i>
+                            <i class="bi bi-star" data-value="4"></i>
+                            <i class="bi bi-star" data-value="5"></i>
+                        </div>
+                    </div>
+                    <form id="reviewForm">
+                        <div class="form-group">
+                            <label for="message">Your Review *</label>
+                            <textarea id="message" name="feedback" cols="30" rows="5" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="hidden" id="selectedRating" name="rating">
+                            <button type="submit" class="btn btn-primary px-3">Leave Your Review</button>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+
+
+
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("rating");
+        const stars = document.querySelectorAll("#ratingStars .bi");
+        const ratingInput = document.getElementById("selectedRating");
+
+        stars.forEach(star => {
+            star.addEventListener("click", function () {
+                const value = this.getAttribute("data-value");
+                ratingInput.value = value;
+                highlightStars(value);
+            });
+
+            star.addEventListener("mouseover", function () {
+                const value = this.getAttribute("data-value");
+                highlightStars(value);
+            });
+
+            star.addEventListener("mouseout", function () {
+                const value = ratingInput.value;
+                highlightStars(value);
+            });
+        });
+
+        function highlightStars(value) {
+            stars.forEach(star => {
+                const starValue = star.getAttribute("data-value");
+                if (starValue <= value) {
+                    star.classList.remove("bi-star");
+                    star.classList.add("bi-star-fill");
+                } else {
+                    star.classList.remove("bi-star-fill");
+                    star.classList.add("bi-star");
+                }
+            });
+        }
+    });
+
+
+    // Add event listener to rating stars
+    const ratingStars = document.querySelectorAll('#ratingStars .bi-star');
+    ratingStars.forEach(star => {
+        star.addEventListener('click', function () {
+            const rating = parseInt(this.getAttribute('data-value'));
+            document.getElementById('selectedRating').value = rating;
+            ratingStars.forEach(s => s.classList.toggle('text-primary', parseInt(s.getAttribute('data-value')) <= rating));
+        });
+    });
+
+    // Add event listener to form submission
+    const reviewForm = document.getElementById('reviewForm');
+    reviewForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const rating = formData.get('rating');
+        const feedback = formData.get('feedback');
+        var username = "{{ seller.username }}";
+        console.log(rating, feedback, username);
+        const feedbackUrl = `/seller/${username}/feedback/`;
+        const csrftoken = Cookies.get('csrftoken');
+        console.log(formData)
+        fetch(feedbackUrl, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            body: formData,
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to submit review');
+                }
+            })
+            .then(data => {
+                toastr.success(data['message']);
+
+                console.log('Review submitted successfully:', data);
+                reviewForm.reset();
+
+            })
+            .catch(error => {
+                console.error('Error submitting review:', error);
+            });
+    });
+
+
+</script>
+{% endblock %}

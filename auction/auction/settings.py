@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'api.apps.ApiConfig',
     'payment.apps.PaymentConfig',
+    'reviews.apps.ReviewsConfig',
+
 
 ]
 
