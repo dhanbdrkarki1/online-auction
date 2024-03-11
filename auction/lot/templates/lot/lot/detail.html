@@ -1,5 +1,7 @@
 {% extends 'client/base.html' %}
 {% load static %}
+{% block title %}{{ lot.name | title }} - BidMe {% endblock %}
+
 {% load lot_tags %}
 {% load thumbnail %}
 {% load humanize %}

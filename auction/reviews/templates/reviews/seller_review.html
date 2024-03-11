@@ -1,6 +1,8 @@
 {% extends 'client/base.html' %}
 {% load review_filters %}
 {% load static %}
+{% block title %}Seller's Review - BidMe {% endblock %}
+
 {% load thumbnail %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'client/css/reviews.css' %}" />
@@ -13,7 +15,8 @@
     <section class="container mt-2">
         <div class="row">
             <div class="col-lg-12 bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
-                <h5 class="mb-0 mb-4">Ratings for seller <a href="{{ seller.get_absolute_url_username }}">{{ seller.get_user_full_name }}</a></h5>
+                <h5 class="mb-0 mb-4">Ratings for seller <a href="{{ seller.get_absolute_url_username }}">{{
+                        seller.get_user_full_name }}</a></h5>
                 <div class="graph-star-rating-header">
                     <div class="star-rating">
                         <a href="#"><i class="icofont-ui-rating active"></i></a>
@@ -30,12 +33,11 @@
                     <div class="rating-list">
                         <div class="rating-list-left text-primary mr-3">
                             {% for star_value in 5|range_from_one_to %}
-                                {% if star_value <= rating %}
-                                    <i class="fas fa-star"></i>
+                            {% if star_value <= rating %} <i class="fas fa-star"></i>
                                 {% else %}
-                                    <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
                                 {% endif %}
-                            {% endfor %}
+                                {% endfor %}
                         </div>
                         <div class="rating-list-center">
                             <div class="progress">
@@ -55,46 +57,47 @@
             </div>
         </div>
         <div class="row mt-5">
-        {% if has_transaction %}
+            {% if has_transaction %}
 
-        <div class="col-md-6">
-        {% else %}
-        <div class="col-md-12">
+            <div class="col-md-6">
+                {% else %}
+                <div class="col-md-12">
 
-        {% endif %}
-                <h4 class="mb-4">Reviews from Bidders</h4>
-                {% for review in reviews %}
-                <div class="row">
-                    <div class="media mb-4">
-                        <img src="{{ review.reviewer.profile_image.url }}" alt="Image" class="img-fluid mr-3 mt-1"
-                            style="width: 45px; border-radius:50%;" />
-                        <div class="media-body">
-                            <h6>
-                                {{ review.reviewer.get_user_full_name }}<small> - <i>{{ review.created|date:"d M Y g:i A" }}
-                                    </i></small>
-                            </h6>
-                            <div class="text-primary mb-2">
-                                {% for _ in "12345" %}
-                                {% if forloop.counter <= review.rating %} <i class="fas fa-star"></i>
-                                    {% else %}
-                                    <i class="far fa-star"></i>
-                                    {% endif %}
-                                    {% endfor %}
+                    {% endif %}
+                    <h4 class="mb-4">Reviews from Bidders</h4>
+                    {% for review in reviews %}
+                    <div class="row">
+                        <div class="media mb-4">
+                            <img src="{{ review.reviewer.profile_image.url }}" alt="Image" class="img-fluid mr-3 mt-1"
+                                style="width: 45px; border-radius:50%;" />
+                            <div class="media-body">
+                                <h6>
+                                    {{ review.reviewer.get_user_full_name }}<small> - <i>{{ review.created|date:"d M Y
+                                            g:i A" }}
+                                        </i></small>
+                                </h6>
+                                <div class="text-primary mb-2">
+                                    {% for _ in "12345" %}
+                                    {% if forloop.counter <= review.rating %} <i class="fas fa-star"></i>
+                                        {% else %}
+                                        <i class="far fa-star"></i>
+                                        {% endif %}
+                                        {% endfor %}
+                                </div>
+                                <p>
+                                    {{ review.feedback }}
+                                </p>
                             </div>
-                            <p>
-                                {{ review.feedback }}
-                            </p>
                         </div>
                     </div>
+                    {% empty %}
+                    <p> Seller does not have any reviews yet.</p>
+                    {% endfor %}
+
                 </div>
-                {% empty %}
-                <p> Seller does not have any reviews yet.</p>
-                {% endfor %}
 
-            </div>
-
-            <!-- review box section -->
-            {% if has_transaction %}
+                <!-- review box section -->
+                {% if has_transaction %}
                 <div class="col-md-6">
                     <h4 class="mb-4">Leave a review</h4>
                     <div class="d-flex my-3" id="ratingStars">
@@ -110,7 +113,8 @@
                     <form id="reviewForm">
                         <div class="form-group">
                             <label for="message">Your Review *</label>
-                            <textarea id="message" name="feedback" cols="30" rows="5" class="form-control" required></textarea>
+                            <textarea id="message" name="feedback" cols="30" rows="5" class="form-control"
+                                required></textarea>
                         </div>
                         <div class="form-group mb-0">
                             <input type="hidden" id="selectedRating" name="rating">
@@ -118,11 +122,11 @@
                         </div>
                     </form>
                 </div>
-            {% endif %}
+                {% endif %}
 
 
 
-        </div>
+            </div>
     </section>
 </div>
 
