@@ -105,6 +105,9 @@ TEMPLATES = [
                 'social_django.context_processors.backends',  
                 'social_django.context_processors.login_redirect',
 
+                # displaying categories to all templates
+                'auctionapp.context_processors.category',
+
             ],
         },
     },

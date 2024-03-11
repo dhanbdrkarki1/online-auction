@@ -4,19 +4,54 @@ from django.shortcuts import render
 from lot.models import Category, Lot
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.db.models import Count, Q
+from datetime import timedelta
+from django.utils import timezone
+from django.db.models import F, ExpressionWrapper, DateTimeField
 
 
 def index(request):
-    categories = Category.objects.all()
-    art_category = Category.objects.filter(name="Fine Art").first()
-    jwellery_category = Category.objects.filter(name="Jewelry").first()
 
-    furniture_category = Category.objects.filter(name="Furnitures").first()
+    # popular lots
+    popular_lots = Lot.objects.filter(
+        Q(is_active=True) & Q(is_auction_over=False)
+        ).annotate(num_bids=Count('bids')).order_by('-num_bids')[:10]
+    # print(popular_lots)
+
+    # Auction ending soon
+    soon_threshold = timezone.now() + timedelta(days=2)
+
+    ending_soon_lots = Lot.objects.filter(
+        Q(is_active=True) & Q(is_auction_over=False)
+    ).annotate(
+        end_time=ExpressionWrapper(
+            F('auction_start_time') + timedelta(days=1) * F('auction_duration'),
+            output_field=DateTimeField()
+        )
+    ).filter(
+        end_time__lte=soon_threshold,
+         end_time__gte=timezone.now()
+    )[:10]
+
+    # loved by others
+    loved_by_others = Lot.objects.filter(
+        Q(is_active=True) & Q(is_auction_over=False)
+    ).annotate(num_favorites=Count('favorites')).order_by('-num_favorites')[:10]
+
+
+    # upcoming auction
+    upcoming_auctions = Lot.objects.filter(
+        auction_start_time__gt=timezone.now(),
+        is_active=True
+    ).order_by('auction_start_time')
+    print(upcoming_auctions)
+
+
     context = {
-        'jwellery_category': jwellery_category,
-        'furniture_category': furniture_category,
-        'art_category':art_category,  
-        'categories': categories
+        'popular_lots': popular_lots,
+        'ending_soon_lots': ending_soon_lots,
+        'loved_by_others': loved_by_others,
+        'upcoming_auctions':upcoming_auctions,  
         }
 
     return render(request, 'auctionapp/index.html', context)

@@ -129,8 +129,6 @@ class LotShippingDetails(models.Model):
     shipment_cost = models.PositiveIntegerField(null=True, blank=True) 
     shipping_notes = models.TextField(blank=True, null=True)
 
-    # shipment status
-
     def __str__(self):
         return f"{self.lot.name}'s Shipping Details"
 
