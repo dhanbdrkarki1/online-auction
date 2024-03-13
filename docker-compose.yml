@@ -18,6 +18,8 @@ services:
 
   auction-web:
     build: .
+    entrypoint: "./entrypoint.sh"
+    # not suitable for asgi
     # command: ["./wait-for-it.sh", "db:5432", "--", 
     #             "python3","/code/auction/manage.py", "runserver", 
     #             "0.0.0.0:8000"]
@@ -46,5 +48,23 @@ services:
       - .:/code
     ports:
       - 80:80
+      - 443:443
 
-    
+  daphne:
+    build: .
+    working_dir: /code/auction
+    command: ["./wait-for-it.sh", "db:5432", "--", 
+            "daphne", "-u", "/code/auction/daphne.sock",
+            "auction.asgi:application"]
+    restart: always
+    volumes:
+      - .:/code
+    environment:
+      - DJANGO_SETTINGS_MODULE=auction.settings.prod
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+    depends_on:
+      - db
+      - cache

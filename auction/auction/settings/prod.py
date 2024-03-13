@@ -6,7 +6,7 @@ ADMINS = [
     ('Dhan Bdr Karki', 'hunterdbk5@gmail.com'),
 ]
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['www.bidme.com','bidme.com']
 
 DATABASES = {
     'default': {
@@ -19,6 +19,15 @@ DATABASES = {
     }
 }
 
+
+
 REDIS_URL = 'redis://cache:6379'
 CACHES['default']['LOCATION'] = REDIS_URL
 CHANNEL_LAYERS['default']['CONFIG']['hosts'] = [REDIS_URL]
+
+
+# security
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
