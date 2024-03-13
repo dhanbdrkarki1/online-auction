@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   var lotSlug = urlParts[urlParts.length - 2];
   console.log(lotSlug);
 
-  const urlLot = wsStart + window.location.host + `/ws/lots/` + lotSlug + '/';
+  const urlLot = wsStart + location.host + `/ws/lots/` + lotSlug + '/';
 
   const requestUser = JSON.parse(
     document.getElementById('request-user').textContent
