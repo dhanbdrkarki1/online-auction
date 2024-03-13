@@ -1,0 +1,20 @@
+# upstream for uWSGI that points to socket created by uWSGI
+
+upstream uwsgi_app {
+    server unix:/code/auction/uwsgi_app.sock
+}
+
+
+server {
+    listen 80;
+    server_name www.bidme.com bidme.com;
+    error_log stderr warn;
+    access_log /dev/stdout main;
+
+    # route any request under / path to the uwsgi_app socket to uWSGI
+    location / {
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass uwsgi_app;
+    }
+
+}

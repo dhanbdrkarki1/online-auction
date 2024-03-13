@@ -1,0 +1,50 @@
+services:
+
+  db:
+    image: postgres:latest
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  cache:
+    image: redis:latest
+    restart: always
+    volumes:
+      - ./data/cache:/data
+
+  auction-web:
+    build: .
+    # command: ["./wait-for-it.sh", "db:5432", "--", 
+    #             "python3","/code/auction/manage.py", "runserver", 
+    #             "0.0.0.0:8000"]
+    command: ["./wait-for-it.sh", "db:5432", "--", 
+            "uwsgi", "--ini", "/code/config/uwsgi/uwsgi.ini"]
+    restart: always
+    volumes: 
+      - .:/code
+    ports:
+      - 8000:8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=auction.settings.prod
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+    depends_on:
+      - db
+      - cache
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./config/nginx:/etc/nginx/templates
+      - .:/code
+    ports:
+      - 80:80
+
+    
