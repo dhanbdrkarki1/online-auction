@@ -767,13 +767,13 @@ Men
 */
 
 #men {
-  padding-top: 90px;
-  padding-bottom: 90px;
+  padding-top: 45px;
+  padding-bottom: 45px;
   border-bottom: 3px dotted #eee;
 }
 
 #men .section-heading {
-  margin-bottom: 60px;
+  margin-bottom: 25px;
 }
 
 #men .item .down-content {
@@ -1087,13 +1087,13 @@ Kids
 */
 
 #kids {
-  padding-top: 90px;
-  padding-bottom: 90px;
+  padding-top: 45px;
+  padding-bottom: 45px;
   border-bottom: 3px dotted #eee;
 }
 
 #kids .section-heading {
-  margin-bottom: 60px;
+  margin-bottom: 25px;
 }
 
 #kids .item .down-content {
