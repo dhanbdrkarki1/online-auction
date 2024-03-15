@@ -38,10 +38,14 @@
                         <li class="scroll-to-section"><a href="{% url 'lots:lot_create' %}">Sell</a></li>
                         <li class="scroll-to-section"><a href="{% url 'auctionapp:favorite_lots' %}">
                                 <i class="bi bi-heart text-primary text-bold"></i>
-                            </a></li>
-                        <li class="scroll-to-section"><a href="#">
+                            </a>
+                        </li>
+
+                        <!-- notification -->
+                        <!-- <li class="scroll-to-section"><a href="#">
                                 <i class="bi bi-bell text-primary text-bold"></i>
-                            </a></li>
+                            </a>
+                        </li> -->
                         {% if request.user.is_authenticated %}
                         <li class="submenu">
                             <a href="#">
@@ -51,12 +55,11 @@
                                 <li><a href="{% url 'auctionapp:favorite_lots' %}">My Favourite Lots</a></li>
                                 <li><a href="{% url 'lots:user_bids' %}">My Bids</a></li>
 
-                                <li><a href="{% url 'chat:chat_view' %}">Messages</a></li>
-                                <li><a href="{% url 'lots:won_lots' %}">My won lots</a></li>
+                                <li><a href="{% url 'chat:chat_view' %}">My Messages</a></li>
+                                <li><a href="{% url 'lots:won_lots' %}">My Won Lots</a></li>
 
-                                <li><a href="{% url 'lots:lots_list' %}">Lots in auction</a></li>
+                                <li><a href="{% url 'lots:lots_list' %}">Lots in Auction</a></li>
                                 <li><a href="{% url 'lots:sold_lots' %}">My Sold Lots</a></li>
-
 
                                 <li><a href="{% url 'account:profile_info' %}">Settings</a></li>
                                 <li><a href="{% url 'account:logout' %}">Logout</a></li>
