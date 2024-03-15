@@ -1,0 +1,73 @@
+{% extends 'client/base.html' %}
+{% load static %}
+{% block title %}Categories - BidMe {% endblock %}
+{% load lot_tags %}
+{% load thumbnail %}
+{% load humanize %}
+{% block content %}
+
+
+<div class="main-banner" style="padding-top:120px;" id="top">
+    <!-- Lot Detail Start -->
+    <section class="container mt-5">
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+            {% if lots_based_on_category %}
+            {% for lot in lots_based_on_category.lots.all %}
+            <div class="col mb-4">
+                <a href="{{ lot.get_absolute_url }}" class="text-decoration-none">
+                    <div class="card border-0 h-100 item" style="cursor: pointer">
+
+                        <div class="thumb position-relative">
+                            {% with first_image=lot.lotImages.first %}
+                            {% if first_image %}
+                            <img src="{{ first_image.image|thumbnail_url:'home_lot_image_thumbnail' }}"
+                                alt="{{ lot.name }}" class="card-img-top">
+                            {% endif %}
+                            {% endwith %}
+
+                        </div>
+                        {% with users_favourite=lot.favorites.all %}
+                        <div class="position-absolute p-2">
+                            <a href="#" class="favorite-lot" data-id="{{ lot.id }}"
+                                data-action="{% if request.user in users_favourite %}remove-from-favourite{% else %}add-to-favourite{% endif %}">
+                                {% if request.user not in users_favourite %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-heart" viewBox="0 0 24 24">
+                                    <path
+                                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                </svg>
+                                {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-heart-fill" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                                </svg>
+                                {% endif %}
+                            </a>
+                        </div>
+                        {% endwith %}
+
+                        <div class="down-content">
+                            <p class="display-5 font-weight-bold text-capitalize">
+                                {{ lot.name }}
+                            </p>
+                            <p class="text-muted text-uppercase">current bid</p>
+                            <p>Rs. {{ lot.starting_price }}</p>
+                            <p class="text-muted">{{ lot.get_time_left }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col">
+                <h2>No lots available in this category.</h2>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+
+
+</div>
+{% endblock %}

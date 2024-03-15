@@ -1,0 +1,26 @@
+{% extends 'client/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}BidMe{% endblock %}
+{% block content %}
+
+{% include 'auctionapp/main_banner.html' %}
+
+{% include 'auctionapp/popular_lots.html' %}
+
+{% if ending_soon_lots %}
+{% include 'auctionapp/auction_ending_soon.html' %}
+{% endif %}
+
+{% include 'auctionapp/other_love_these.html' %}
+
+{% if upcoming_auctions %}
+{% include 'auctionapp/upcoming_auction.html' %}
+{% endif %}
+
+{% endblock %}
+
+{% block modal %}
+{% include 'account/modal/loginModal.html' %}
+{% include 'account/modal/registerModal.html' %}
+{% endblock %}

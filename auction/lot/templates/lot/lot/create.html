@@ -1,0 +1,388 @@
+{% extends 'client/base.html' %}
+{% load static %}
+{% block title %}Create a Lot - BidMe {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'client/css/lot-form.css' %}" />
+
+{% endblock %}
+
+{% block content %}
+
+<div class="main-banner" style="padding-top:120px;" id="top">
+    <div class="container">
+
+        <form id="lotForm" method="POST" action="{% url 'lots:lot_create' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- start step indicators -->
+            <div class="form-header d-flex mb-4">
+                <span class="stepIndicator">Category</span>
+                <span class="stepIndicator">Photos</span>
+                <span class="stepIndicator">Lot Details</span>
+                <span class="stepIndicator">Selling Details</span>
+                <span class="stepIndicator">Shipping Details</span>
+                <span class="stepIndicator">Preview</span>
+            </div>
+            <!-- end step indicators -->
+
+            <!-- step one -->
+            <div class="step" id="step1">
+                <h1 class="display-6">Select a category</h1>
+                <p class="text-muted text-justify mb-4">Select a category that fits your lot. Unsure what to choose?
+                    Pick the best
+                    options and
+                    our expert will ensure it's correct.</p>
+
+                <h3 class="mb-2">Search category</h3>
+                <div class="mb-3 search-icon">
+                    <input type="text" class="form-control" name="category_search_query"
+                        placeholder="e.g., art, jwellery, paintings, etc." name="category" id="searchInput" />
+                </div>
+
+                <!-- category result -->
+                <div id="categoryResult" class="mb-3"></div>
+
+                <hr>
+                <p class="text-bold mb-4">Can't find what you're looking for? <a href="#">Browse all categories</a></p>
+            </div>
+
+            <!-- step two -->
+            <div class="step" id="step2">
+                <h1 class="display-6">Upload Photos</h1>
+                <p class="text-muted mb-4 text-justify">Upload photos that showcase your lot in the best way.
+                    Remember to to put your best photos first and include different angles. You can move your photos
+                    here.</p>
+
+                <div class="upload-box">
+                    <label class="upload-btn col-lg-12 col-md-6 text-center">
+                        <p class="mb-0"><i class="bi bi-cloud-arrow-up-fill upload-icon-large"></i></p>
+                        <p class="mb-0">Drag and drop to upload</p>
+                        <p class="mb-0">or browse to choose files</p>
+                        <input type="file" name="lot_images" accept="image/*" data-max_length="10"
+                            class="upload-inputfile d-none" multiple />
+                    </label>
+
+                    <div class="upload-img-wrap m-1 d-none"></div>
+                    <button class="btn btn-primary mx-1 my-4 add-more d-none"><i class="bi bi-plus-circle-fill"></i> Add
+                        More
+                        Photos</button>
+                </div>
+            </div>
+            <!-- step two end -->
+
+
+            <!-- step three -->
+            <div class="step" id="step3">
+                <h1 class="display-6">Lot Details</h1>
+                <p class="text-muted mb-4 text-justify">To give us the best overview of your lot, please enter all the
+                    required details as accurately as possible. This way
+                    you’ll speed up the experts review and increase your lot’s findability, meaning it will attract more
+                    bidders.</p>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="lotName">Lot Name</label>
+                    <input type="text" id="lotName" name="lot_name" class="form-control" />
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="lotCondition">Condition</label>
+                    <select id="lotCondition" name="lot_condition" class="form-control">
+                        {% for value, label in lot_condition_choices %}
+                        <option name="{{ label }}" value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="lotDescription">Description</label>
+                    <textarea id="lotDescription" name="lot_description" class="form-control"></textarea>
+                </div>
+            </div>
+            <!-- step three  end-->
+
+
+            <!-- step four -->
+            <div class="step" id="step4">
+                <h1 class="display-6">Selling Details</h1>
+                <p class="text-muted mb-4 text-justify">To give us the best overview of your lot, please enter all the
+                    required details as accurately as possible. This way
+                    you’ll speed up the experts review and increase your lot’s findability, meaning it will attract more
+                    bidders.</p>
+
+                <div class="form-group row">
+                    <label for="auctionDuration" class="col-sm-2 col-form-label">Duration</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <select id="totalDuration" name="auction_duration" class="form-control">
+                                {% for value, label in lot_duration_choices %}
+                                <option name="{{ label }}" value="{{ value }}">{{ value }} days</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="bid_on_submit" id="bidOnSubmit" value=""
+                                checked>
+                            <label class="form-check-label" for="bidOnSubmit">
+                                Start my bid when I submit them
+                            </label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="bid_on_submit" id="startBidOnSchedule"
+                                value="">
+                            <label class="form-check-label" for="startBidOnSchedule">
+                                Schedule to start on
+                            </label>
+                        </div>
+                        <div class="input-group mt-2">
+                            <input type="text" id="startDate" name="auction_scheduled_time"
+                                class="form-control datetimepicker-input" data-toggle="datetimepicker"
+                                data-target="#startDate" placeholder="Select start date and time" disabled>
+                            <div class="input-group-append">
+                                <div class="input-group-text"><i class="fa fa-calendar" id="schedule-calender"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group row">
+                    <label for="auctionPrice" class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="startingPrice">
+                                        Starting Price
+                                    </label>
+                                    <input class="form-control" type="text" name="starting_price" id="startingPrice"
+                                        value="">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="buyItNowPrice">
+                                        Buy It Now Price
+                                    </label>
+                                    <input class="form-control" type="text" name="buy_it_now_price" id="buyItNowPrice"
+                                        value="">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="reservePrice">
+                                        Reserve Price
+                                    </label>
+                                    <input class="form-control" type="text" name="reserve_price" id="reservePrice"
+                                        value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="auctionQuantity" class="col-sm-2 col-form-label">Quantity</label>
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <input class="form-control col-lg-3" type="text" min="1" name="quantity"
+                                id="auctionQuantity" value="1" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- step four end-->
+
+            <!-- step five -->
+            <div class="step" id="step5">
+                <h1 class="display-6">Shipping Details</h1>
+                <p class="text-muted mb-4 text-justify">To give us the best overview of your lot, please enter all the
+                    required
+                    details as accurately as possible. This way you’ll speed up the experts review and increase your
+                    lot’s
+                    findability, meaning it will attract more bidders.</p>
+                <div class="row align-items-end">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="package_type">Package Type</label>
+                            <select name="package_type" id="package_type" class="form-control">
+                                {% for value, label in lot_packages_type_choices %}
+                                <option name="{{ label }}" value="{{ value }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dimensions">Dimensions</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input type="text" name="item_length" id="length" class="form-control"
+                                            placeholder="Length" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">in. X</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input type="text" name="item_breadth" id="breadth" class="form-control"
+                                            placeholder="Breadth" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">in. X</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input type="text" name="item_height" id="height" class="form-control"
+                                            placeholder="Height" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">in.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="w-100"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="package_weight">Package Weight</label>
+                            <select name="package_weight" id="package_weight" class="form-control">
+                                {% for value, label in lot_weight_range_choices %}
+                                <option name="{{ label }}" value="{{ value }}">{{ value }} KG</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="shipment_cost">Shipment Cost</label>
+                            <input type="text" name="shipment_cost" id="shipment_cost" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="carrier_type">Carrier Type</label>
+                            <select name="carrier_type" id="carrier_type" class="form-control">
+                                {% for value, label in lot_carrier_type_choices %}
+                                <option name="{{ label }}" value="{{ value }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="item_location">Item Location</label>
+                            <input type="text" name="item_location" id="item_location" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="shipping_notes">Shipping Notes</label>
+                            <textarea name="shipping_notes" id="shipping_notes" class="form-control"
+                                rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- step five end-->
+
+            <!-- step six -->
+            <div class="step" id="step6">
+                <h1 class="display-6">Preview</h1>
+                <p class="text-muted mb-4 text-justify">Please review the details you've entered:</p>
+                <div id="previewDetails" class="mb-4">
+                </div>
+            </div>
+            <!-- step six end-->
+
+
+            <!-- start previous / next buttons -->
+            <div class="form-footer d-flex">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">
+                    Previous
+                </button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+            </div>
+            <!-- end previous / next buttons -->
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+
+    tinymce.init({
+        selector: 'textarea#lotDescription',
+        menubar: false,
+        plugins: 'anchor autolink charmap codesample emoticons link lists table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link table | align lineheight | tinycomments | checklist numlist bullist indent outdent',
+    });
+
+
+    $(function () {
+        $('#startDate').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm:ss',
+            icons: {
+                time: 'fa fa-clock',
+                date: 'fa fa-calendar',
+                up: 'fa fa-chevron-up',
+                down: 'fa fa-chevron-down',
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-crosshairs',
+                clear: 'fa fa-trash',
+                close: 'fa fa-times'
+            },
+            sideBySide: true,
+            useCurrent: false,
+            minDate: moment(), // preventing selecting previous time
+        });
+
+        $('#schedule-calender').click(function () {
+            $('#startDate').datetimepicker('show');
+        });
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('searchInput').focus();
+
+        // when bid on submit is clicked, disable scheduling date
+        var startBidOnSubmit = document.getElementById("bidOnSubmit");
+        var startBidOnSchedule = document.getElementById("startBidOnSchedule");
+        var startDateInput = document.getElementById("startDate");
+
+        startBidOnSubmit.addEventListener("change", function () {
+            if (this.checked) {
+                startDateInput.disabled = true;
+                startDateInput.required = false;
+                startDateInput.value = "";
+            }
+        });
+
+        startBidOnSchedule.addEventListener("change", function () {
+            if (this.checked) {
+                startDateInput.disabled = false;
+                startDateInput.required = true;
+            }
+        });
+    });
+
+</script>
+<script src="{% static 'client/js/lot-form-handling.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% load static %}
+{% load thumbnail %}
+<!-- ***** Main Banner Area Start ***** -->
+<div class="main-banner" id="top">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="left-content">
+                    <div class="thumb">
+                        <div class="inner-content">
+                            <h4>We Are BidMe</h4>
+                            <span>Explore, bid, win—repeat!</span>
+
+                            <div class="main-border-button">
+                                <a href="#">Browse Catalogues</a>
+                            </div>
+                        </div>
+                        <img class="banner-img" style="max-width: 100%;height: 33.80rem;"
+                            src="{% static 'client/images/banner/main-banner-bag.png' %}" alt="" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="right-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="right-first-image">
+                                <div class="thumb">
+                                    <div class="inner-content">
+                                        <h4>Collectibles</h4>
+                                        <span>Find hidden treasures</span>
+                                    </div>
+                                    <div class="hover-content">
+                                        <div class="inner">
+                                            <h4>Collectibles</h4>
+                                            <p>
+                                                Complete your collection or discover something new
+                                            </p>
+                                            <div class="main-border-button">
+                                                <a
+                                                    href="{% url 'auctionapp:lots_based_on_category' catgory_slug='collectibles' %}">Discover
+                                                    More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{% static 'client/images/banner/collectibles-coin.png' %}"
+                                        style="max-width: 100%;height: 16rem;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="right-first-image">
+                                <div class="thumb">
+                                    <div class="inner-content">
+                                        <h4>Jewelry</h4>
+                                        <span>Dazzle with exquisite gems</span>
+                                    </div>
+                                    <div class="hover-content">
+                                        <div class="inner">
+                                            <h4>Jewelry</h4>
+                                            <p>
+                                                Find the perfect piece to express yourself.
+                                            </p>
+                                            <div class="main-border-button">
+                                                <a
+                                                    href="{% url 'auctionapp:lots_based_on_category' catgory_slug='jwellery' %}">Discover
+                                                    More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{% static 'client/images/banner/jwellery-watch.png' %}"
+                                        style="max-width: 100%;height: 16rem;" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="right-first-image">
+                                <div class="thumb">
+                                    <div class="inner-content">
+                                        <h4>Furniture</h4>
+                                        <span>Elevate your living space</span>
+                                    </div>
+                                    <div class="hover-content">
+                                        <div class="inner">
+                                            <h4>Furniture</h4>
+                                            <p>
+                                                Bid on vintage treasures, modern masterpieces, and everything in
+                                                between.
+                                            </p>
+                                            <div class="main-border-button">
+                                                <a
+                                                    href="{% url 'auctionapp:lots_based_on_category' catgory_slug='furnitures' %}">Discover
+                                                    More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{% static 'client/images/banner/furniture.png' %}"
+                                        style="max-width: 100%;height: 16rem;" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="right-first-image">
+                                <div class="thumb">
+                                    <div class="inner-content">
+                                        <h4>Fine Art</h4>
+                                        <span>Own a piece of art history</span>
+                                    </div>
+                                    <div class="hover-content">
+                                        <div class="inner">
+                                            <h4>Fine Art</h4>
+                                            <p>
+                                                Discover your next masterpiece & Invest in beauty and creativity.
+                                            </p>
+                                            <div class="main-border-button">
+                                                <a
+                                                    href="{% url 'auctionapp:lots_based_on_category' catgory_slug='fine-art' %}">Discover
+                                                    More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{% static 'client/images/banner/fine-art.jpg' %}"
+                                        style="max-width: 100%;height: 16rem;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ***** Main Banner Area End ***** -->
