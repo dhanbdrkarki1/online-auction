@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   var otherUserId = urlParts[urlParts.length - 2];
   console.log(otherUserId);
   const urlChat =
-    'ws://' + window.location.host + `/ws/chat/` + otherUserId + '/';
+    wsStart + location.host + `/ws/chat/` + otherUserId + '/';
 
   const requestUser = JSON.parse(
     document.getElementById('request-user').textContent

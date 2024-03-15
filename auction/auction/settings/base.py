@@ -174,9 +174,6 @@ AUTH_USER_MODEL = 'account.CustomUser'
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -223,3 +220,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+# serving static files
+STATIC_ROOT = BASE_DIR / 'static'

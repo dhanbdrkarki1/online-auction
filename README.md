@@ -56,3 +56,15 @@ url: http://localhost:5555/
 .\venv\Scripts\activate
 cd .\auction\
 py manage.py runserver
+
+# For production
+
+perform additional checks relevent to prod deployment
+S
+python manage.py check --deploy --settings=auction.settings.prod
+
+# To create ssl/tls certificate,
+openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 -nodes \
+-keyout ssl/bidme.key -out ssl/bidme.crt \
+-subj '/CN=*.bidme.com' \
+-addext 'subjectAltName=DNS:*.bidme.com'

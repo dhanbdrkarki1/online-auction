@@ -1,14 +1,48 @@
 # upstream for uWSGI
 upstream uwsgi_app {
- server unix:/code/auction/uwsgi_app.sock;
+    server unix:/code/auction/uwsgi_app.sock;
 }
+
+# upstream for Daphne
+upstream daphne{
+    server unix:/code/auction/daphne.sock;
+}
+
+# redirecting http request to https
 server {
- listen 80;
- server_name www.bidme.com bidme.com;
- error_log stderr warn;
- access_log /dev/stdout main;
- location / {
- include /etc/nginx/uwsgi_params;
- uwsgi_pass uwsgi_app;
- }
+    listen 80;
+    server_name www.bidme.com bidme.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    ssl_certificate /code/auction/ssl/bidme.crt;
+    ssl_certificate_key /code/auction/ssl/bidme.key;
+
+    server_name www.bidme.com bidme.com;
+    error_log stderr warn;
+    access_log /dev/stdout main;
+
+    location / {
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass uwsgi_app;
+    }
+
+    # pass any URL request that starts with the /ws/ prefix to Daphne and the rest to uWSGI
+    location /ws/ {
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_redirect off;
+        proxy_pass http://daphne;
+    }
+
+    location /static/ {
+        alias /code/auction/static/;
+    }
+
+    location /media/ {
+        alias /code/auction/media/;
+    }
 }
