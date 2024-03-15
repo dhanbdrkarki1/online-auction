@@ -2,6 +2,7 @@ admin-template/
 client-template/
 # .env
 
+data/
 
 *.sock
 
