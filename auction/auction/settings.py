@@ -19,6 +19,7 @@ ALLOWED_HOSTS = ['bidme.com','localhost','127.0.0.1']
 
 INSTALLED_APPS = [
     'daphne',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,7 +33,6 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'rest_framework',
     'auctionapp.apps.AuctionappConfig',
-    'myadmin.apps.MyadminConfig',
     'account.apps.AccountConfig',
     'lot.apps.LotConfig',
     'chat.apps.ChatConfig',

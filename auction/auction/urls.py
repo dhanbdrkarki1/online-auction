@@ -4,9 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
     path('admin/', admin.site.urls),
     path('', include('auctionapp.urls', namespace='auctionapp')),
-    path('myadmin/', include('myadmin.urls', namespace='myadmin')),
     path('account/', include('account.urls', namespace='account')),
     path('', include('lot.urls', namespace='lots')),
     path('', include('chat.urls', namespace='chat')),
