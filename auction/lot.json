@@ -1,0 +1,2550 @@
+[
+{
+  "model": "lot.category",
+  "pk": 1,
+  "fields": {
+    "name": "Fine Art",
+    "slug": "fine-art",
+    "description": "This is a fine art.",
+    "created": "2024-02-13T08:53:44.586Z",
+    "updated": "2024-02-14T06:58:17.203Z",
+    "parent": null
+  }
+},
+{
+  "model": "lot.category",
+  "pk": 2,
+  "fields": {
+    "name": "Drawing",
+    "slug": "drawing",
+    "description": null,
+    "created": "2024-02-13T08:53:54.142Z",
+    "updated": "2024-02-13T08:53:54.142Z",
+    "parent": 1
+  }
+},
+{
+  "model": "lot.category",
+  "pk": 5,
+  "fields": {
+    "name": "Jewelry",
+    "slug": "jewelry",
+    "description": null,
+    "created": "2024-02-13T08:55:21.046Z",
+    "updated": "2024-02-13T08:55:21.046Z",
+    "parent": null
+  }
+},
+{
+  "model": "lot.category",
+  "pk": 8,
+  "fields": {
+    "name": "Collectibles",
+    "slug": "collectibles",
+    "description": "This is a collectibles.",
+    "created": "2024-02-14T06:59:06.471Z",
+    "updated": "2024-02-14T06:59:06.471Z",
+    "parent": 1
+  }
+},
+{
+  "model": "lot.category",
+  "pk": 9,
+  "fields": {
+    "name": "Furnitures",
+    "slug": "furnitures",
+    "description": "this is a furnitures",
+    "created": "2024-02-23T08:11:30.269Z",
+    "updated": "2024-02-23T08:11:30.269Z",
+    "parent": null
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 45,
+  "fields": {
+    "category": 1,
+    "seller": 25,
+    "name": "lot 100",
+    "slug": "lot-100",
+    "condition": "Used - Good",
+    "description": "<p>lot 100</p>",
+    "starting_price": 10000,
+    "buy_it_now_price": 20000,
+    "reserve_price": 18000,
+    "auction_start_time": "2024-02-17T09:58:25Z",
+    "auction_duration": 2,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-17T09:58:25.385Z",
+    "updated": "2024-02-18T14:38:12.552Z",
+    "favorites": [
+      37,
+      39
+    ]
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 46,
+  "fields": {
+    "category": 1,
+    "seller": 25,
+    "name": "lot 101",
+    "slug": "lot-101",
+    "condition": "Used - Good",
+    "description": "<p>lot 101</p>",
+    "starting_price": 5000,
+    "buy_it_now_price": 10000,
+    "reserve_price": 15000,
+    "auction_start_time": "2024-02-17T10:00:24Z",
+    "auction_duration": 2,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-17T10:00:24.201Z",
+    "updated": "2024-02-18T14:38:22.077Z",
+    "favorites": [
+      39
+    ]
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 47,
+  "fields": {
+    "category": 1,
+    "seller": 25,
+    "name": "GONZHO - El lazo verde",
+    "slug": "gonzho-el-lazo-verde",
+    "condition": "New",
+    "description": "<p>Original work by Gonzho, acrylic on canvas glued to board, varnished, 50x40 cm, year 2024<br>unframed.</p>\r\n<div class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">YEAR</span>\r\n<div class=\"be-lot-specification__value u-typography-body\">2024</div>\r\n</div>\r\n<div class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">EDITION</span>\r\n<div class=\"be-lot-specification__value u-typography-body\">Original</div>\r\n</div>\r\n<div class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">CONDITION</span>\r\n<div class=\"be-lot-specification__value u-typography-body\">Excellent condition musical</div>\r\n</div>\r\n<div class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">HEIGHT</span>\r\n<div class=\"be-lot-specification__value u-typography-body\">40 cm</div>\r\n</div>",
+    "starting_price": 20000,
+    "buy_it_now_price": 40000,
+    "reserve_price": 35000,
+    "auction_start_time": "2024-03-02T15:07:04Z",
+    "auction_duration": 2,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-18T15:07:04.330Z",
+    "updated": "2024-03-11T04:11:05.334Z",
+    "favorites": [
+      36,
+      37,
+      38,
+      39,
+      40
+    ]
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 48,
+  "fields": {
+    "category": 1,
+    "seller": 25,
+    "name": "Hestela Charbonnier - Amour et Amour",
+    "slug": "hestela-charbonnier-amour-et-amour",
+    "condition": "Used - Excellent",
+    "description": "<p>Colorful airs that are made up of delicate scents that alternate between warm, sometimes sparkling, woody, sweet notes and always present in our tradition<br>They were created by drawing on distant memories, sensations and moods to make them flow into a torrent of new emotions<br>and the dance of flowers, the dance of colors, the dance of perfumes, of joys, of smiles that embraces us at every awakening and kisses us at every sunset.</p>\r\n<ul>\r\n<li class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">TECHNIQUE: </span>Acrylic on canvas</li>\r\n<li class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">SIGNATURE: </span>Hand signed</li>\r\n<li class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">YEAR: </span>2024</li>\r\n<li class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">EDITION: </span>Unique</li>\r\n</ul>\r\n<p>&nbsp;</p>",
+    "starting_price": 50000,
+    "buy_it_now_price": 100000,
+    "reserve_price": 80000,
+    "auction_start_time": "2024-03-15T15:10:00Z",
+    "auction_duration": 10,
+    "scheduled_time": "2024-03-15T15:10:00Z",
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-18T15:10:27.968Z",
+    "updated": "2024-03-11T04:24:13.636Z",
+    "favorites": [
+      37,
+      38,
+      39
+    ]
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 49,
+  "fields": {
+    "category": 1,
+    "seller": 25,
+    "name": "Ugo Vistosi - Ninfee XL",
+    "slug": "ugo-vistosi-ninfee-xl",
+    "condition": "Used - Excellent",
+    "description": "<p>The painting is a unique and original piece, created with acrylic colors on canvas by Vistosi Ugo, signed at the bottom left by the author, it is shipped rolled up in a sturdy rigid tube.<br>The canvas measures 160x90, and must be stretched and fixed on a 150x80 cm frame, not supplied, and the edges will also be painted like the painting.<br>A dreamlike vision between abstraction and figurative characterizes this work, full of pathos and colors.</p>\r\n<div class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">TECHNIQUE: </span>Acrylic on canvas</div>\r\n<div class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">SIGNATURE: </span>Hand signed</div>\r\n<div class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">YEAR: </span>2024</div>\r\n<div class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">EDITION: </span>Single piece</div>\r\n<div class=\"be-lot-specification\"><span class=\"be-lot-specification__name u-typography-label-s u-typography-uppercase u-color-dark-gray\">CONDITION: </span>Excellent condition</div>",
+    "starting_price": 20000,
+    "buy_it_now_price": 40000,
+    "reserve_price": 35000,
+    "auction_start_time": "2024-03-10T04:15:00Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-10T04:15:00Z",
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-18T15:16:02.408Z",
+    "updated": "2024-03-11T03:54:10.246Z",
+    "favorites": [
+      40
+    ]
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 50,
+  "fields": {
+    "category": 5,
+    "seller": 38,
+    "name": "ROLEX 6238 PRE-DAYTONA CHRONO. SUISSE 36MM",
+    "slug": "rolex-6238-pre-daytona-chrono-suisse-36mm",
+    "condition": "Used - Excellent",
+    "description": "<p>Highly sought after Rolex m.6238 pre-Daytona Chrono. Suisse. 36MM case diameter. Desirable black dial with silver stick dial markers and hands. Fold over clasp and stainless steel bracelet.\r\nsmartphone test\r\n</p>",
+    "starting_price": 50000,
+    "buy_it_now_price": 100000,
+    "reserve_price": 80000,
+    "auction_start_time": "2024-02-23T07:57:25Z",
+    "auction_duration": 2,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-23T07:57:25.981Z",
+    "updated": "2024-02-24T07:12:14.553Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 51,
+  "fields": {
+    "category": 5,
+    "seller": 38,
+    "name": "Vacheron Constantin 18k Rose Gold 47120 Malte Chronograph Mens Wrist Watch",
+    "slug": "vacheron-constantin-18k-rose-gold-47120-malte-chronograph-mens-wrist-watch",
+    "condition": "Used - Excellent",
+    "description": "<ul>\r\n<li><strong>Described By:&nbsp;</strong>Michelle</li>\r\n<li><strong>Title:&nbsp;</strong>Vacheron Constantin 18k Rose Gold 47120 Malte Chronograph Mens Wrist Watch</li>\r\n<li><strong>Description:&nbsp;</strong>Vacheron Constantin 18k Rose Gold 47120 Malte Chronograph Mens Wrist Watch</li>\r\n<li><strong>Case Size:&nbsp;</strong>42mm</li>\r\n<li><strong>Total Length:&nbsp;</strong>8 inches</li>\r\n<li><strong>Condition:&nbsp;</strong>Case displays a little wear, some discoloring on dial edge near 10 marker, sapphire crystal looks good, signed strap displays some wear</li>\r\n<li><strong>Movement Condition:&nbsp;</strong>Movement is running, chronograph starts stops and flies back to 0, for optimum timekeeping accuracy we suggest an overhaul at buyers expense</li>\r\n</ul>",
+    "starting_price": 16000,
+    "buy_it_now_price": 25000,
+    "reserve_price": 20000,
+    "auction_start_time": "2024-02-23T08:00:10.018Z",
+    "auction_duration": 2,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-23T08:00:10.034Z",
+    "updated": "2024-02-23T08:00:10.034Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 52,
+  "fields": {
+    "category": 5,
+    "seller": 38,
+    "name": "Emerald and Diamond 10ct Rose Gold Ring",
+    "slug": "emerald-and-diamond-10ct-rose-gold-ring",
+    "condition": "Used - Good",
+    "description": "<div class=\"collapse show\">\r\n<div class=\"card\">\r\n<div class=\"card-body\">\r\n<div>\r\n<div>1.48ct Emerald and Diamond 10ct Rose Gold Ring. One Emerald Cut Emerald Centering Thirty Six Round Single Cut Diamonds. Comes With A Certificate Of Valuation Of $5,890. Ring Size: N. Free Express Delivery With Insurance Australia Wide.</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<div id=\"paymentNShipmentToggler\" class=\"accordion-heading\" tabindex=\"0\" role=\"button\"></div>",
+    "starting_price": 16000,
+    "buy_it_now_price": 25000,
+    "reserve_price": 20000,
+    "auction_start_time": "2024-02-23T08:02:28.812Z",
+    "auction_duration": 5,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-23T08:02:28.828Z",
+    "updated": "2024-02-23T08:02:28.828Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 53,
+  "fields": {
+    "category": 5,
+    "seller": 38,
+    "name": "Pair of 67.15ct Tahitian Pearl and 1.03ct Diamond 14ct White Gold Chanel Inspired Earrings",
+    "slug": "pair-of-6715ct-tahitian-pearl-and-103ct-diamond-14ct-white-gold-chanel-inspired-earrings",
+    "condition": "New",
+    "description": "<p>Pair of 67.15ct Tahitian Pearl and 1.03ct Diamond 14ct White Gold Chanel Inspired Earrings. Comes With Certificate of Valuation of $21,300. Two Black Grey Round Tahitian Pearls With Thirty Four Black Round Brilliant Cut Diamonds and Thirty Four Round Brilliant Cut Diamonds set in (CC) Feature. Free Express Delivery With Insurance Australia Wide.</p>",
+    "starting_price": 16000,
+    "buy_it_now_price": 25000,
+    "reserve_price": 20000,
+    "auction_start_time": "2024-02-23T08:05:05.172Z",
+    "auction_duration": 7,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-23T08:05:05.183Z",
+    "updated": "2024-02-23T08:05:05.183Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 54,
+  "fields": {
+    "category": 5,
+    "seller": 38,
+    "name": "Tiffany Heavy 18k Gold Ivory Midcentury Modern Statement Necklace",
+    "slug": "tiffany-heavy-18k-gold-ivory-midcentury-modern-statement-necklace",
+    "condition": "New",
+    "description": "<ul>\r\n<li><strong>Title:&nbsp;</strong>Stunning Signed Tiffany Heavy 18k Gold Ivory Midcentury Modern Statement Necklace 167grams<br>\r\n<p>&nbsp;</p>\r\n</li>\r\n<li><strong>Description:&nbsp;</strong>A stunning midcentury modern statement piece in HEAVY 18k gold set with incredibly beautiful ivory, signed by Tiffany &amp; Co. It weighs 167 grams due to its serious gold value &amp; remains in terrific condition! This piece meets the&nbsp;<strong>de minimis rule</strong>&nbsp;for resale because it is less than 200 grams of ivory, but we still cannot ship to California or New York.</li>\r\n<li><strong>Approx. Dimensions or Size of Item:&nbsp;</strong>Measures 27 inches end to end. Center piece alone is 2-1/16 inch (T) X 1-1/2 inch (W).</li>\r\n</ul>",
+    "starting_price": 16000,
+    "buy_it_now_price": 25000,
+    "reserve_price": 20000,
+    "auction_start_time": "2024-02-23T08:07:09.850Z",
+    "auction_duration": 10,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-23T08:07:09.859Z",
+    "updated": "2024-02-23T08:07:09.859Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 55,
+  "fields": {
+    "category": 9,
+    "seller": 37,
+    "name": "Antique Oak Slant Front Desk",
+    "slug": "antique-oak-slant-front-desk",
+    "condition": "Used - Good",
+    "description": "<p>Features: large drawer with brass pulls, two small interior drawers with cubbies and stands on cabriole legs. Measures 33\" wide, 17 1/2\" deep and 39\" tall.</p>",
+    "starting_price": 17000,
+    "buy_it_now_price": 25000,
+    "reserve_price": 20000,
+    "auction_start_time": "2024-03-11T03:53:03Z",
+    "auction_duration": 2,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-23T08:38:28.785Z",
+    "updated": "2024-03-11T03:53:06.326Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 56,
+  "fields": {
+    "category": 9,
+    "seller": 37,
+    "name": "French 19th century gilt wood over mantle mirror",
+    "slug": "french-19th-century-gilt-wood-over-mantle-mirror",
+    "condition": "Used - Excellent",
+    "description": "<div>\r\n<h4>Description</h4>\r\n<div>An outstanding French 19th century gilt wood over mantle mirror having all over carved floral decoration. H 160cm, W 145cm</div>\r\n</div>\r\n<div>\r\n<h4>Condition Report</h4>\r\n<div>Please note that whilst we endeavour to mention any imperfection, the absence of this information in the catalogue does not automatically imply that the lot is free from defect.</div>\r\n</div>",
+    "starting_price": 17000,
+    "buy_it_now_price": 25000,
+    "reserve_price": 20000,
+    "auction_start_time": "2024-02-23T08:40:49.456Z",
+    "auction_duration": 10,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-23T08:40:49.463Z",
+    "updated": "2024-02-23T08:40:49.463Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 57,
+  "fields": {
+    "category": 9,
+    "seller": 37,
+    "name": "Fantastic Antique N/P arm chair",
+    "slug": "fantastic-antique-np-arm-chair",
+    "condition": "Used - Excellent",
+    "description": "<div>\r\n<h4>Description</h4>\r\n<div>Fantastic antique needlepoint carved mahogany framed arm chair, down cushion, upholstery good, structurally sound and in good condition for age, 28\"w x 36\"d x 35\"h with seat height 18\"</div>\r\n</div>\r\n<div>\r\n<div>&nbsp;</div>\r\n</div>",
+    "starting_price": 170000,
+    "buy_it_now_price": 200000,
+    "reserve_price": 180000,
+    "auction_start_time": "2024-02-23T08:44:44.587Z",
+    "auction_duration": 7,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-23T08:44:44.596Z",
+    "updated": "2024-02-23T08:44:44.596Z",
+    "favorites": [
+      39
+    ]
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 58,
+  "fields": {
+    "category": 9,
+    "seller": 37,
+    "name": "Louis XV-Style Carved Creme Peinte Fauteuil",
+    "slug": "louis-xv-style-carved-creme-peinte-fauteuil",
+    "condition": "Used - Good",
+    "description": "<div>Louis XV-Style Carved Creme Peinte Fauteuil, 19th c., foliate crest rail, padded arms, shaped seat rail, cabriole legs, h. 37 in., w. 25 in., d. 20 1/2 in. Provenance: The Estate of Caroline P. Ireland.</div>",
+    "starting_price": 170000,
+    "buy_it_now_price": 200000,
+    "reserve_price": 180000,
+    "auction_start_time": "2024-03-11T03:56:56Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-11T03:56:56Z",
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-23T08:46:47.836Z",
+    "updated": "2024-03-11T03:57:12.433Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 59,
+  "fields": {
+    "category": 1,
+    "seller": 39,
+    "name": "This is a agar bro lot",
+    "slug": "this-is-a-agar-bro-lot",
+    "condition": "New",
+    "description": "<h1>This is a agar bro lot</h1>",
+    "starting_price": 15000,
+    "buy_it_now_price": 20000,
+    "reserve_price": 15000,
+    "auction_start_time": "2024-02-27T02:31:15Z",
+    "auction_duration": 7,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-27T02:31:15.257Z",
+    "updated": "2024-02-27T02:32:49.759Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 60,
+  "fields": {
+    "category": 9,
+    "seller": 38,
+    "name": "This is a ffff bro lot",
+    "slug": "this-is-a-ffff-bro-lot",
+    "condition": "New",
+    "description": "<p>dfbd</p>",
+    "starting_price": 15000,
+    "buy_it_now_price": 20000,
+    "reserve_price": 15000,
+    "auction_start_time": "2024-02-29T07:00:18.241Z",
+    "auction_duration": 2,
+    "scheduled_time": null,
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-02-29T07:00:18.258Z",
+    "updated": "2024-02-29T07:00:18.258Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 61,
+  "fields": {
+    "category": 9,
+    "seller": 38,
+    "name": "Fake Furniture",
+    "slug": "fake-furniture",
+    "condition": "Used - Good",
+    "description": "<p>Fake Furniture</p>",
+    "starting_price": 15000,
+    "buy_it_now_price": 20000,
+    "reserve_price": 18000,
+    "auction_start_time": "2024-03-02T07:25:23.923Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-02T07:25:23.923Z",
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-03-02T07:25:23.956Z",
+    "updated": "2024-03-02T07:25:23.956Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 62,
+  "fields": {
+    "category": 9,
+    "seller": 38,
+    "name": "Fake furniture 3",
+    "slug": "fake-furniture-3",
+    "condition": "Used - Excellent",
+    "description": "<p>Fake furniture 3</p>",
+    "starting_price": 5000,
+    "buy_it_now_price": 10000,
+    "reserve_price": 18000,
+    "auction_start_time": "2024-03-11T03:59:16Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-11T03:59:16Z",
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-03-02T07:30:20.018Z",
+    "updated": "2024-03-11T03:59:24.985Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 63,
+  "fields": {
+    "category": 5,
+    "seller": 39,
+    "name": "FAke jwellery ",
+    "slug": "fake-jwellery",
+    "condition": "New",
+    "description": "<p>FAke jwellery&nbsp;</p>",
+    "starting_price": 8000,
+    "buy_it_now_price": 10000,
+    "reserve_price": 15000,
+    "auction_start_time": "2024-03-02T07:33:50.396Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-02T07:33:50.396Z",
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-03-02T07:33:50.411Z",
+    "updated": "2024-03-02T07:33:50.411Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 64,
+  "fields": {
+    "category": 9,
+    "seller": 39,
+    "name": "Fake Furniture 5",
+    "slug": "fake-furniture-5",
+    "condition": "Used - Fair",
+    "description": "<p>Fake Furniture 5</p>",
+    "starting_price": 8000,
+    "buy_it_now_price": 10000,
+    "reserve_price": 12,
+    "auction_start_time": "2024-03-02T07:48:40.232Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-02T07:48:40.232Z",
+    "quantity": 1,
+    "is_auction_over": true,
+    "is_active": true,
+    "created": "2024-03-02T07:48:40.249Z",
+    "updated": "2024-03-02T07:50:20.408Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 65,
+  "fields": {
+    "category": 9,
+    "seller": 39,
+    "name": "Fake Furniture 600",
+    "slug": "fake-furniture-600",
+    "condition": "Used - Excellent",
+    "description": "<p>Fake Furniture 600</p>",
+    "starting_price": 8000,
+    "buy_it_now_price": 10000,
+    "reserve_price": 35000,
+    "auction_start_time": "2024-03-02T07:54:04Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-02T07:54:04Z",
+    "quantity": 1,
+    "is_auction_over": true,
+    "is_active": true,
+    "created": "2024-03-02T07:54:04.059Z",
+    "updated": "2024-03-04T16:16:44.691Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 66,
+  "fields": {
+    "category": 9,
+    "seller": 39,
+    "name": "Fake Furniture 300",
+    "slug": "fake-furniture-300",
+    "condition": "Used - Good",
+    "description": "<p>Fake Furniture 300</p>",
+    "starting_price": 8000,
+    "buy_it_now_price": 10000,
+    "reserve_price": 15000,
+    "auction_start_time": "2024-03-02T08:26:50.739Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-02T08:26:50.739Z",
+    "quantity": 1,
+    "is_auction_over": true,
+    "is_active": true,
+    "created": "2024-03-02T08:26:50.756Z",
+    "updated": "2024-03-02T08:28:35.973Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 67,
+  "fields": {
+    "category": 1,
+    "seller": 39,
+    "name": "Fake lot",
+    "slug": "fake-lot",
+    "condition": "Used - Good",
+    "description": "<p><strong>This is a lot</strong></p>\r\n<p>Fake lot</p>",
+    "starting_price": 8000,
+    "buy_it_now_price": 10000,
+    "reserve_price": 15000,
+    "auction_start_time": "2024-03-04T04:25:24.463Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-04T04:25:24.463Z",
+    "quantity": 1,
+    "is_auction_over": false,
+    "is_active": true,
+    "created": "2024-03-04T04:25:24.479Z",
+    "updated": "2024-03-04T04:25:24.479Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lot",
+  "pk": 68,
+  "fields": {
+    "category": 2,
+    "seller": 38,
+    "name": "Girl on Sale",
+    "slug": "girl-on-sale",
+    "condition": "New",
+    "description": "<p>Girl on Sale</p>",
+    "starting_price": 100,
+    "buy_it_now_price": 500,
+    "reserve_price": 300,
+    "auction_start_time": "2024-03-21T03:32:42.761Z",
+    "auction_duration": 2,
+    "scheduled_time": "2024-03-21T03:32:42.761Z",
+    "quantity": 1,
+    "is_auction_over": true,
+    "is_active": true,
+    "created": "2024-03-21T03:32:42.786Z",
+    "updated": "2024-03-22T15:27:56.148Z",
+    "favorites": []
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 40,
+  "fields": {
+    "lot": 45,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 10,
+    "shipping_notes": "lot 100"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 41,
+  "fields": {
+    "lot": 46,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 10,
+    "shipping_notes": "lot 101"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 42,
+  "fields": {
+    "lot": 47,
+    "package_type": "Envelope",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Air Freight",
+    "shipment_cost": 10,
+    "shipping_notes": "not any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 43,
+  "fields": {
+    "lot": 48,
+    "package_type": "Envelope",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "not any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 44,
+  "fields": {
+    "lot": 49,
+    "package_type": "Envelope",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 10,
+    "shipping_notes": "not any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 45,
+  "fields": {
+    "lot": 50,
+    "package_type": "Envelope",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "no any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 46,
+  "fields": {
+    "lot": 51,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "not any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 47,
+  "fields": {
+    "lot": 52,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "no"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 48,
+  "fields": {
+    "lot": 53,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "not any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 49,
+  "fields": {
+    "lot": 54,
+    "package_type": "Envelope",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "not"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 50,
+  "fields": {
+    "lot": 55,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "10-20",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "careful"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 51,
+  "fields": {
+    "lot": 56,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "5-10",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "not"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 52,
+  "fields": {
+    "lot": 57,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "5-10",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "no"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 53,
+  "fields": {
+    "lot": 58,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": ".."
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 54,
+  "fields": {
+    "lot": 59,
+    "package_type": "Envelope",
+    "dimensions": "1x2x3",
+    "weight": "2-5",
+    "item_location": "kathmandu",
+    "carrier": "Air Freight",
+    "shipment_cost": 12,
+    "shipping_notes": "no any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 55,
+  "fields": {
+    "lot": 60,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 12,
+    "shipping_notes": "bmk"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 56,
+  "fields": {
+    "lot": 61,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 10,
+    "shipping_notes": "Fake Furniture"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 57,
+  "fields": {
+    "lot": 62,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 12,
+    "shipping_notes": "not any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 58,
+  "fields": {
+    "lot": 63,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 10,
+    "shipping_notes": "FAke jwellery "
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 59,
+  "fields": {
+    "lot": 64,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 10,
+    "shipping_notes": "Fake Furniture 5"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 60,
+  "fields": {
+    "lot": 65,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 10,
+    "shipping_notes": "not any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 61,
+  "fields": {
+    "lot": 66,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 10,
+    "shipping_notes": "Fake Furniture 300"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 62,
+  "fields": {
+    "lot": 67,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 10,
+    "shipping_notes": "not any"
+  }
+},
+{
+  "model": "lot.lotshippingdetails",
+  "pk": 63,
+  "fields": {
+    "lot": 68,
+    "package_type": "Box",
+    "dimensions": "1x2x3",
+    "weight": "0-2",
+    "item_location": "kathmandu",
+    "carrier": "Courier",
+    "shipment_cost": 20,
+    "shipping_notes": "vbjklm"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 10,
+  "fields": {
+    "lot": 45,
+    "image": "lots/2024/02/17/45_20240217095825.png"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 11,
+  "fields": {
+    "lot": 45,
+    "image": "lots/2024/02/17/45_20240217095825.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 12,
+  "fields": {
+    "lot": 46,
+    "image": "lots/2024/02/17/46_20240217100024.png"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 13,
+  "fields": {
+    "lot": 46,
+    "image": "lots/2024/02/17/46_20240217100024_0GuzXO4.png"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 14,
+  "fields": {
+    "lot": 46,
+    "image": "lots/2024/02/17/46_20240217100024_wBZZgyI.png"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 15,
+  "fields": {
+    "lot": 47,
+    "image": "lots/2024/02/18/47_20240218150704.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 16,
+  "fields": {
+    "lot": 47,
+    "image": "lots/2024/02/18/47_20240218150704_Pkn1WWg.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 17,
+  "fields": {
+    "lot": 47,
+    "image": "lots/2024/02/18/47_20240218150704_H0Mb5k7.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 18,
+  "fields": {
+    "lot": 47,
+    "image": "lots/2024/02/18/47_20240218150704_SCES5c8.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 19,
+  "fields": {
+    "lot": 47,
+    "image": "lots/2024/02/18/47_20240218150704_Jht7yPE.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 20,
+  "fields": {
+    "lot": 47,
+    "image": "lots/2024/02/18/47_20240218150704_BPJxVot.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 21,
+  "fields": {
+    "lot": 47,
+    "image": "lots/2024/02/18/47_20240218150704_L0RplBL.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 22,
+  "fields": {
+    "lot": 48,
+    "image": "lots/2024/02/18/48_20240218151027.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 23,
+  "fields": {
+    "lot": 48,
+    "image": "lots/2024/02/18/48_20240218151028.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 24,
+  "fields": {
+    "lot": 48,
+    "image": "lots/2024/02/18/48_20240218151028_KKYdHwx.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 25,
+  "fields": {
+    "lot": 48,
+    "image": "lots/2024/02/18/48_20240218151028_X1SuOCz.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 26,
+  "fields": {
+    "lot": 48,
+    "image": "lots/2024/02/18/48_20240218151028_drg03Og.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 27,
+  "fields": {
+    "lot": 48,
+    "image": "lots/2024/02/18/48_20240218151028_cqGwsCs.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 28,
+  "fields": {
+    "lot": 48,
+    "image": "lots/2024/02/18/48_20240218151028_K7kbjtW.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 29,
+  "fields": {
+    "lot": 48,
+    "image": "lots/2024/02/18/48_20240218151028_GqUKjZC.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 30,
+  "fields": {
+    "lot": 49,
+    "image": "lots/2024/02/18/49_20240218151602.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 31,
+  "fields": {
+    "lot": 49,
+    "image": "lots/2024/02/18/49_20240218151602_34AJjtG.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 32,
+  "fields": {
+    "lot": 49,
+    "image": "lots/2024/02/18/49_20240218151602_hb1v9al.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 33,
+  "fields": {
+    "lot": 49,
+    "image": "lots/2024/02/18/49_20240218151602_11yt8oK.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 34,
+  "fields": {
+    "lot": 49,
+    "image": "lots/2024/02/18/49_20240218151602_Fp777m7.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 35,
+  "fields": {
+    "lot": 49,
+    "image": "lots/2024/02/18/49_20240218151602_1NDSlkc.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 36,
+  "fields": {
+    "lot": 49,
+    "image": "lots/2024/02/18/49_20240218151602_o6s9dWd.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 37,
+  "fields": {
+    "lot": 49,
+    "image": "lots/2024/02/18/49_20240218151602_y2PDElX.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 38,
+  "fields": {
+    "lot": 49,
+    "image": "lots/2024/02/18/49_20240218151602_zDNtdOG.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 39,
+  "fields": {
+    "lot": 50,
+    "image": "lots/2024/02/23/50_20240223075725.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 40,
+  "fields": {
+    "lot": 50,
+    "image": "lots/2024/02/23/50_20240223075726.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 41,
+  "fields": {
+    "lot": 50,
+    "image": "lots/2024/02/23/50_20240223075726_xZYQDyH.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 42,
+  "fields": {
+    "lot": 50,
+    "image": "lots/2024/02/23/50_20240223075726_kzHMESD.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 43,
+  "fields": {
+    "lot": 50,
+    "image": "lots/2024/02/23/50_20240223075726_nR6XnE7.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 44,
+  "fields": {
+    "lot": 50,
+    "image": "lots/2024/02/23/50_20240223075726_2MZg9Gi.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 45,
+  "fields": {
+    "lot": 51,
+    "image": "lots/2024/02/23/51_20240223080010.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 46,
+  "fields": {
+    "lot": 51,
+    "image": "lots/2024/02/23/51_20240223080010_FZW1rTz.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 47,
+  "fields": {
+    "lot": 51,
+    "image": "lots/2024/02/23/51_20240223080010_JwBdfs9.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 48,
+  "fields": {
+    "lot": 51,
+    "image": "lots/2024/02/23/51_20240223080010_5DqofBL.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 49,
+  "fields": {
+    "lot": 51,
+    "image": "lots/2024/02/23/51_20240223080010_KiW938w.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 51,
+  "fields": {
+    "lot": 52,
+    "image": "lots/2024/02/23/52_20240223080228_qPCJ8q8.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 52,
+  "fields": {
+    "lot": 52,
+    "image": "lots/2024/02/23/52_20240223080228_5sCykx9.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 53,
+  "fields": {
+    "lot": 52,
+    "image": "lots/2024/02/23/52_20240223080228_bvtyiFu.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 54,
+  "fields": {
+    "lot": 52,
+    "image": "lots/2024/02/23/52_20240223080228_Cz9nXJl.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 56,
+  "fields": {
+    "lot": 53,
+    "image": "lots/2024/02/23/53_20240223080505_DIdY2d1.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 57,
+  "fields": {
+    "lot": 53,
+    "image": "lots/2024/02/23/53_20240223080505_6IOJeF2.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 58,
+  "fields": {
+    "lot": 53,
+    "image": "lots/2024/02/23/53_20240223080505_j65h4rr.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 59,
+  "fields": {
+    "lot": 53,
+    "image": "lots/2024/02/23/53_20240223080505_YMJ2iMH.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 60,
+  "fields": {
+    "lot": 54,
+    "image": "lots/2024/02/23/54_20240223080709.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 61,
+  "fields": {
+    "lot": 54,
+    "image": "lots/2024/02/23/54_20240223080709_FDmbxXl.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 62,
+  "fields": {
+    "lot": 54,
+    "image": "lots/2024/02/23/54_20240223080709_0UqvfMa.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 63,
+  "fields": {
+    "lot": 54,
+    "image": "lots/2024/02/23/54_20240223080709_eosp7qB.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 64,
+  "fields": {
+    "lot": 54,
+    "image": "lots/2024/02/23/54_20240223080709_rarSt73.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 65,
+  "fields": {
+    "lot": 54,
+    "image": "lots/2024/02/23/54_20240223080709_r0Y5jIH.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 66,
+  "fields": {
+    "lot": 54,
+    "image": "lots/2024/02/23/54_20240223080709_X4Xgk1k.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 67,
+  "fields": {
+    "lot": 54,
+    "image": "lots/2024/02/23/54_20240223080709_Tf2sEcJ.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 68,
+  "fields": {
+    "lot": 55,
+    "image": "lots/2024/02/23/55_20240223083828.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 69,
+  "fields": {
+    "lot": 55,
+    "image": "lots/2024/02/23/55_20240223083828_GX5Su5G.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 70,
+  "fields": {
+    "lot": 55,
+    "image": "lots/2024/02/23/55_20240223083828_EiDupcJ.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 71,
+  "fields": {
+    "lot": 55,
+    "image": "lots/2024/02/23/55_20240223083828_iSrHmQZ.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 72,
+  "fields": {
+    "lot": 55,
+    "image": "lots/2024/02/23/55_20240223083828_0vlql1v.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 73,
+  "fields": {
+    "lot": 55,
+    "image": "lots/2024/02/23/55_20240223083828_vx18u9s.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 74,
+  "fields": {
+    "lot": 55,
+    "image": "lots/2024/02/23/55_20240223083828_41ZQu3o.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 75,
+  "fields": {
+    "lot": 56,
+    "image": "lots/2024/02/23/56_20240223084049.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 76,
+  "fields": {
+    "lot": 56,
+    "image": "lots/2024/02/23/56_20240223084049_0WvekIE.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 77,
+  "fields": {
+    "lot": 56,
+    "image": "lots/2024/02/23/56_20240223084049_kY3nkS8.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 78,
+  "fields": {
+    "lot": 56,
+    "image": "lots/2024/02/23/56_20240223084049_t9PoVWy.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 79,
+  "fields": {
+    "lot": 56,
+    "image": "lots/2024/02/23/56_20240223084049_QZBReXo.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 80,
+  "fields": {
+    "lot": 57,
+    "image": "lots/2024/02/23/57_20240223084444.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 81,
+  "fields": {
+    "lot": 57,
+    "image": "lots/2024/02/23/57_20240223084444_TCfwWz9.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 82,
+  "fields": {
+    "lot": 57,
+    "image": "lots/2024/02/23/57_20240223084444_U2pijvP.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 83,
+  "fields": {
+    "lot": 57,
+    "image": "lots/2024/02/23/57_20240223084444_LdBuL1B.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 84,
+  "fields": {
+    "lot": 57,
+    "image": "lots/2024/02/23/57_20240223084444_0kMPbKt.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 85,
+  "fields": {
+    "lot": 57,
+    "image": "lots/2024/02/23/57_20240223084444_X4Bhkk9.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 86,
+  "fields": {
+    "lot": 58,
+    "image": "lots/2024/02/23/58_20240223084647.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 87,
+  "fields": {
+    "lot": 58,
+    "image": "lots/2024/02/23/58_20240223084647_vJQlRDf.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 88,
+  "fields": {
+    "lot": 58,
+    "image": "lots/2024/02/23/58_20240223084647_j3Hr7gK.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 89,
+  "fields": {
+    "lot": 58,
+    "image": "lots/2024/02/23/58_20240223084647_GOGxk4H.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 90,
+  "fields": {
+    "lot": 58,
+    "image": "lots/2024/02/23/58_20240223084647_pL83HcK.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 91,
+  "fields": {
+    "lot": 58,
+    "image": "lots/2024/02/23/58_20240223084647_hqxLeqT.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 92,
+  "fields": {
+    "lot": 58,
+    "image": "lots/2024/02/23/58_20240223084647_t8pic6E.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 93,
+  "fields": {
+    "lot": 58,
+    "image": "lots/2024/02/23/58_20240223084647_TSrVJGQ.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 94,
+  "fields": {
+    "lot": 59,
+    "image": "lots/2024/02/27/59_20240227023115.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 95,
+  "fields": {
+    "lot": 59,
+    "image": "lots/2024/02/27/59_20240227023115_rsmyqVV.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 96,
+  "fields": {
+    "lot": 59,
+    "image": "lots/2024/02/27/59_20240227023115_MfuSvUL.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 97,
+  "fields": {
+    "lot": 59,
+    "image": "lots/2024/02/27/59_20240227023115_xiY2R4u.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 98,
+  "fields": {
+    "lot": 60,
+    "image": "lots/2024/02/29/60_20240229070018.png"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 99,
+  "fields": {
+    "lot": 61,
+    "image": "lots/2024/03/02/61_20240302072524.jpeg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 100,
+  "fields": {
+    "lot": 61,
+    "image": "lots/2024/03/02/61_20240302072524.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 101,
+  "fields": {
+    "lot": 61,
+    "image": "lots/2024/03/02/61_20240302072524.png"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 102,
+  "fields": {
+    "lot": 61,
+    "image": "lots/2024/03/02/61_20240302072524_wgifMMB.png"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 103,
+  "fields": {
+    "lot": 62,
+    "image": "lots/2024/03/02/62_20240302073020.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 104,
+  "fields": {
+    "lot": 62,
+    "image": "lots/2024/03/02/62_20240302073020_zEPq4F7.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 105,
+  "fields": {
+    "lot": 62,
+    "image": "lots/2024/03/02/62_20240302073020_7KDkkpU.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 106,
+  "fields": {
+    "lot": 63,
+    "image": "lots/2024/03/02/63_20240302073350.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 107,
+  "fields": {
+    "lot": 63,
+    "image": "lots/2024/03/02/63_20240302073350_3gdvpqA.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 108,
+  "fields": {
+    "lot": 63,
+    "image": "lots/2024/03/02/63_20240302073350_VjmLW5f.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 109,
+  "fields": {
+    "lot": 64,
+    "image": "lots/2024/03/02/64_20240302074840.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 110,
+  "fields": {
+    "lot": 64,
+    "image": "lots/2024/03/02/64_20240302074840_0NTv4ls.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 111,
+  "fields": {
+    "lot": 64,
+    "image": "lots/2024/03/02/64_20240302074840_5gqu2ys.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 112,
+  "fields": {
+    "lot": 65,
+    "image": "lots/2024/03/02/65_20240302075404.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 113,
+  "fields": {
+    "lot": 65,
+    "image": "lots/2024/03/02/65_20240302075404_ai6iOTc.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 114,
+  "fields": {
+    "lot": 65,
+    "image": "lots/2024/03/02/65_20240302075404_M06TO6A.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 115,
+  "fields": {
+    "lot": 66,
+    "image": "lots/2024/03/02/66_20240302082650.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 116,
+  "fields": {
+    "lot": 66,
+    "image": "lots/2024/03/02/66_20240302082650_n4kXDdX.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 117,
+  "fields": {
+    "lot": 66,
+    "image": "lots/2024/03/02/66_20240302082650_3gobCnx.JPG"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 118,
+  "fields": {
+    "lot": 67,
+    "image": "lots/2024/03/04/67_20240304042524.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 119,
+  "fields": {
+    "lot": 67,
+    "image": "lots/2024/03/04/67_20240304042524_EXi7siN.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 120,
+  "fields": {
+    "lot": 67,
+    "image": "lots/2024/03/04/67_20240304042524_LycJcfQ.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 121,
+  "fields": {
+    "lot": 68,
+    "image": "lots/2024/03/21/68_20240321033242.jpg"
+  }
+},
+{
+  "model": "lot.lotimage",
+  "pk": 122,
+  "fields": {
+    "lot": 68,
+    "image": "lots/2024/03/21/68_20240321033242_wZ4zTqw.jpg"
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 194,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 16020,
+    "bidded_at": "2024-03-02T01:41:12.883Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 195,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 16040,
+    "bidded_at": "2024-03-02T01:42:14.424Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 196,
+  "fields": {
+    "lot": 51,
+    "bidder": 37,
+    "amount": 16060,
+    "bidded_at": "2024-03-02T01:43:04.380Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 197,
+  "fields": {
+    "lot": 51,
+    "bidder": 37,
+    "amount": 16060,
+    "bidded_at": "2024-03-02T02:51:26.099Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 198,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 16080,
+    "bidded_at": "2024-03-02T02:52:57.244Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 199,
+  "fields": {
+    "lot": 51,
+    "bidder": 37,
+    "amount": 16800,
+    "bidded_at": "2024-03-02T02:54:24.516Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 200,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 16820,
+    "bidded_at": "2024-03-02T02:58:17.122Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 201,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 16840,
+    "bidded_at": "2024-03-02T03:01:23.866Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 202,
+  "fields": {
+    "lot": 51,
+    "bidder": 37,
+    "amount": 16860,
+    "bidded_at": "2024-03-02T03:03:48.776Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 203,
+  "fields": {
+    "lot": 51,
+    "bidder": 40,
+    "amount": 17580,
+    "bidded_at": "2024-03-02T03:07:16.593Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 204,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 17600,
+    "bidded_at": "2024-03-02T03:08:54.880Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 205,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 17620,
+    "bidded_at": "2024-03-02T03:09:20.963Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 206,
+  "fields": {
+    "lot": 51,
+    "bidder": 40,
+    "amount": 18270,
+    "bidded_at": "2024-03-02T03:09:31.503Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 207,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 18290,
+    "bidded_at": "2024-03-02T03:10:00.883Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 208,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 18310,
+    "bidded_at": "2024-03-02T03:24:17.241Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 209,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 18330,
+    "bidded_at": "2024-03-02T03:25:49.382Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 210,
+  "fields": {
+    "lot": 51,
+    "bidder": 40,
+    "amount": 19030,
+    "bidded_at": "2024-03-02T03:25:56.307Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 211,
+  "fields": {
+    "lot": 51,
+    "bidder": 40,
+    "amount": 19050,
+    "bidded_at": "2024-03-02T03:29:52.564Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 212,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 19070,
+    "bidded_at": "2024-03-02T03:30:13.984Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 213,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 19090,
+    "bidded_at": "2024-03-02T03:30:59.539Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 214,
+  "fields": {
+    "lot": 51,
+    "bidder": 40,
+    "amount": 19390,
+    "bidded_at": "2024-03-02T03:31:04.944Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 215,
+  "fields": {
+    "lot": 51,
+    "bidder": 40,
+    "amount": 19410,
+    "bidded_at": "2024-03-02T03:34:25.492Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 216,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 19810,
+    "bidded_at": "2024-03-02T03:34:31.423Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 217,
+  "fields": {
+    "lot": 51,
+    "bidder": 40,
+    "amount": 19830,
+    "bidded_at": "2024-03-02T03:36:28.328Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 218,
+  "fields": {
+    "lot": 51,
+    "bidder": 39,
+    "amount": 19850,
+    "bidded_at": "2024-03-02T03:36:47.168Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 219,
+  "fields": {
+    "lot": 47,
+    "bidder": 39,
+    "amount": 20020,
+    "bidded_at": "2024-03-02T07:18:49.811Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 220,
+  "fields": {
+    "lot": 47,
+    "bidder": 39,
+    "amount": 20290,
+    "bidded_at": "2024-03-02T07:22:30.538Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 221,
+  "fields": {
+    "lot": 47,
+    "bidder": 39,
+    "amount": 20310,
+    "bidded_at": "2024-03-02T07:32:12.489Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 222,
+  "fields": {
+    "lot": 51,
+    "bidder": 40,
+    "amount": 19870,
+    "bidded_at": "2024-03-02T07:40:36.838Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 223,
+  "fields": {
+    "lot": 65,
+    "bidder": 40,
+    "amount": 8020,
+    "bidded_at": "2024-03-02T07:54:25.994Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 224,
+  "fields": {
+    "lot": 65,
+    "bidder": 40,
+    "amount": 8240,
+    "bidded_at": "2024-03-02T07:54:33.751Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 225,
+  "fields": {
+    "lot": 65,
+    "bidder": 40,
+    "amount": 8260,
+    "bidded_at": "2024-03-02T07:54:51Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 226,
+  "fields": {
+    "lot": 66,
+    "bidder": 40,
+    "amount": 8020,
+    "bidded_at": "2024-03-02T08:27:20.375Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 227,
+  "fields": {
+    "lot": 48,
+    "bidder": 39,
+    "amount": 50020,
+    "bidded_at": "2024-03-02T09:27:13.199Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 228,
+  "fields": {
+    "lot": 49,
+    "bidder": 39,
+    "amount": 20020,
+    "bidded_at": "2024-03-03T08:09:37.781Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 229,
+  "fields": {
+    "lot": 49,
+    "bidder": 39,
+    "amount": 20040,
+    "bidded_at": "2024-03-03T08:10:37.024Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 230,
+  "fields": {
+    "lot": 47,
+    "bidder": 39,
+    "amount": 20330,
+    "bidded_at": "2024-03-03T09:04:16.229Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 231,
+  "fields": {
+    "lot": 47,
+    "bidder": 39,
+    "amount": 20350,
+    "bidded_at": "2024-03-03T09:04:29.577Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 232,
+  "fields": {
+    "lot": 47,
+    "bidder": 40,
+    "amount": 20370,
+    "bidded_at": "2024-03-03T09:08:41.435Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 233,
+  "fields": {
+    "lot": 48,
+    "bidder": 40,
+    "amount": 50040,
+    "bidded_at": "2024-03-03T09:09:25.732Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 234,
+  "fields": {
+    "lot": 48,
+    "bidder": 39,
+    "amount": 50060,
+    "bidded_at": "2024-03-03T09:39:15.859Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 235,
+  "fields": {
+    "lot": 48,
+    "bidder": 40,
+    "amount": 50210,
+    "bidded_at": "2024-03-03T09:39:24.726Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 236,
+  "fields": {
+    "lot": 48,
+    "bidder": 40,
+    "amount": 50230,
+    "bidded_at": "2024-03-03T09:49:12.976Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 237,
+  "fields": {
+    "lot": 48,
+    "bidder": 40,
+    "amount": 50250,
+    "bidded_at": "2024-03-03T10:04:18.403Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 238,
+  "fields": {
+    "lot": 48,
+    "bidder": 40,
+    "amount": 50270,
+    "bidded_at": "2024-03-03T10:13:23.255Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 239,
+  "fields": {
+    "lot": 48,
+    "bidder": 40,
+    "amount": 50290,
+    "bidded_at": "2024-03-03T10:17:03.562Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 240,
+  "fields": {
+    "lot": 48,
+    "bidder": 40,
+    "amount": 50310,
+    "bidded_at": "2024-03-03T10:18:58.174Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 241,
+  "fields": {
+    "lot": 48,
+    "bidder": 40,
+    "amount": 50330,
+    "bidded_at": "2024-03-03T10:22:21.731Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 242,
+  "fields": {
+    "lot": 48,
+    "bidder": 39,
+    "amount": 50350,
+    "bidded_at": "2024-03-03T10:22:46.489Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 243,
+  "fields": {
+    "lot": 48,
+    "bidder": 40,
+    "amount": 50370,
+    "bidded_at": "2024-03-03T10:23:58.068Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 244,
+  "fields": {
+    "lot": 48,
+    "bidder": 39,
+    "amount": 50390,
+    "bidded_at": "2024-03-03T10:24:06.013Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 245,
+  "fields": {
+    "lot": 48,
+    "bidder": 38,
+    "amount": 51110,
+    "bidded_at": "2024-03-03T10:25:26.593Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 246,
+  "fields": {
+    "lot": 67,
+    "bidder": 40,
+    "amount": 8020,
+    "bidded_at": "2024-03-04T04:27:24.821Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 247,
+  "fields": {
+    "lot": 67,
+    "bidder": 40,
+    "amount": 8040,
+    "bidded_at": "2024-03-04T08:09:05.797Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 248,
+  "fields": {
+    "lot": 55,
+    "bidder": 39,
+    "amount": 17020,
+    "bidded_at": "2024-03-04T08:10:56.977Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 249,
+  "fields": {
+    "lot": 48,
+    "bidder": 38,
+    "amount": 51130,
+    "bidded_at": "2024-03-13T03:01:33.347Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 250,
+  "fields": {
+    "lot": 48,
+    "bidder": 38,
+    "amount": 51850,
+    "bidded_at": "2024-03-21T03:28:56.056Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 251,
+  "fields": {
+    "lot": 68,
+    "bidder": 40,
+    "amount": 120,
+    "bidded_at": "2024-03-21T03:33:29.474Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.bid",
+  "pk": 252,
+  "fields": {
+    "lot": 68,
+    "bidder": 40,
+    "amount": 140,
+    "bidded_at": "2024-03-21T03:33:33.531Z",
+    "accepted": true
+  }
+},
+{
+  "model": "lot.lotshippingstatus",
+  "pk": 1,
+  "fields": {
+    "lot": 65,
+    "status": "delivered",
+    "status_updated_at": "2024-03-07T11:19:20.510Z",
+    "delivery_date": "2024-03-15T08:35:56Z"
+  }
+},
+{
+  "model": "lot.lotshippingstatus",
+  "pk": 2,
+  "fields": {
+    "lot": 66,
+    "status": "delivered",
+    "status_updated_at": "2024-03-12T04:59:12.025Z",
+    "delivery_date": null
+  }
+}
+]

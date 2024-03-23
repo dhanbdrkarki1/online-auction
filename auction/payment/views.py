@@ -1,3 +1,5 @@
+import json
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from lot.models import Lot, LotShippingStatus
@@ -57,3 +59,55 @@ def esewa_verify(request):
             url += f'?lot_id={lot_id}&amount={amount}'
             return redirect(url)
 
+def khalti_request(request):
+    lot_id = request.GET.get('lot_id')
+    amount = request.GET.get('amount')
+    url = "https://a.khalti.com/api/v2/epayment/initiate/"
+    return_url = 'http://127.0.0.1:8000/payment/verify/khalti/'
+    payload = json.dumps({
+            "return_url": return_url,
+            "website_url": "http://127.0.0.1:8000/",
+            "amount": int(amount) * 100,
+            "purchase_order_id": f"{lot_id}",
+            "purchase_order_name": "customer_name",
+            "customer_info": {
+                "name": str(request.user.get_user_full_name()),
+                "email": str(request.user.email),
+                "phone": str(request.user.phone_number),
+            }
+        })
+    
+    headers = {
+            'Authorization': 'key 93c4d5cb81ef4b8caf41ff6fa52889d0',
+            'Content-Type': 'application/json',
+        }
+    
+    response = requests.request("POST", url, headers=headers, data=payload)
+    new_res = json.loads(response.text)
+    print(new_res)
+    return redirect(new_res['payment_url'])
+
+def khalti_verify(request):
+    pidx = request.GET.get('pidx')
+    headers = {
+            'Authorization': 'key 93c4d5cb81ef4b8caf41ff6fa52889d0',
+            'Content-Type': 'application/json',
+        }
+    payload = json.dumps({
+            'pidx': pidx
+        })
+    url = "https://a.khalti.com/api/v2/epayment/lookup/"
+    response = requests.request("POST", url, headers=headers, data=payload)
+    response = json.loads(response.text)
+
+    if response['status'] == 'Completed':
+        # transaction = Transaction.objects.create(
+        #         lot=lot, 
+        #         buyer=request.user, 
+        #         final_price=int(float(amount)), 
+        #         status=True,
+        #         payment_method="Esewa")
+        #     shipping_status = LotShippingStatus.objects.create(lot=lot)
+        return JsonResponse(response)
+    else:
+        return JsonResponse(response)

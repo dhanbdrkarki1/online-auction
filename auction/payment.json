@@ -1,0 +1,26 @@
+[
+{
+  "model": "payment.transaction",
+  "pk": 1,
+  "fields": {
+    "lot": 65,
+    "buyer": 40,
+    "final_price": 8260,
+    "transaction_time": "2024-03-05T10:55:59.188Z",
+    "payment_method": "Esewa",
+    "status": true
+  }
+},
+{
+  "model": "payment.transaction",
+  "pk": 2,
+  "fields": {
+    "lot": 66,
+    "buyer": 40,
+    "final_price": 80,
+    "transaction_time": "2024-03-12T04:58:21.669Z",
+    "payment_method": "Esewa",
+    "status": true
+  }
+}
+]
