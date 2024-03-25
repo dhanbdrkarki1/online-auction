@@ -73,12 +73,14 @@ def favorite_lots(request):
     favorite_lots = request.user.favorite_lots.all()
     return render(request, 'auctionapp/favorite_lots.html', {'favorite_lots': favorite_lots})
 
+# searching lot
 # can remove stop words, stemming and ranking results
 def search_lots(request):
     search_results = []
     context = None
     if 'query' in request.GET:
         query = request.GET.get('query', '')
+        # Postgres full-text-search using a SearchVectorField
         search_vector = SearchVector('name', weight='A') + \
             SearchVector('description', weight='B') + \
             SearchVector('category__name', weight='C')
