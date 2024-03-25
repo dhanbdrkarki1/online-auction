@@ -49,16 +49,11 @@ def user_login(request):
                 return redirect('auctionapp:home')
             else:
                 messages.info(request, 'Your account has been disabled!')
-
                 return redirect('auctionapp:home')
         else:
             messages.error(request, 'Your email or password is incorrect!')
             return redirect('auctionapp:home')
-<<<<<<< HEAD
-    return render(request, 'account/modal/loginModal.html')
-=======
     return render(request, 'account/login.html')
->>>>>>> account-ui
 
 
 # Register User
