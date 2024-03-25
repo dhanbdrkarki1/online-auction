@@ -33,7 +33,7 @@ def user_login(request):
         password = request.POST.get('password')
         user_email = CustomUser.objects.filter(email = email).first()
         if not user_email:
-            messages.success(request, 'Email not found !')
+            messages.error(request, 'Email not found !')
             return redirect('auctionapp:home')
 
         user = authenticate(request, email = email, password = password)
@@ -48,10 +48,8 @@ def user_login(request):
 
                 return redirect('auctionapp:home')
         else:
-            print("Your email or password is incorrect!-----------------------")
-            messages.info(request, 'Your email or password is incorrect!')
+            messages.error(request, 'Your email or password is incorrect!')
             return redirect('auctionapp:home')
-        
     return render(request, 'account/modal/loginModal.html')
 
 
