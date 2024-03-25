@@ -175,6 +175,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+LOGIN_URL='/account/login/'
+# LOGIN_REDIRECT_URL='/'
+
 # Email server configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -203,3 +206,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+# admin template
+JET_DEFAULT_THEME = 'light-violet'
