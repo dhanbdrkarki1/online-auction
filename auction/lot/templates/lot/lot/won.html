@@ -20,8 +20,12 @@
 
         <!-- Tab Content -->
         <div class="tab-content" id="myTabContent">
+
+
             <!-- Unpaid Lots Tab Pane -->
             <div class="tab-pane fade show active" id="unpaid-lots" role="tabpanel" aria-labelledby="unpaid-lots-tab">
+                <p class="display-5 mt-3">Here are all the lots you have won and are remaining to pay.</p>
+
                 <table id="tblUnpaidLots" class="table mt-4 display responsive nowrap" width="100%">
                     <thead>
                         <tr>
@@ -37,6 +41,8 @@
 
             <!-- Paid Lots Tab Pane -->
             <div class="tab-pane fade" id="paid-lots" role="tabpanel" aria-labelledby="paid-lots-tab">
+                <p class="display-5 mt-3">Here are all the lots you have made the payment.</p>
+
                 <table id="tblPaidLots" class="table mt-4 display responsive nowrap" width="100%">
                     <thead>
                         <tr>
@@ -70,7 +76,7 @@
                     <img src="{% static 'client/images/logo/esewa.png' %}" alt="Esewa"
                         style="width: 100px; height: auto;">
                 </button>
-            
+
                 <button type="submit" class="btn btn-light payment-option" data-payment="khalti">
                     <img src="{% static 'client/images/logo/khalti.png' %}" alt="Esewa"
                         style="width: 100px; height: auto;">

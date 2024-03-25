@@ -207,5 +207,5 @@ CHANNEL_LAYERS = {
     },
 }
 
-# admin
+# admin template
 JET_DEFAULT_THEME = 'light-violet'

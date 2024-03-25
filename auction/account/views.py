@@ -31,6 +31,9 @@ def user_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
+        redirect_url = request.GET.get('next')
+        print("Redirect Url................", redirect_url)
+
         user_email = CustomUser.objects.filter(email = email).first()
         if not user_email:
             messages.error(request, 'Email not found !')
@@ -41,7 +44,8 @@ def user_login(request):
             if user.is_active:
                 login(request, user)
                 print(" User logged in..")
-
+                if(redirect_url):
+                    return redirect(redirect_url)
                 return redirect('auctionapp:home')
             else:
                 messages.info(request, 'Your account has been disabled!')
@@ -50,7 +54,11 @@ def user_login(request):
         else:
             messages.error(request, 'Your email or password is incorrect!')
             return redirect('auctionapp:home')
+<<<<<<< HEAD
     return render(request, 'account/modal/loginModal.html')
+=======
+    return render(request, 'account/login.html')
+>>>>>>> account-ui
 
 
 # Register User

@@ -1,0 +1,79 @@
+{% extends 'client/base.html' %}
+{% load static %}
+{% block title %}Register - BidMe {% endblock %}
+
+<!-- Login -->
+{% block content %}
+<div class="main-banner" style="padding-top:120px;border:none;" id="top">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-title text-center mb-4">
+                            <h4>Sign Up</h4>
+                        </div>
+                        <!-- Start Register Form -->
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <!-- First Name Input -->
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formFirstName1">First Name</label>
+                                        <input type="text" id="formFirstName1" name="first_name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Last Name Input -->
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="formLastName1">Last Name</label>
+                                        <input type="text" id="formLastName1" name="last_name" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email Input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="formEmail1">Email</label>
+                                <input type="email" id="formEmail1" name="email" class="form-control" />
+                            </div>
+
+                            <!-- Password Input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="formPassword1">Password</label>
+                                <input type="password" id="formPassword1" name="password" class="form-control" />
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col d-flex justify-content-center">
+                                    <!-- Checkbox -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="form2Example31"
+                                            checked />
+                                        <label class="form-check-label" for="form2Example31"> Remember me </label>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <a href="#!">Forgot password?</a>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary btn-block mb-4">Sign Up</button>
+
+                            <!-- Register Buttons -->
+                            <div class="text-center">
+                                <p>Already have an account? <a href="{% url 'account:login' %}" id="signinLink">Sign
+                                        in</a></p>
+                            </div>
+                        </form>
+                        <!-- End Register Form -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
