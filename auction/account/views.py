@@ -32,27 +32,27 @@ def user_login(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         redirect_url = request.GET.get('next')
-        print("Redirect Url................", redirect_url)
 
-        user_email = CustomUser.objects.filter(email = email).first()
-        if not user_email:
+        # get user detail
+        user_email = CustomUser.objects.filter(email = email).first() 
+        if not user_email: # checking if mail exist
             messages.error(request, 'Email not found !')
             return redirect('auctionapp:home')
-
+        # verifying user
         user = authenticate(request, email = email, password = password)
         if user is not None:
             if user.is_active:
                 login(request, user)
-                print(" User logged in..")
+                # if next in url, return to its value page
                 if(redirect_url):
                     return redirect(redirect_url)
                 return redirect('auctionapp:home')
             else:
                 messages.info(request, 'Your account has been disabled!')
-                return redirect('auctionapp:home')
+                return redirect('auctionapp:home') # redirecting to homepage
         else:
             messages.error(request, 'Your email or password is incorrect!')
-            return redirect('auctionapp:home')
+            return redirect('auctionapp:home') 
     return render(request, 'account/login.html')
 
 
@@ -71,9 +71,6 @@ def register_user(request):
             user_obj = CustomUser.objects.create(email = email, first_name=first_name, last_name=last_name)
             user_obj.set_password(password)
 
-            # adding user to group
-            # group = Group.objects.get(name="bidder")
-            # user_obj.groups.add(group)
             user_obj.save()
             # must provide backend for multiple authentication backends
             login(request, user_obj,  backend='django.contrib.auth.backends.ModelBackend')
