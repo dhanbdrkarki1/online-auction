@@ -85,7 +85,9 @@ def search_lots(request):
             SearchVector('description', weight='B') + \
             SearchVector('category__name', weight='C')
 
+        # translates user terms into a query object for database comparison
         search_query = SearchQuery(query)
+        # retrieving search results and sorting them by relevance
         search_results = Lot.objects.annotate(
             search=search_vector,
             rank=SearchRank(search_vector, search_query)

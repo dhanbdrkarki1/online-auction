@@ -59,26 +59,33 @@ def user_login(request):
 # Register User
 def register_user(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        email = request.POST.get('email').lower()
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         password = request.POST.get('password')
+        redirect_url = request.GET.get('next')
+
         try:
             if CustomUser.objects.filter(email = email).first():
                 messages.info(request, 'Email is already taken!')
                 return redirect('auctionapp:home')
-            
+            # saving user in db
             user_obj = CustomUser.objects.create(email = email, first_name=first_name, last_name=last_name)
             user_obj.set_password(password)
-
             user_obj.save()
+            
             # must provide backend for multiple authentication backends
             login(request, user_obj,  backend='django.contrib.auth.backends.ModelBackend')
             messages.success(request, 'Your account has been created successfully.')
+            # if next in url, return to its value page
+            if(redirect_url):
+                return redirect(redirect_url)
             return redirect('auctionapp:home')
 
         except Exception as e:
             print(e)
+    return render(request, 'account/register.html')
+
 
 # Change User Password
 @login_required

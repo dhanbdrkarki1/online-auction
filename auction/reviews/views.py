@@ -10,6 +10,7 @@ from collections import OrderedDict
 
 User=get_user_model()
 
+# Handling review to seller
 @login_required
 def seller_review(request, username):
     seller = get_object_or_404(User, username=username)

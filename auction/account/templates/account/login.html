@@ -17,23 +17,23 @@
                             {% csrf_token %}
                             <!-- Email input -->
                             <div class="form-floating mb-4">
-                                <label class="form-label" for="formLoginEmail">Email</label>
-                                <input type="email" name="email" id="formLoginEmail" class="form-control" />
+                                <label class="form-label" for="userEmail">Email</label>
+                                <input type="email" name="email" id="userEmail" class="form-control" />
                             </div>
 
                             <!-- Password input -->
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="form2Example2">Password</label>
-                                <input type="password" name="password" id="form2Example2" class="form-control" />
+                                <label class="form-label" for="userPassword">Password</label>
+                                <input type="password" name="password" id="userPassword" class="form-control" />
                             </div>
 
                             <div class="row mb-4">
                                 <div class="col d-flex justify-content-center">
                                     <!-- Checkbox -->
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="form2Example31"
+                                        <input class="form-check-input" type="checkbox" value="" id="userRememberMe"
                                             checked />
-                                        <label class="form-check-label" for="form2Example31"> Remember me </label>
+                                        <label class="form-check-label" for="userRememberMe"> Remember me </label>
                                     </div>
                                 </div>
 
@@ -47,7 +47,8 @@
 
                             <!-- Register buttons -->
                             <div class="text-center">
-                                <p>Not a member? <a href="#!" id="signupLink">Register</a></p>
+                                <p>Not a member? <a href="{% url 'account:register' %}" id="signupLink">Register</a>
+                                </p>
                                 <p>or continue with:
                                     <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"
                                         class="btn btn-primary btn-floating mx-1  mb-0 me-3">
@@ -65,4 +66,22 @@
 
 
 
+{% endblock %}
+
+{% block js %}
+<script>
+    var signupLink = document.getElementById('signupLink');
+    var registerUrl = "{% url 'account:register' %}";
+    console.log(registerUrl)
+    var searchParams = new URLSearchParams(window.location.search);
+    var nextUrl = searchParams.get('next');
+    console.log(nextUrl)
+
+    if (nextUrl) {
+        signupLink.href = registerUrl + '?next=' + encodeURIComponent(nextUrl);
+    } else {
+        signupLink.href = registerUrl;  // Fallback to the default register URL
+    }
+    console.log(signupLink.href)
+</script>
 {% endblock %}
