@@ -23,6 +23,8 @@ Password: P@ssword0
 ## only can run social auth with this command:
 
 python manage.py runserver_plus --cert-file cert.crt
+or
+python manage.py runserver_plus 7000 --cert-file cert.crt
 
 # Run docker
 
