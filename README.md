@@ -15,6 +15,8 @@ Password: P@ssword0
 
 # Social Authentication: Google
 
+https://developers.google.com/identity/protocols/OAuth2
+
 ## To enable, social auth:
 
 1. Goto C:\Windows\System32\drivers\etc
@@ -24,7 +26,7 @@ Password: P@ssword0
 
 python manage.py runserver_plus --cert-file cert.crt
 or
-python manage.py runserver_plus 7000 --cert-file cert.crt
+python manage.py runserver_plus 8000 --cert-file cert.crt
 
 # Run docker
 

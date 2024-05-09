@@ -15,8 +15,8 @@
     <section class="container mt-2">
         <div class="row">
             <div class="col-lg-12 bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
-                <h5 class="mb-0 mb-4">Ratings for seller <a href="{{ seller.get_absolute_url_username }}">{{
-                        seller.get_user_full_name }}</a></h5>
+                <h5 class="mb-0 mb-4">Ratings for seller <a href="{{ seller.get_absolute_url_username }}">
+                        {{ seller.get_user_full_name }}</a></h5>
                 <div class="graph-star-rating-header">
                     <div class="star-rating">
                         <a href="#"><i class="icofont-ui-rating active"></i></a>
@@ -72,8 +72,8 @@
                                 style="width: 45px; border-radius:50%;" />
                             <div class="media-body">
                                 <h6>
-                                    {{ review.reviewer.get_user_full_name }}<small> - <i>{{ review.created|date:"d M Y
-                                            g:i A" }}
+                                    {{ review.reviewer.get_user_full_name }}<small> - <i>
+                                            {{ review.created|date:"d M Y g:i A" }}
                                         </i></small>
                                 </h6>
                                 <div class="text-primary mb-2">

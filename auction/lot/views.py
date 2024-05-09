@@ -50,15 +50,18 @@ def lot_create(request):
         carrier_type = request.POST.get('carrier_type')
         shipping_notes = request.POST.get('shipping_notes')
         
-        current_time = timezone.now()
+        current_time = datetime.now()
+
         if scheduled_time is None:
             auction_start_time = current_time
             scheduled_time = auction_start_time
         else:
             scheduled_time = datetime.strptime(scheduled_time, "%Y/%m/%d %H:%M:%S")
+            print("strptime", scheduled_time)
             auction_start_time = scheduled_time
         
         bidding_closing_time = auction_start_time + timedelta(days=int(auction_duration))
+        print("bidding closing time", bidding_closing_time)
 
         starting_price = int(starting_price) if starting_price else None
         buy_it_now_price = int(buy_it_now_price) if buy_it_now_price else None
@@ -106,7 +109,7 @@ def lot_create(request):
             print("Delayed by.......", delay)
 
             # apply_async -> alternative to delay but allow customization like task routing, task expiration time, priority
-            notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=100)
+            notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=120)
             # notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=delay)
 
 

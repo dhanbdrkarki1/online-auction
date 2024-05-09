@@ -36,7 +36,7 @@ class BidAdmin(admin.ModelAdmin):
     list_display = ['id', 'lot', 'bidder', 'amount', 'accepted', 'bidded_at',]
     list_filter = ('bidder', 'accepted', 'lot',)
     ordering = ('-bidded_at', 'amount',)
-    search_fields = ('lot','bidder',)
+    search_fields = ('lot__name','bidder',)
     list_display_links = ('lot',)
 
 
