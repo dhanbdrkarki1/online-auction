@@ -8,11 +8,14 @@ class ConditionChoices(models.TextChoices):
     USED_POOR = 'Used - Poor'
 
 class DurationChoices(models.IntegerChoices):
+    ONE_DAY = 1
     TWO_DAYS = 2
     THREE_DAYS = 3
     FIVE_DAYS = 5
     SEVEN_DAYS = 7
     TEN_DAYS = 10
+    FIFTEEN_DAYS = 15
+
 
 class PackageTypeChoices(models.TextChoices):
     BOX = 'Box'

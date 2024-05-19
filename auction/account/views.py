@@ -32,27 +32,29 @@ def user_login(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         redirect_url = request.GET.get('next')
-
-        # get user detail
-        user_email = CustomUser.objects.filter(email = email).first() 
-        if not user_email: # checking if mail exist
-            messages.error(request, 'Email not found !')
-            return redirect('auctionapp:home')
-        # verifying user
-        user = authenticate(request, email = email, password = password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                # if next in url, return to its value page
-                if(redirect_url):
-                    return redirect(redirect_url)
+        try:
+            # get user detail
+            user_email = CustomUser.objects.filter(email = email).first() 
+            if not user_email: # checking if mail exist
+                messages.error(request, 'Email not found !')
                 return redirect('auctionapp:home')
+            # verifying user
+            user = authenticate(request, email = email, password = password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    # if next in url, return to its value page
+                    if(redirect_url):
+                        return redirect(redirect_url)
+                    return redirect('auctionapp:home')
+                else:
+                    messages.info(request, 'Your account has been disabled!')
+                    return redirect('auctionapp:home') # redirecting to homepage
             else:
-                messages.info(request, 'Your account has been disabled!')
-                return redirect('auctionapp:home') # redirecting to homepage
-        else:
-            messages.error(request, 'Your email or password is incorrect!')
-            return redirect('auctionapp:home') 
+                messages.error(request, 'Your email or password is incorrect!')
+                return redirect('auctionapp:home') 
+        except Exception as e:
+            print(e)
     return render(request, 'account/login.html')
 
 
@@ -94,17 +96,20 @@ def change_password(request):
         old_password = request.POST.get('old_password')
         new_password1 = request.POST.get('password1')
         new_password2 = request.POST.get('password2')
-        print(request.user.check_password(old_password))
-        if not request.user.check_password(old_password):
-            return JsonResponse({'status': 'error', 'message': 'The old password is incorrect.'})
+        try:
+            if not request.user.check_password(old_password):
+                return JsonResponse({'status': 'error', 'message': 'The old password is incorrect.'})
 
-        if new_password1 != new_password2:
-            return JsonResponse({'status': 'error', 'message': 'The new passwords do not match.'})
+            if new_password1 != new_password2:
+                return JsonResponse({'status': 'error', 'message': 'The new passwords do not match.'})
 
-        request.user.set_password(new_password1)
-        request.user.save()
-        update_session_auth_hash(request, request.user)
-        return JsonResponse({'status': 'ok', 'message': 'Your password has been chanaged.'})
+            request.user.set_password(new_password1)
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+            return JsonResponse({'status': 'ok', 'message': 'Your password has been chanaged.'})
+        except Exception as e:
+            print(e)
+            return JsonResponse({'status': 'error', 'message': 'Found Error while changing password.'})
 
 
 # Send email verification mail to user

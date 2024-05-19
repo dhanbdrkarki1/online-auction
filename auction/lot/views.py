@@ -22,12 +22,15 @@ User=get_user_model()
 
 
 def lot_list(request):
-    lots = Lot.objects.filter(seller=request.user)
+    try:
+        lots = Lot.objects.filter(seller=request.user)
+        context = {
+            'lots_list' : lots
+        }
+        return render(request, "lot/lot/list.html", context)
+    except Lot.DoesNotExist as e:
+        print(e)
 
-    context = {
-        'lots_list' : lots
-    }
-    return render(request, "lot/lot/list.html", context)
 
 def lot_create(request):
     if request.method == 'POST':
@@ -146,23 +149,25 @@ def search_categories(request):
     if request.method == 'GET':
         print("search categories")
         search_query = request.GET.get('search_query', '')
-        categories = Category.objects.filter(name__icontains=search_query)
-        categories_dict = [{'id': category.id, 'name': category.name} for category in categories]
-        return JsonResponse({'categories': categories_dict})
-    return JsonResponse({}, status=400)
-
-
+        try:
+            categories = Category.objects.filter(name__icontains=search_query)
+            categories_dict = [{'id': category.id, 'name': category.name} for category in categories]
+            return JsonResponse({'categories': categories_dict})
+        except Category.DoesNotExist as e:
+            print(e)
+            return JsonResponse({}, status=400)
 
 def seller_detail(request, username):
     seller = get_object_or_404(User, username=username)
-    seller_lots = Lot.objects.filter(seller=seller)
-    context = {
-        'seller': seller,
-        'seller_lots': seller_lots
-    }
-    return render(request, 'lot/seller/detail.html', context)
-
-
+    try:
+        seller_lots = Lot.objects.filter(seller=seller)
+        context = {
+            'seller': seller,
+            'seller_lots': seller_lots
+        }
+        return render(request, 'lot/seller/detail.html', context)
+    except Lot.DoesNotExist as e:
+        print(e)
 
 
 def place_bid(request, lot_id):
@@ -171,37 +176,49 @@ def place_bid(request, lot_id):
         data = json.loads(request.body)
         bid_amount = data.get('bid_amount')
         print(bid_amount)
-        bid = Bid.objects.create(lot=lot, bidder=request.user, amount=bid_amount)
+        try:
+            bid = Bid.objects.create(lot=lot, bidder=request.user, amount=bid_amount)
+        except Exception as e:
+            print(e)
+            return JsonResponse({'status': 'error'})
         return JsonResponse({'status': 'ok'})
 
 
 
 def get_latest_bids(request, lot_id):
     lot = get_object_or_404(Lot, id=lot_id)
-    bids = lot.bids.order_by('-amount') 
-    bids_count = lot.bids.count()
-    print(bids_count)
+    try:
+        bids = lot.bids.order_by('-amount') 
+        bids_count = lot.bids.count()
+        print(bids_count)
 
-    # bids data
-    data = []
-    for bid in bids:
-        formatted_bidded_at = humanize.naturaltime(bid.bidded_at)
-        formatted_amount = humanize.intcomma(bid.amount)
-        data.append({
-            'bidder': bid.bidder.get_username_display(),
-            'amount': formatted_amount,
-            'bidded_at': formatted_bidded_at
-        })
-    return JsonResponse(data, safe=False)
+        # bids data
+        data = []
+        for bid in bids:
+            formatted_bidded_at = humanize.naturaltime(bid.bidded_at)
+            formatted_amount = humanize.intcomma(bid.amount)
+            data.append({
+                'bidder': bid.bidder.get_username_display(),
+                'amount': formatted_amount,
+                'bidded_at': formatted_bidded_at
+            })
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        print(e)
+        return JsonResponse({}, status=400)
+
 
 def check_bid(request, lot_id):
     lot = get_object_or_404(Lot, id=lot_id)
     
     # Check if there is any bid for the lot
-    bid_exists = Bid.objects.filter(lot=lot).exists()
+    try:
+        bid_exists = Bid.objects.filter(lot=lot).exists()
     
-    return JsonResponse({'bid_exists': bid_exists})
-
+        return JsonResponse({'bid_exists': bid_exists})
+    except Bid.DoesNotExist as e:
+        print(e)
+        return JsonResponse({'status': 'error'})
 
 @login_required
 @require_POST
@@ -229,14 +246,20 @@ def toggle_favorite(request):
     
 
 def sold_lots(request):
-    sold_lots = Lot.objects.filter(is_auction_over=True)
-    print("Sold lots########", sold_lots)
-    return render(request, 'lot/lot/sold.html', {'sold_lots': sold_lots})
+    try:
+        sold_lots = Lot.objects.filter(is_auction_over=True)
+        print("Sold lots########", sold_lots)
+        return render(request, 'lot/lot/sold.html', {'sold_lots': sold_lots})
+    except Lot.DoesNotExist as e:
+        print(e)
 
 
 def user_bids(request):
-    user_bids = Bid.objects.filter(bidder=request.user).order_by('-bidded_at')
-    return render(request, 'lot/lot/bids.html', {'user_bids': user_bids})
+    try:
+        user_bids = Bid.objects.filter(bidder=request.user).order_by('-bidded_at')
+        return render(request, 'lot/lot/bids.html', {'user_bids': user_bids})
+    except Bid.DoesNotExist as e:
+        print(e)
 
 
 def user_won_lots(request):

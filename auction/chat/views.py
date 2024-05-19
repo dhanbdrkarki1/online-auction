@@ -12,28 +12,30 @@ def chat(request, other_user_id=None):
     user = request.user
     other_user = None
     messages = []
+    try:
+        if other_user_id:
+            other_user = get_object_or_404(User, id=other_user_id)
+            chat_room = ChatRoom.objects.filter(members=user).filter(members=other_user).first()
+            # only include those sent by the current user and the other user
+            messages = Message.objects.filter(room=chat_room).filter(Q(sender=user) | Q(sender=other_user)).order_by('timestamp')
 
-    if other_user_id:
-        other_user = get_object_or_404(User, id=other_user_id)
-        chat_room = ChatRoom.objects.filter(members=user).filter(members=other_user).first()
-        # only include those sent by the current user and the other user
-        messages = Message.objects.filter(room=chat_room).filter(Q(sender=user) | Q(sender=other_user)).order_by('timestamp')
+        users_chatted_with = set()
+        sent_messages = Message.objects.filter(sender=user)
+        received_messages = Message.objects.filter(room__members=user)
+        for message in sent_messages:
+            users_chatted_with.add(message.room.members.exclude(id=user.id).first())
+        for message in received_messages:
+            users_chatted_with.add(message.sender)
 
-    users_chatted_with = set()
-    sent_messages = Message.objects.filter(sender=user)
-    received_messages = Message.objects.filter(room__members=user)
-    for message in sent_messages:
-        users_chatted_with.add(message.room.members.exclude(id=user.id).first())
-    for message in received_messages:
-        users_chatted_with.add(message.sender)
+        users_chatted_with.discard(user)
 
-    users_chatted_with.discard(user)
-
-    context = {
-        'other_user': other_user,
-        'messages': messages,
-        'users_chatted_with': users_chatted_with
-    }
-    return render(request, 'chat/chat.html', context)
+        context = {
+            'other_user': other_user,
+            'messages': messages,
+            'users_chatted_with': users_chatted_with
+        }
+        return render(request, 'chat/chat.html', context)
+    except Exception as e:
+        return HttpResponseForbidden(f"An error occurred: {e}")
 
 

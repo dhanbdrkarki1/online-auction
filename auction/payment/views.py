@@ -122,22 +122,21 @@ def khalti_verify(request):
             user_email = request.GET['customer_info']['email']
             print(user_email)
 
+            lot = Lot.objects.get(id=lot_id)
+            print(lot_id)
+            transaction = Transaction.objects.create(
+                    lot=lot, 
+                    buyer=user_email, 
+                    final_price=int(amount), 
+                    status=True,
+                    payment_method="Khalti")
+            try:
+                shipping_status = LotShippingStatus.objects.create(lot=lot)
+                messages.success(request, 'You have made payment successfully.')
 
-            # lot = Lot.objects.get(id=lot_id)
-            # print(lot_id)
-            # transaction = Transaction.objects.create(
-            #         lot=lot, 
-            #         buyer=user_email, 
-            #         final_price=int(amount), 
-            #         status=True,
-            #         payment_method="Khalti")
-            # try:
-            #     shipping_status = LotShippingStatus.objects.create(lot=lot)
-            #     messages.success(request, 'You have made payment successfully.')
-
-            # except LotShippingStatus.DoesNotExist as e:
-            #     print(e)
-            # return redirect(reverse_lazy('lots:won_lots'))
+            except LotShippingStatus.DoesNotExist as e:
+                print(e)
+            return redirect(reverse_lazy('lots:won_lots'))
         except Lot.DoesNotExist as e:
             print(e)
             messages.error(request, 'Error during payment!')
