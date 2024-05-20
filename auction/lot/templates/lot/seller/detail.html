@@ -39,7 +39,11 @@
 
                                     </p>
                                     <a href="{% url 'reviews:seller_reviews' username=seller.username %}">
-                                        5 Reviews
+                                        {% if seller_review_count == 0 %}
+                                        No Reviews
+                                        {% else %}
+                                        {{ seller_review_count }} Review{{ seller_review_count|pluralize }}
+                                        {% endif %}
                                     </a>
                                 </div>
                             </div>

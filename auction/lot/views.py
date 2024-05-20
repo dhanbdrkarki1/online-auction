@@ -16,6 +16,8 @@ from asgiref.sync import async_to_sync
 from django.core import serializers
 from django.db.models import Max, OuterRef, Subquery, F
 from django.contrib.auth import get_user_model
+from reviews.models import SellerReview
+
 
 User=get_user_model()
 
@@ -112,8 +114,8 @@ def lot_create(request):
             print("Delayed by.......", delay)
 
             # apply_async -> alternative to delay but allow customization like task routing, task expiration time, priority
-            notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=120)
-            # notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=delay)
+            # notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=120)
+            notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=delay)
 
 
 
@@ -161,9 +163,12 @@ def seller_detail(request, username):
     seller = get_object_or_404(User, username=username)
     try:
         seller_lots = Lot.objects.filter(seller=seller)
+        seller_review_count = SellerReview.objects.filter(seller=seller).count()
+
         context = {
             'seller': seller,
-            'seller_lots': seller_lots
+            'seller_lots': seller_lots,
+            'seller_review_count': seller_review_count
         }
         return render(request, 'lot/seller/detail.html', context)
     except Lot.DoesNotExist as e:
