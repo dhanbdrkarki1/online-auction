@@ -2,7 +2,7 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from lot.models import Lot, LotShippingStatus
+from lot.models import Lot, LotShippingStatus, Bid
 from payment.models import Transaction
 import xml.etree.ElementTree as ET
 import requests
@@ -105,7 +105,7 @@ def khalti_request(request):
 def khalti_verify(request):
     pidx = request.GET.get('pidx')
     headers = {
-            'Authorization': 'key 93c4d5cb81ef4b8caf41ff6fa52889d0',
+            'Authorization': 'key live_secret_key_93c4d5cb81ef4b8caf41ff6fa52889d0',
             'Content-Type': 'application/json',
         }
     payload = json.dumps({
@@ -119,14 +119,16 @@ def khalti_verify(request):
         try:
             amount = float(request.GET.get('amount'))/100
             lot_id = request.GET.get('purchase_order_id')
-            user_email = request.GET['customer_info']['email']
-            print(user_email)
 
             lot = Lot.objects.get(id=lot_id)
+            highest_bid = Bid.objects.filter(lot=lot).order_by('-amount').first()
+            highest_bidder_email = highest_bid.bidder.email
+
+            
             print(lot_id)
             transaction = Transaction.objects.create(
                     lot=lot, 
-                    buyer=user_email, 
+                    buyer=highest_bidder_email, 
                     final_price=int(amount), 
                     status=True,
                     payment_method="Khalti")
