@@ -48,7 +48,7 @@ function loadLotShipmentTable() {
             elem = `<div class="w-75 btn-group" role="group">
                     <button type="button" class="btn btn-primary mx-2 shipment-button" data-lot-name="${row.lot_name}" data-shipment-status="${row.shipment_status}" data-shipping-date=${row.shipping_date} data-shipment-id="${row.shipment_id}"> 
                     <i class="bi bi-truck"></i> 
-                    Hawa Shipment </button>
+                    Update Shipment </button>
                                 </div>
                             `;
           }

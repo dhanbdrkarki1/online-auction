@@ -114,8 +114,8 @@ def lot_create(request):
             print("Delayed by.......", delay)
 
             # apply_async -> alternative to delay but allow customization like task routing, task expiration time, priority
-            # notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=120)
-            notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=delay)
+            notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=120)
+            # notify_winner_and_close_bidding.apply_async(args=[lot.id], countdown=delay)
 
 
 
@@ -136,7 +136,8 @@ def lot_detail(request, slug):
     try:
         lot = get_object_or_404(Lot, slug=slug)
         lot_images = LotImage.objects.filter(lot=lot)
-        shipping_details = LotShippingDetails.objects.filter(lot=lot)
+        shipping_details = LotShippingDetails.objects.filter(lot=lot)[0]
+        print(shipping_details)
         bids = Bid.objects.filter(lot=lot).order_by('-amount')
         context = {'lot': lot, 'lot_images':lot_images, 'shipping_details':shipping_details, 'bids': bids}
         return render(request, 'lot/lot/detail.html', context)

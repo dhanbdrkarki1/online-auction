@@ -237,9 +237,9 @@
                             </form>
                             {% endif %}
                         <p class="card-text mb-4">
-                            <p class="text-muted"><i class="bi bi-truck"></i> Rs. 100 from Kathmandu, arrives in 2-8 days
+                            <p class="text-muted"><i class="bi bi-truck"></i> Rs. {{ shipping_details.shipment_cost }} from {{ shipping_details.item_location }}, arrives in 2-8 days
                             </p>
-                            <p class="text-muted"><i class="bi bi-bank"></i> Buyer Protection fee: 9% + € 3</p>
+                            <p class="text-muted"><i class="bi bi-bank"></i> Buyer Protection fee: 2%</p>
                             <p class="text-muted" id="closingTimeText_{{ lot.id }}"></p>
 
                         </p>
