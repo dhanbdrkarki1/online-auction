@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 import requests
 from django.urls import reverse_lazy
 from django.contrib import messages
-
+from decouple import config
 
 
 def esewa_request(request):
@@ -90,7 +90,7 @@ def khalti_request(request):
             })
         
         headers = {
-                'Authorization': 'key 93c4d5cb81ef4b8caf41ff6fa52889d0',
+                'Authorization': config('KHALTI_AUTHORIZATION_KEY'),
                 'Content-Type': 'application/json',
             }
         
@@ -105,7 +105,7 @@ def khalti_request(request):
 def khalti_verify(request):
     pidx = request.GET.get('pidx')
     headers = {
-            'Authorization': 'key live_secret_key_93c4d5cb81ef4b8caf41ff6fa52889d0',
+            'Authorization': config('KHALTI_AUTHORIZATION_KEY'),
             'Content-Type': 'application/json',
         }
     payload = json.dumps({
