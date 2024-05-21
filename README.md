@@ -15,7 +15,8 @@ Password: P@ssword0
 
 # Social Authentication: Google
 
-https://developers.google.com/identity/protocols/OAuth2
+Doc: https://developers.google.com/identity/protocols/OAuth2
+console: https://console.cloud.google.com/ then goto api and services.
 
 ## To enable, social auth:
 
@@ -26,7 +27,7 @@ https://developers.google.com/identity/protocols/OAuth2
 
 python manage.py runserver_plus --cert-file cert.crt
 or
-python manage.py runserver_plus 8000 --cert-file cert.crt
+python manage.py runserver_plus 8001 --cert-file cert.crt
 
 # Run docker
 

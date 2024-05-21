@@ -58,6 +58,21 @@ def user_login(request):
     return render(request, 'account/login.html')
 
 
+# Password validation logic
+def check_password_strength(password):
+    min_length = 8
+    has_uppercase = any(char.isupper() for char in password)
+    has_lowercase = any(char.islower() for char in password)
+    has_digit = any(char.isdigit() for char in password)
+    has_symbol = any(not char.isalnum() for char in password)
+    return (
+        len(password) >= min_length and
+        has_uppercase and
+        has_lowercase and
+        has_digit and
+        has_symbol
+    )
+
 # Register User
 def register_user(request):
     if request.method == 'POST':
@@ -71,6 +86,11 @@ def register_user(request):
             if CustomUser.objects.filter(email = email).first():
                 messages.info(request, 'Email is already taken!')
                 return redirect('auctionapp:home')
+            
+            if not check_password_strength(password):
+                messages.info(request, "Password must be at least 8 characters long and contain a mix of uppercase, lowercase letters, numbers, and symbols.")
+                return redirect('auctionapp:home')
+            
             # saving user in db
             user_obj = CustomUser.objects.create(email = email, first_name=first_name, last_name=last_name)
             user_obj.set_password(password)
