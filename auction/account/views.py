@@ -87,6 +87,11 @@ def register_user(request):
                 messages.info(request, 'Email is already taken!')
                 return redirect('auctionapp:home')
             
+            # Check for empty password
+            if not password:
+                messages.error(request, "Password cannot be empty.")
+                return redirect('auctionapp:home')
+            
             if not check_password_strength(password):
                 messages.info(request, "Password must be at least 8 characters long and contain a mix of uppercase, lowercase letters, numbers, and symbols.")
                 return redirect('auctionapp:home')
