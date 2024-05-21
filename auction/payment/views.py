@@ -122,13 +122,13 @@ def khalti_verify(request):
 
             lot = Lot.objects.get(id=lot_id)
             highest_bid = Bid.objects.filter(lot=lot).order_by('-amount').first()
-            highest_bidder_email = highest_bid.bidder.email
+            highest_bidder = highest_bid.bidder
 
             
             print(lot_id)
             transaction = Transaction.objects.create(
                     lot=lot, 
-                    buyer=highest_bidder_email, 
+                    buyer=highest_bidder, 
                     final_price=int(amount), 
                     status=True,
                     payment_method="Khalti")
