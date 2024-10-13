@@ -37,6 +37,9 @@ virtualenv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
 cd auction
+py manage.py makemigrations account
+py manage.py makemigrations
+py manage.py migrate
 py manage.py runserver
 ```
 
