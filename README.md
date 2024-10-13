@@ -107,4 +107,4 @@ python manage.py runserver_plus --cert-file cert.crt
 or
 python manage.py runserver_plus 8001 --cert-file cert.crt
 
-Note: You can only sign up or login using the email you have added in the developer console of google for social authentication.
+**Note💡:** You can only sign up or login using the email you have added in the developer console of google for social authentication.
