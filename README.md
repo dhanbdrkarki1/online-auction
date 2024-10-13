@@ -30,17 +30,12 @@ Online auction and bidding system is a revolutionary digital commerce innovation
 
 ## Running Application
 
-### Virtual Environment Setup
+### Virtual Environment Setup and Installing Dependencies
 
 ```
 virtualenv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
-cd auction
-py manage.py makemigrations account
-py manage.py makemigrations
-py manage.py migrate
-py manage.py runserver
 ```
 
 ### Update .env file as per your need
@@ -53,6 +48,7 @@ EMAIL_HOST_PASSWORD = '<EMAIL PASSWORD>'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<GOOGLE OAUTH2 KEY FOR GOOGLE AUTHENTICATION>'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<GOOGLE OAUTH2 SECRET FOR GOOGLE AUTHENTICATION>'
 
+# Assuming PgAdmin or your database server is already setup, set the connection credentials here
 DB_NAME = '<DATABASE NAME>'
 DB_USER = '<DATABASE USERNAME>'
 DB_PASSWORD = '<DATABASE PASSWORD>'
@@ -111,3 +107,13 @@ or
 python manage.py runserver_plus 8001 --cert-file cert.crt
 
 **Note💡:** You can only sign up or login using the email you have added in the developer console of google for social authentication.
+
+### Get Ready to run application
+
+```
+cd auction
+py manage.py makemigrations account
+py manage.py makemigrations
+py manage.py migrate
+py manage.py runserver
+```
