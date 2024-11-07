@@ -6,9 +6,9 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=auction_db
+      - POSTGRES_USER=auction_admin
+      - POSTGRES_PASSWORD=auction_admin
 
   cache:
     image: redis:latest
@@ -23,8 +23,7 @@ services:
     # command: ["./wait-for-it.sh", "db:5432", "--", 
     #             "python3","/code/auction/manage.py", "runserver", 
     #             "0.0.0.0:8000"]
-    command: ["./wait-for-it.sh", "db:5432", "--", 
-            "uwsgi", "--ini", "/code/config/uwsgi/uwsgi.ini"]
+    command: ["uwsgi", "--ini", "/code/config/uwsgi/uwsgi.ini"]
     restart: always
     volumes: 
       - .:/code
@@ -32,9 +31,9 @@ services:
       - 8000:8000
     environment:
       - DJANGO_SETTINGS_MODULE=auction.settings.prod
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=auction_db
+      - POSTGRES_USER=auction_admin
+      - POSTGRES_PASSWORD=auction_admin
 
     depends_on:
       - db
@@ -61,9 +60,9 @@ services:
       - .:/code
     environment:
       - DJANGO_SETTINGS_MODULE=auction.settings.prod
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=auction_db
+      - POSTGRES_USER=auction_admin
+      - POSTGRES_PASSWORD=auction_admin
 
     depends_on:
       - db

@@ -1,12 +1,12 @@
 from .base import *
 
-DEBUG = False
+DEBUG = True # set this to false
 
-ADMINS = [
-    ('Dhan Bdr Karki', 'hunterdbk5@gmail.com'),
-]
+# ADMINS = [
+#     ('Dhan Bdr Karki', 'hunterdbk5@gmail.com'),
+# ]
 
-ALLOWED_HOSTS = ['www.bidme.com','bidme.com']
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
@@ -28,6 +28,6 @@ CHANNEL_LAYERS['default']['CONFIG']['hosts'] = [REDIS_URL]
 
 # security
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
