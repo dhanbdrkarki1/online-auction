@@ -6,9 +6,9 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=auction_db
-      - POSTGRES_USER=auction_admin
-      - POSTGRES_PASSWORD=auction_admin
+      - DB_NAME=auction_db
+      - DB_USER=auction_admin
+      - DB_PASSWORD=auction_admin
     networks:
       - auction-network
 
@@ -52,11 +52,11 @@ services:
       # Allowed Hosts
       - ALLOWED_HOSTS=127.0.0.1,bidme.com,localhost 
       # DB Environment
-      - POSTGRES_DB=auction_db
-      - POSTGRES_USER=auction_admin
-      - POSTGRES_PASSWORD=auction_admin
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
+      - DB_NAME=auction_db
+      - DB_USER=auction_admin
+      - DB_PASSWORD=auction_admin
+      - DB_HOST=db
+      - DB_PORT=5432
       # Celery
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://cache:6379/0
@@ -103,11 +103,11 @@ services:
       # Allowed Hosts
       - ALLOWED_HOSTS=127.0.0.1,bidme.com,localhost 
       # DB Environment
-      - POSTGRES_DB=auction_db
-      - POSTGRES_USER=auction_admin
-      - POSTGRES_PASSWORD=auction_admin
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
+      - DB_NAME=auction_db
+      - DB_USER=auction_admin
+      - DB_PASSWORD=auction_admin
+      - DB_HOST=db
+      - DB_PORT=5432
       # Celery
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://cache:6379/0
@@ -139,11 +139,11 @@ services:
       # Allowed Hosts
       - ALLOWED_HOSTS=127.0.0.1,bidme.com,localhost 
       # DB Environment
-      - POSTGRES_DB=auction_db
-      - POSTGRES_USER=auction_admin
-      - POSTGRES_PASSWORD=auction_admin
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
+      - DB_NAME=auction_db
+      - DB_USER=auction_admin
+      - DB_PASSWORD=auction_admin
+      - DB_HOST=db
+      - DB_PORT=5432
       # Celery
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://cache:6379/0
