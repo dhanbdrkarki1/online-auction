@@ -51,6 +51,10 @@ services:
       - DJANGO_SECRET_KEY='dhanbdrkarki-is-deploying-django-haha6u=jl$hz*4cc!63m#vg0k0%(j%0lp#o9d4$g_o+#mg2eg-*$66'
       # Allowed Hosts
       - ALLOWED_HOSTS=127.0.0.1,bidme.com,localhost 
+      # Django SuperUser
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@gmail.com
       # DB Environment
       - DB_NAME=auction_db
       - DB_USER=auction_admin
@@ -108,6 +112,7 @@ services:
       - DB_PASSWORD=auction_admin
       - DB_HOST=db
       - DB_PORT=5432
+
       # Celery
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://cache:6379/0
