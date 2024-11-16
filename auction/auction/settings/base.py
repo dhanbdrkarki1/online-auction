@@ -12,7 +12,7 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bidme.com','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'bidme.com','localhost',]
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,6 +56,13 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
+# OPTIONAL
+#  reduce the size of the static files when they are served
+# STORAGES = {
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
 
 # SOCIAL AUTH SETTINGS START
 # recommended to use the built-in JSONB field to store the extracted extra_data When using PostgreSQL
@@ -176,7 +184,7 @@ AUTH_USER_MODEL = 'account.CustomUser'
 STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Default primary key field type
@@ -223,3 +231,7 @@ CHANNEL_LAYERS = {
 
 # serving static files
 STATIC_ROOT = BASE_DIR / 'static'
+
+# celery broker and result
+CELERY_BROKER_URL = os.environ.get("BROKER_URL", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("RESULT_BACKEND", "redis://localhost:6379/0")

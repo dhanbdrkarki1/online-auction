@@ -1,48 +1,89 @@
-# upstream for uWSGI
+# Upstream group for uWSGI
 upstream uwsgi_app {
+    # Use a Unix socket for uWSGI to communicate with the app
     server unix:/code/auction/uwsgi_app.sock;
 }
 
-# upstream for Daphne
-upstream daphne{
+# Upstream group for Daphne
+upstream daphne {
+    # Use a Unix socket for Daphne to handle WebSocket connections
     server unix:/code/auction/daphne.sock;
 }
 
-# redirecting http request to https
+# Main server block to handle HTTP traffic
 server {
+    # Listen for incoming connections on port 80 (HTTP)
     listen 80;
-    server_name www.bidme.com bidme.com;
-    return 301 https://$host$request_uri;
-}
 
-server {
-    listen 443 ssl;
-    ssl_certificate /code/auction/ssl/bidme.crt;
-    ssl_certificate_key /code/auction/ssl/bidme.key;
-
+    # Domain names this server block handles
     server_name www.bidme.com bidme.com;
+
+    # Redirects all requests to the same host and URI, but using HTTPS. 
+    # The 301 status code indicates a permanent redirect.
+    # return 301 https://$host$request_uri;
+
+    # Log errors to stderr at the warning level
     error_log stderr warn;
+
+    # Log access requests to stdout with the "main" log format
     access_log /dev/stdout main;
 
+    # Location block for the root URL ("/")
     location / {
+        # Include the standard uWSGI parameters
         include /etc/nginx/uwsgi_params;
+
+        # Forward requests to the uWSGI application
         uwsgi_pass uwsgi_app;
+
+        # Keep the channel to uWSGI open even if the client closes the connection
+        uwsgi_ignore_client_abort on;
     }
 
-    # pass any URL request that starts with the /ws/ prefix to Daphne and the rest to uWSGI
+    # Location block for WebSocket requests (URLs starting with "/ws/")
     location /ws/ {
+        # Use HTTP/1.1 for WebSocket connections
         proxy_http_version 1.1;
+
+        # Set headers required for WebSocket upgrades
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
+
+        # Disable any automatic redirects by Nginx
         proxy_redirect off;
+
+        # Forward WebSocket requests to the Daphne upstream
         proxy_pass http://daphne;
     }
 
+    # Serve static files for URLs starting with "/static/"
     location /static/ {
+        # Location of the static files on the server
         alias /code/auction/static/;
     }
 
+    # Serve media files for URLs starting with "/media/"
     location /media/ {
+        # Location of the media files on the server
         alias /code/auction/media/;
     }
+
+    # Optionally handle 404 and 500 errors
+    # Define a custom page for 404 (Not Found) errors
+    error_page 404 /404.html;
+
+    # Define a custom page for server errors (500, 502, 503, 504)
+    error_page 500 502 503 504 /50x.html;
+
+    # Serve the custom error page from the default HTML directory
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
 }
+
+# Main server block to handle HTTPS traffic
+# server {
+#     listen 443 ssl;
+#     ssl_certificate /code/auction/ssl/bidme.crt;
+#     ssl_certificate_key /code/auction/ssl/bidme.key;
+# }

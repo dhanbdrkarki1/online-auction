@@ -18,11 +18,22 @@ import chat.routing
 import lot.routing
 
 
+# application = ProtocolTypeRouter({
+#     'http': django_asgi_app,
+#     'websocket': AllowedHostsOriginValidator(
+#         URLRouter(
+#             chat.routing.websocket_urlpatterns + lot.routing.websocket_urlpatterns
+#         )
+#     ),
+# })
+
 application = ProtocolTypeRouter({
     'http': django_asgi_app,
     'websocket': AllowedHostsOriginValidator(
-        URLRouter(
-            chat.routing.websocket_urlpatterns + lot.routing.websocket_urlpatterns
+        AuthMiddlewareStack(  # Wrap the WebSocket router with AuthMiddlewareStack
+            URLRouter(
+                chat.routing.websocket_urlpatterns + lot.routing.websocket_urlpatterns
+            )
         )
     ),
 })

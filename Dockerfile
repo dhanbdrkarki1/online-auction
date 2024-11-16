@@ -27,7 +27,11 @@ RUN apk add --no-cache --virtual .build-deps \
     # Install uWSGI dependencies
     && apk add build-base linux-headers pcre-dev \
     # Upgrade pip
-    && python3 -m pip install --upgrade pip
+    && python3 -m pip install --upgrade pip 
+    # Cleanup: Remove build dependencies and unnecessary cache
+    # && apk del .build-deps \
+    # && rm -rf /var/cache/apk/*
+    
 
 # create a new user and group by assigning the specified user ID (USER_UID), group ID (USER_GID), and home directory, associating the user with the defined group.
 RUN addgroup -g ${USER_GID} ${GROUP_NAME} && \

@@ -19,12 +19,23 @@ DATABASES = {
     }
 }
 
+# STATic files
+STATIC_URL = 'static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# serving static files
+STATIC_ROOT = BASE_DIR / 'static'
+
+# Caching
 REDIS_URL = 'redis://cache:6379'
 CACHES['default']['LOCATION'] = REDIS_URL
 CHANNEL_LAYERS['default']['CONFIG']['hosts'] = [REDIS_URL]
 
+# celery broker and result
+CELERY_BROKER_URL = os.environ.get("BROKER_URL", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("RESULT_BACKEND", "redis://localhost:6379/0")
 
 # security
 
