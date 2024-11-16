@@ -46,7 +46,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=auction.settings.prod
       # Debug Mode
-      - DEBUG_STATUS=True 
+      - DEBUG_STATUS=False 
       # Django Secret Key
       - DJANGO_SECRET_KEY='dhanbdrkarki-is-deploying-django-haha6u=jl$hz*4cc!63m#vg0k0%(j%0lp#o9d4$g_o+#mg2eg-*$66'
       # Allowed Hosts
@@ -61,11 +61,11 @@ services:
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://cache:6379/0
       # Email setup
-      - EMAIL_HOST_USER='hunterdbk5@gmail.com'
-      - EMAIL_HOST_PASSWORD='jknq cesc wkao fysg'
+      - EMAIL_HOST_USER=hunterdbk5@gmail.com
+      - EMAIL_HOST_PASSWORD=hcov wkxs hyow gwbn
       # Google OAuth - Social Login
-      - SOCIAL_AUTH_GOOGLE_OAUTH2_KEY='164037503258-2mu6kfvt7e4j9m0vn6aordkl3juhkg3p.apps.googleusercontent.com'
-      - SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET='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'
+      - SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=164037503258-2mu6kfvt7e4j9m0vn6aordkl3juhkg3p.apps.googleusercontent.com
+      - SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=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
     depends_on:
       - db
       - cache
@@ -97,7 +97,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=auction.settings.prod
       # Debug Mode
-      - DEBUG_STATUS=True 
+      - DEBUG_STATUS=False 
       # Django Secret Key
       - DJANGO_SECRET_KEY='dhanbdrkarki-is-deploying-django-haha6u=jl$hz*4cc!63m#vg0k0%(j%0lp#o9d4$g_o+#mg2eg-*$66'
       # Allowed Hosts
@@ -112,11 +112,11 @@ services:
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://cache:6379/0
       # Email setup
-      - EMAIL_HOST_USER='hunterdbk5@gmail.com'
-      - EMAIL_HOST_PASSWORD='jknq cesc wkao fysg'
+      - EMAIL_HOST_USER=hunterdbk5@gmail.com
+      - EMAIL_HOST_PASSWORD=hcov wkxs hyow gwbn
       # Google OAuth - Social Login
-      - SOCIAL_AUTH_GOOGLE_OAUTH2_KEY='164037503258-2mu6kfvt7e4j9m0vn6aordkl3juhkg3p.apps.googleusercontent.com'
-      - SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET='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'
+      - SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=164037503258-2mu6kfvt7e4j9m0vn6aordkl3juhkg3p.apps.googleusercontent.com
+      - SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=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
     depends_on:
       - db
       - cache
@@ -133,7 +133,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=auction.settings.prod
       # Debug Mode
-      - DEBUG_STATUS=True 
+      - DEBUG_STATUS=False 
       # Django Secret Key
       - DJANGO_SECRET_KEY='dhanbdrkarki-is-deploying-django-haha6u=jl$hz*4cc!63m#vg0k0%(j%0lp#o9d4$g_o+#mg2eg-*$66'
       # Allowed Hosts
@@ -148,11 +148,11 @@ services:
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://cache:6379/0
       # Email setup
-      - EMAIL_HOST_USER='hunterdbk5@gmail.com'
-      - EMAIL_HOST_PASSWORD='jknq cesc wkao fysg'
+      - EMAIL_HOST_USER=hunterdbk5@gmail.com
+      - EMAIL_HOST_PASSWORD=hcov wkxs hyow gwbn
       # Google OAuth - Social Login
-      - SOCIAL_AUTH_GOOGLE_OAUTH2_KEY='164037503258-2mu6kfvt7e4j9m0vn6aordkl3juhkg3p.apps.googleusercontent.com'
-      - SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET='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'
+      - SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=164037503258-2mu6kfvt7e4j9m0vn6aordkl3juhkg3p.apps.googleusercontent.com
+      - SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=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
     depends_on:
       - rabbitmq
       - cache

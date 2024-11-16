@@ -12,7 +12,7 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'bidme.com','localhost',]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -73,9 +73,6 @@ AUTHENTICATION_BACKENDS = [
      'social_core.backends.google.GoogleOAuth2',
 ]
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
-
 SOCIAL_AUTH_PIPELINE = [
  'social_core.pipeline.social_auth.social_details',
  'social_core.pipeline.social_auth.social_uid',
@@ -135,16 +132,6 @@ WSGI_APPLICATION = 'auction.wsgi.application'
 # }
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -192,15 +179,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-# Email server configuration
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD =  config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-
 # easy thumbnail to crop images to a specific aspect ratio
 THUMBNAIL_ALIASES = {
     '': {
@@ -231,7 +209,3 @@ CHANNEL_LAYERS = {
 
 # serving static files
 STATIC_ROOT = BASE_DIR / 'static'
-
-# celery broker and result
-CELERY_BROKER_URL = os.environ.get("BROKER_URL", "redis://localhost:6379/0")
-CELERY_RESULT_BACKEND = os.environ.get("RESULT_BACKEND", "redis://localhost:6379/0")
