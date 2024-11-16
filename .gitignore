@@ -16,6 +16,11 @@ __pycache__/
 # C extensions
 *.so
 
+media/
+auction/static/admin/
+auction/static/django_extensions/
+auction/static/rest_framework/
+
 # Distribution / packaging
 .Python
 build/
