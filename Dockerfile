@@ -27,10 +27,10 @@ RUN apk add --no-cache --virtual .build-deps \
     # Install uWSGI dependencies
     && apk add build-base linux-headers pcre-dev \
     # Upgrade pip
-    && python3 -m pip install --upgrade pip 
+    && python3 -m pip install --upgrade pip \
     # Cleanup: Remove build dependencies and unnecessary cache
-    # && apk del .build-deps \
-    # && rm -rf /var/cache/apk/*
+    && apk del .build-deps \
+    && rm -rf /var/cache/apk/*
     
 
 # create a new user and group by assigning the specified user ID (USER_UID), group ID (USER_GID), and home directory, associating the user with the defined group.
@@ -45,17 +45,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 FROM python:3.12-alpine
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-# Application settings
-# ENV DJANGO_SETTINGS_MODULE=blogsite.settings \
-#     DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,[::1] \
-#     DJANGO_DEBUG=0 \
-#     DJANGO_SECRET_KEY=""
-# # Database settings
-# ENV POSTGRES_DB="" \
-#     POSTGRES_USER="" \
-#     POSTGRES_PASSWORD="" \
-#     POSTGRES_HOST="" \
-#     POSTGRES_PORT=5432
 
 # Working directory
 WORKDIR /code
